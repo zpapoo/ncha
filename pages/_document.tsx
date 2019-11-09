@@ -17,6 +17,13 @@ export default class MyDocument extends Document {
             href="https://fonts.googleapis.com/css?family=Noto+Sans+KR:400,700&display=swap"
             rel="stylesheet"
           />
+          <link rel="stylesheet" href="/reset.css" />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="/favicon-32x32.png"
+          />
         </Head>
         <body>
           <Main />
