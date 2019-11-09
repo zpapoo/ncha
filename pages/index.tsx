@@ -1,8 +1,11 @@
 import Head from 'next/head'
 import React from 'react'
 
+import { Header } from '../components/header'
+
 const Home = () => (
   <>
+    <Header />
     <Head>
       <title>Home</title>
       <link

@@ -1,6 +1,6 @@
 {
   "extends": ["react-app", "prettier"],
-  "plugins": ["react-hooks", "simple-import-sort"],
+  "plugins": ["react-hooks", "simple-import-sort", "emotion"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
     "padding-line-between-statements": [
