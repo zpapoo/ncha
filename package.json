@@ -1,26 +1,25 @@
 {
-  "name": "ncha",
-  "version": "1.0.0",
-  "description": "ncha project",
-  "main": "index.js",
+  "name": "ncha-frontend",
+  "description": "ncha frontend project",
+  "version": "0.1.0",
+  "private": true,
   "scripts": {
-    "start:client": "cd ./frontend && yarn dev",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
     "lint": "eslint ."
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/zpapoo/ncha.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/zpapoo/ncha/issues"
+  "dependencies": {
+    "next": "9.1.3",
+    "react": "16.11.0",
+    "react-dom": "16.11.0"
   },
   "devDependencies": {
+    "@types/node": "^12.12.7",
+    "@types/react": "^16.9.11",
+    "typescript": "^3.7.2",
     "@typescript-eslint/eslint-plugin": "^2.6.1",
     "@typescript-eslint/parser": "^2.6.1",
-    "babel-eslint": "^10.0.3",
     "eslint": "^6.6.0",
     "eslint-config-prettier": "^6.5.0",
     "eslint-config-react-app": "^5.0.2",
@@ -29,8 +28,6 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.2.0",
-    "eslint-plugin-simple-import-sort": "^4.0.0",
-    "typescript": "^3.7.2"
-  },
-  "homepage": "https://github.com/zpapoo/ncha#readme"
+    "eslint-plugin-simple-import-sort": "^4.0.0"
+  }
 }
