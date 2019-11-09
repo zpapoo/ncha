@@ -1,0 +1,18 @@
+{
+  "extends": ["react-app", "prettier", "eslint:recommended"],
+  "plugins": ["react-hooks", "simple-import-sort"],
+  "rules": {
+    "react-hooks/rules-of-hooks": "error",
+    "padding-line-between-statements": [
+      "error",
+      { "blankLine": "always", "prev": "*", "next": "return" }
+    ],
+    "max-depth": ["error", { "max": 3 }],
+    "no-unneeded-ternary": ["error", { "defaultAssignment": false }],
+    "simple-import-sort/sort": "error",
+    "sort-imports": "off",
+    "import/order": "off",
+    "no-multiple-empty-lines": "error",
+    "semi": ["error", "never"]
+  }
+}

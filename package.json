@@ -1,0 +1,36 @@
+{
+  "name": "ncha",
+  "version": "1.0.0",
+  "description": "ncha project",
+  "main": "index.js",
+  "scripts": {
+    "start:client": "cd ./frontend && yarn dev",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zpapoo/ncha.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/zpapoo/ncha/issues"
+  },
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^2.6.1",
+    "@typescript-eslint/parser": "^2.6.1",
+    "babel-eslint": "^10.0.3",
+    "eslint": "^6.6.0",
+    "eslint-config-prettier": "^6.5.0",
+    "eslint-config-react-app": "^5.0.2",
+    "eslint-plugin-flowtype": "^4.3.0",
+    "eslint-plugin-import": "^2.18.2",
+    "eslint-plugin-jsx-a11y": "^6.2.3",
+    "eslint-plugin-react": "^7.16.0",
+    "eslint-plugin-react-hooks": "^2.2.0",
+    "eslint-plugin-simple-import-sort": "^4.0.0",
+    "typescript": "^3.7.2"
+  },
+  "homepage": "https://github.com/zpapoo/ncha#readme"
+}
