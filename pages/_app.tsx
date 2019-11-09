@@ -10,7 +10,9 @@ export default class MyApp extends App {
       <>
         <Global
           styles={css`
-            html,
+            html {
+              background-color: #1b1b1b;
+            }
             body {
               margin: auto;
               max-width: 520px;
