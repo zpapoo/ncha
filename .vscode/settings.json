@@ -1,5 +1,5 @@
 {
-    "editor.formatOnSave": false,
+    "editor.formatOnSave": true,
     "javascript.format.enable": false,
     "eslint.alwaysShowStatus": true,
     "eslint.options": {
@@ -19,5 +19,5 @@
     ],
     "eslint.autoFixOnSave": true,
     "eslint.packageManager": "yarn",
-    "eslint.nodePath": "./frontend/node_modules/"
+    "typescript.tsdk": "node_modules/typescript/lib"
   }

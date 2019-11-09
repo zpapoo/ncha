@@ -1,5 +1,5 @@
 {
-  "extends": ["react-app", "prettier", "eslint:recommended"],
+  "extends": ["react-app", "prettier"],
   "plugins": ["react-hooks", "simple-import-sort"],
   "rules": {
     "react-hooks/rules-of-hooks": "error",
@@ -13,6 +13,7 @@
     "sort-imports": "off",
     "import/order": "off",
     "no-multiple-empty-lines": "error",
-    "semi": ["error", "never"]
+    "semi": ["error", "never"],
+    "no-tabs": "error"
   }
 }
