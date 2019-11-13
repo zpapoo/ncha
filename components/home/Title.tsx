@@ -5,8 +5,6 @@ interface Props {}
 
 const StyledTitle = styled.div`
   flex-direction: column;
-  font-family: Noto Sans KR;
-  font-style: normal;
   font-weight: 900;
   font-size: 56px;
   line-height: 104.7%;

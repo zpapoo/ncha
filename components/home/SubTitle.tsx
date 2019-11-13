@@ -4,7 +4,6 @@ import React from 'react'
 interface Props {}
 
 const StyledSubTitle = styled.div`
-  font-style: normal;
   font-weight: bold;
   font-size: 18px;
   line-height: 26px;

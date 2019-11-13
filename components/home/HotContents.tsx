@@ -8,13 +8,10 @@ interface Props {}
 const HotContentsWrapper = styled.div`
   position: relative;
   margin-top: 24px;
-  width: 100%;
-  height: 100%;
 `
 
 const StyledImage = styled.img`
   width: 100%;
-  height: 100%;
 `
 
 export const HotContents: React.FC<Props> = () => {
