@@ -18,8 +18,8 @@ export const Home: React.FC<Props> = () => {
     <>
       <MainTop />
       <TitleWrapper>
-        <Title></Title>
-        <SubTitle></SubTitle>
+        <Title />
+        <SubTitle />
       </TitleWrapper>
       <HotContents />
       <Contents>
