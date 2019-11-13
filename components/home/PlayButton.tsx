@@ -3,7 +3,7 @@ import React from 'react'
 
 interface Props {}
 
-const StyledPlayButton = styled.div`
+const StyledPlayButton = styled.button`
   position: absolute;
   bottom: 0;
   right: 0;
