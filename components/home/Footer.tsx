@@ -4,12 +4,8 @@ import React from 'react'
 interface Props {}
 
 const StyledFooter = styled.div`
-  height: 64px;
-
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
+  padding: 20px 0;
+  text-align: center;
   background-color: #000;
 
   color: #cbcbcb;

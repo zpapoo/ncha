@@ -4,10 +4,8 @@ import React from 'react'
 interface Props {}
 
 const StyledContentsTitle = styled.div`
-  font-style: normal;
   font-weight: bold;
   font-size: 24px;
-  line-height: 26px;
   letter-spacing: -0.1em;
 
   margin-bottom: 12px;

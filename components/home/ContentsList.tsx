@@ -7,7 +7,6 @@ interface Props {
 
 const StyledContentsList = styled.ul`
   display: flex;
-  flex-direction: row;
   overflow-x: scroll;
   -webkit-overflow-scrolling: auto;
 `
