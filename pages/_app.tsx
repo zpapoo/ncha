@@ -1,6 +1,6 @@
-import { css, Global } from '@emotion/core'
-import App from 'next/app'
-import React from 'react'
+import { css, Global } from "@emotion/core"
+import App from "next/app"
+import React from "react"
 
 export default class MyApp extends App {
   render() {
@@ -16,7 +16,7 @@ export default class MyApp extends App {
               max-width: 520px;
               background-color: #141414;
               min-height: 100%;
-              font-family: Noto Sans KR Helvetica, Arial, sans-serif;
+              font-family: "Noto Sans KR", Helvetica, Arial, sans-serif;
             }
           `}
         />
