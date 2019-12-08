@@ -106,9 +106,9 @@ export const Player: React.FC<Props> = () => {
           <FormattedTime>127:24</FormattedTime>
         </TimeLineContainer>
         <PlayerButton />
-        <SpeechBubble data={mockData[0].data}/>
-        <SpeechBubble data={mockData[1].data}/>
       </PlayerTop>
+      <SpeechBubble data={mockData[0].data}/>
+      <SpeechBubble data={mockData[1].data}/>
     </>
   )
 }
