@@ -25,30 +25,6 @@ const ProfileImage = styled.div`
   border-radius: 50%;
   margin-right: 13px;
 `
-// FIXME: Fix when emotion SSR setting will be done. 
-const BubbleFirst = styled.div`
-  display: inline-block;
-  position: relative;
-  background: rgba(104, 127, 209, 0.5);
-  color: rgba(255, 255, 255, 0.9);
-  border-radius: 5px;
-  padding: 9px;
-  margin-top: 9px;
-  line-height: 15px;
-
-  &::before {
-    content: '';
-    position: absolute;
-    top: 20%;
-    left: -9px;
-    width: 0;
-    height: 0;
-    border-top: 0px solid transparent;
-    border-radius: 1px 0 0 0;
-    border-bottom: 12px solid transparent;
-    border-right: 9px solid rgba(104,127,209,0.5);
-  }
-`
 
 const Bubble = styled.div`
   display: inline-block;
@@ -58,6 +34,23 @@ const Bubble = styled.div`
   border-radius: 5px;
   padding: 9px;
   margin-top: 9px;
+  line-height: 15px;
+
+  &:first-of-type {
+    &:before {
+      content: '';
+      position: absolute;
+      top: 20%;
+      left: -9px;
+      width: 0;
+      height: 0;
+      border-top: 0px solid transparent;
+      border-radius: 1px 0 0 0;
+      border-bottom: 12px solid transparent;
+      border-right: 9px solid rgba(104,127,209,0.5);
+    }
+
+  }
 `
 
 const Name = styled.span`
@@ -75,15 +68,6 @@ export const SpeechBubble = ({data}: Props) => {
           <Name>{name}</Name>
           {
             comments.map((comment: string, index: number) => {
-              // FIXME: Fix when emotion ssr setting is done
-              if (index === 0) {
-                return (
-                  <BubbleFirst key={`${name}-${index}`}>
-                    {comment}
-                  </BubbleFirst>
-                )
-              }
-
               return (
                 <Bubble key={`${name}-${index}`}>
                   {comment}
