@@ -17,11 +17,18 @@ const initialState: Player = {
 }
 
 const reducers = {
-  play: (state: Player, action: PayloadAction<number>) =>  ({
+  play: (state: Player, action: PayloadAction) =>  ({
+    ...state,
+    isPlaying: true,
+  }),
+  onTimeUpdate: (state: Player, action: PayloadAction<number>) =>  ({
     ...state,
     currentTime: action.payload
   }),
-  pause: (state: Player) => state
+  pause: (state: Player) => ({
+    ...state,
+    isPlaying: false
+  })
 }
 
 const _ = createSlice({ name, initialState, reducers })
