@@ -2,6 +2,8 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import React from 'react'
 
+import { SpeechBubble } from './SpeechBubble'
+
 interface Props {}
 
 const PlayerTop = styled.div`
@@ -18,7 +20,7 @@ const CloseButton = styled.span`
   right: 16px;
   width: 16px;
   height: 16px;
-  background-image: url('/images/cancel_icon.png');
+  background-image: url("/images/cancel_icon.png");
   background-size: cover;
   opacity: 0.3;
 `
@@ -69,56 +71,29 @@ const PlayerButton = styled.div`
   border-radius: 50%;
 `
 
-const Item = styled.div`
-  margin: auto auto 16px auto;
-  padding: 0px 16px;
-  height: auto;
-  display: flex;
-  align-items: center;
-  /* justify-content: center; */
-`
-
-const ItemIcon = styled.div`
-  margin-right: 12px;
-
-  height: 20px;
-  min-width: 20px;
-  background-color: #e0115f;
-  border-radius: 30%;
-`
-
-const ItemContents = styled.div`
-  font-style: normal;
-  font-weight: normal;
-  font-size: 14px;
-  line-height: 15px;
-  color: rgba(255, 255, 255, 0.9);
-
-  display: -webkit-box;
-  min-height: 48px;
-  max-height: 60px;
-
-  overflow: hidden;
-  overflow-wrap: break-word;
-
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 4;
-`
-
 export const Player: React.FC<Props> = () => {
   const { query } = useRouter()
-  const { id } = query
 
-  const longContents = `방황하였으며, 우리의 얼마나 심장은 불어 청춘의 이상의 투명하되 것이다.
-  가슴이 따뜻한 작고 힘있다. 얼음이 무엇을 천고에 쓸쓸하랴? 같으며,
-  설레는 거친 새 장식하는 희망의 얼음과 것 같으며, 설레는 거친 새
-  장식하는 희망의 얼음과 것 같으며, 설레는 거친 새 장식하는 희망의
-  얼음과 것 같으며, 설레는 거친 새 장식하는 희망의 얼음과 것 같으며,
-  설레는 거친 새 장식하는 희망의 얼음과 것s`
-  const shortContents = `설레는 거친 새 장식하는 희망의 얼음과 것 같으며,`
-  const middleContents = `설레는 거친 새 장식하는 우리의 얼마나 심장은 불어 청춘의 이상의 투명하되 것이다. 방황하였으며, 우리의 얼마나 심장은 불어 청춘의 이상의 투명하되 것이다.`
-
-  console.log(id)
+  const mockData = [
+    {
+      data: {
+        name: '소소감독',
+        comments: [
+          '방황하였으며, 우리의 얼마나 심장은 불어 청춘의 이상의 투명하되 것이다. 가슴이 따뜻한 작고 힘있다. 얼음이 무엇을 천고에 쓸쓸하랴? 같으며,설레는 거친 새 장식하는 희망의 얼음과 것 같으며, 설레는 거친 새장식하는 희망의 얼음과 것 같으며, 설레는 거친 새 장식하는 희망의',
+          '가슴이 따뜻한 작고 힘있다.'
+        ]
+      }
+    },
+    {
+      data: {
+        name: '음향감독',
+        comments: [
+          '방황하였으며, 우리의 얼마나 심장은 불어 청춘의 이상의 투명하되 것이다. 가슴이 따뜻한 작고 힘있다. 얼음이 무엇을 천고에 쓸쓸하랴? 같으며,설레는 거친 새 장식하는 희망의 얼음과 것 같으며, 설레는 거친 새장식하는 희망의 얼음과 것 같으며, 설레는 거친 새 장식하는 희망의',
+          '가슴이 따뜻한 작고 힘있다.'
+        ]
+      }
+    }
+  ]
 
   return (
     <>
@@ -132,26 +107,8 @@ export const Player: React.FC<Props> = () => {
         </TimeLineContainer>
         <PlayerButton />
       </PlayerTop>
-      <Item>
-        <ItemIcon />
-        <ItemContents>{longContents}</ItemContents>
-      </Item>
-      <Item>
-        <ItemIcon />
-        <ItemContents>{longContents}</ItemContents>
-      </Item>
-      <Item>
-        <ItemIcon />
-        <ItemContents>{shortContents}</ItemContents>
-      </Item>
-      <Item>
-        <ItemIcon />
-        <ItemContents>{middleContents}</ItemContents>
-      </Item>
-      <Item>
-        <ItemIcon />
-        <ItemContents>{shortContents}</ItemContents>
-      </Item>
+      <SpeechBubble data={mockData[0].data}/>
+      <SpeechBubble data={mockData[1].data}/>
     </>
   )
 }

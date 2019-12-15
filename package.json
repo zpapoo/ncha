@@ -7,7 +7,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint ."
+    "lint": "eslint ./ --ext ts,tsx"
   },
   "dependencies": {
     "@emotion/core": "^10.0.22",
