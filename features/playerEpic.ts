@@ -10,13 +10,11 @@ export const playerEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,
   store$: StateObservable<RootState>
 ) =>  {
-  // Timer's first parameter === runningTime
-
   return (
     action$.pipe(
       ofType(`${playerActionName}/play`),
       mergeMap(() => timer(0, 1000)),
-      map((count) => {
+      map(() => {
         const currentTime = store$.value.player.currentTime
 
         return playerActions.onTimeUpdate(currentTime + 1)
