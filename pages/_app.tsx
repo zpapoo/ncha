@@ -1,6 +1,9 @@
 import { css, Global } from '@emotion/core'
 import App from 'next/app'
 import React from 'react'
+import { Provider } from 'react-redux'
+
+import store from '../features'
 
 export default class MyApp extends App {
   render() {
@@ -21,7 +24,9 @@ export default class MyApp extends App {
           `}
         />
         <div className="wrap">
-          <Component {...pageProps} />
+          <Provider store={store}>
+            <Component {...pageProps} />
+          </Provider>
         </div>
       </>
     )

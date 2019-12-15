@@ -15,6 +15,7 @@ const initialState: Player = {
   isPlaying: false,
   comment: []
 }
+
 const reducers = {
   play: (state: Player, action: PayloadAction<number>) =>  ({
     ...state,
@@ -25,5 +26,6 @@ const reducers = {
 
 const _ = createSlice({ name, initialState, reducers })
 
+export const playerActionName = _.name
 export const playerReducer = _.reducer
 export const playerActions = _.actions
