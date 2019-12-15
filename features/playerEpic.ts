@@ -1,7 +1,7 @@
 import { PayloadAction } from '@reduxjs/toolkit'
 import { ActionsObservable, Epic, ofType, StateObservable } from 'redux-observable'
 import { timer } from 'rxjs'
-import { flatMap, map, takeUntil } from 'rxjs/operators'
+import { map, mergeMap, repeat, takeUntil } from 'rxjs/operators'
 
 import { RootState } from '.'
 import { playerActionName, playerActions } from './player'
@@ -15,7 +15,7 @@ export const playerEpic: Epic = (
   return (
     action$.pipe(
       ofType(`${playerActionName}/play`),
-      flatMap(() => timer(0, 1000)),
+      mergeMap(() => timer(0, 1000)),
       map((count) => {
         const currentTime = store$.value.player.currentTime
 
@@ -23,7 +23,8 @@ export const playerEpic: Epic = (
       }),
       takeUntil(action$.pipe(
         ofType(`${playerActionName}/pause`)
-      ))
+      )),
+      repeat()
     )
   )
 }
