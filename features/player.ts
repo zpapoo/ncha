@@ -17,7 +17,7 @@ const initialState: Player = {
 }
 
 const reducers = {
-  play: (state: Player, action: PayloadAction) =>  ({
+  play: (state: Player) =>  ({
     ...state,
     isPlaying: true,
   }),
