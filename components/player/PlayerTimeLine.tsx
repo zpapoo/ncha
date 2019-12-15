@@ -34,7 +34,6 @@ export const PlayerTimeLine = () => {
   )
   const {currentTime, runningTime} = playerState
   const width = (currentTime / runningTime) * 100
-  console.log(width)
 
   return (
     <TimeLineContainer>
