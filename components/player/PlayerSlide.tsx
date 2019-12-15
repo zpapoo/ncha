@@ -9,6 +9,14 @@ const  Slide = styled<'div', Props>('div')`
   background: linear-gradient(to right, #EF4D88 0%, #4E51FF 100%);
   height: 100%;
   width: ${(props) => `${props.width}%`};
+
+  &::after {
+    content: "";
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #4E51FF;
+  }
 `
 
 export const PlayerSlide = ({width}: Props) => {
