@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 // TODO: Fix Comment Type
-interface Player {
+export interface PlayerState {
   currentTime: number;
   runningTime: number;
   isPlaying: boolean;
@@ -9,23 +9,24 @@ interface Player {
 }
 
 const name = 'player'
-const initialState: Player = {
+// TODO: Change running time
+const initialState: PlayerState = {
   currentTime: 0,
-  runningTime: 0,
+  runningTime: 100,
   isPlaying: false,
   comment: []
 }
 
 const reducers = {
-  play: (state: Player) =>  ({
+  play: (state: PlayerState) =>  ({
     ...state,
     isPlaying: true,
   }),
-  onTimeUpdate: (state: Player, action: PayloadAction<number>) =>  ({
+  onTimeUpdate: (state: PlayerState, action: PayloadAction<number>) =>  ({
     ...state,
     currentTime: action.payload
   }),
-  pause: (state: Player) => ({
+  pause: (state: PlayerState) => ({
     ...state,
     isPlaying: false
   })
