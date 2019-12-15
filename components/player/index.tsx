@@ -2,6 +2,7 @@ import styled from '@emotion/styled'
 import { useRouter } from 'next/router'
 import React from 'react'
 
+import { PlayerTimeLine } from './PlayerTimeLine'
 import { SpeechBubble } from './SpeechBubble'
 
 interface Props {}
@@ -100,11 +101,7 @@ export const Player: React.FC<Props> = () => {
       <PlayerTop>
         <PlayerTitle>The Dark Night</PlayerTitle>
         <CloseButton />
-        <TimeLineContainer>
-          <FormattedTime>00:00</FormattedTime>
-          <TimeLine />
-          <FormattedTime>127:24</FormattedTime>
-        </TimeLineContainer>
+        <PlayerTimeLine />
         <PlayerButton />
       </PlayerTop>
       <SpeechBubble data={mockData[0].data}/>
