@@ -3,7 +3,7 @@ import React from 'react'
 import { useSelector } from 'react-redux'
 
 import { RootState } from '../../features'
-import { PlayerState } from '../../features/player'
+import { playerSelectors } from '../../features/player'
 import { PlayerSlide } from './PlayerSlide'
 
 const TimeLineContainer = styled.div`
@@ -29,10 +29,12 @@ const TimeLine = styled.span`
 `
 
 export const PlayerTimeLine = () => {
-  const playerState = useSelector<RootState, PlayerState>(
-    state => state.player
+  const currentTime = useSelector<RootState, number>(
+    state => playerSelectors.currentTime(state.player)
   )
-  const {currentTime, runningTime} = playerState
+  const runningTime = useSelector<RootState, number>(
+    state => playerSelectors.runningTime(state.player)
+  )
   const width = (currentTime / runningTime) * 100
 
   return (

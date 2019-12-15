@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 // TODO: Fix Comment Type
 export interface PlayerState {
@@ -33,6 +33,21 @@ const reducers = {
 }
 
 const _ = createSlice({ name, initialState, reducers })
+
+const getCurrentTime = createSelector(
+  (state: PlayerState) => state.currentTime,
+  time => time || 0
+)
+
+const getRunningTime = createSelector(
+  (state: PlayerState) => state.runningTime,
+  time => time || 0
+)
+
+export const playerSelectors = {
+  currentTime: getCurrentTime,
+  runningTime: getRunningTime
+}
 
 export const playerActionName = _.name
 export const playerReducer = _.reducer
