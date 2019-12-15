@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
-import { useRouter } from 'next/router'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { RootState } from '../../features'
 import { playerActions, PlayerState } from '../../features/player'
 import { mockData } from '../../mockData/comment'
+import { PlayerButton } from './PlayerButton'
 import { PlayerTimeLine } from './PlayerTimeLine'
 import { SpeechBubble } from './SpeechBubble'
 
@@ -41,45 +41,14 @@ const PlayerTitle = styled.h2`
   color: #ffffff;
 `
 
-// TODO: Replace with svg
-const PlayButton = styled.div`
-  margin: auto;
-  width: 0px;
-  height: 0px;
-  border-top: 14px solid transparent;
-  border-bottom: 14px solid transparent;
-  border-left: 20px solid #EF4D88;
-`
-
-const PauseButton = styled.div`
-  margin: auto;
-  width: 12px;
-  height: 12px;
-  background-color: #EF4D88;
-`
-
 export const Player: React.FC<Props> = () => {
-  const dispatch = useDispatch()
-  const playerState = useSelector<RootState, PlayerState>(
-    state => state.player
-  )
-  const {isPlaying} = playerState
-
   return (
     <>
       <PlayerTop>
         <PlayerTitle>The Dark Night</PlayerTitle>
         <CloseButton />
         <PlayerTimeLine />
-        {
-          isPlaying
-            ? <PauseButton onClick={ () =>
-              dispatch(playerActions.pause())
-            }/>
-            : <PlayButton onClick={ () =>
-              dispatch(playerActions.play())
-            }/>
-        }
+        <PlayerButton />
       </PlayerTop>
       <SpeechBubble data={mockData[0].data}/>
       <SpeechBubble data={mockData[1].data}/>
