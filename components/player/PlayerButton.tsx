@@ -1,9 +1,8 @@
 import styled from '@emotion/styled'
+import { RootState } from 'features'
+import { playerActions } from 'features/player'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
-import { RootState } from '../../features'
-import { playerActions } from '../../features/player'
 
 // TODO: Replace with svg
 const PlayButton = styled.div`

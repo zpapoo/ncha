@@ -1,9 +1,8 @@
 import { css, Global } from '@emotion/core'
+import store from 'features'
 import App from 'next/app'
 import React from 'react'
 import { Provider } from 'react-redux'
-
-import store from '../features'
 
 export default class MyApp extends App {
   render() {

@@ -1,13 +1,10 @@
 import styled from '@emotion/styled'
+import { PlayerButton } from 'components/player/PlayerButton'
+import { PlayerTimeLine } from 'components/player/PlayerTimeLine'
+import { SpeechBubble } from 'components/player/SpeechBubble'
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
 
-import { RootState } from '../../features'
-import { playerActions, PlayerState } from '../../features/player'
 import { mockData } from '../../mockData/comment'
-import { PlayerButton } from './PlayerButton'
-import { PlayerTimeLine } from './PlayerTimeLine'
-import { SpeechBubble } from './SpeechBubble'
 
 interface Props {}
 

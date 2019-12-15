@@ -1,9 +1,9 @@
 import styled from '@emotion/styled'
+import { RootState } from 'features'
+import { playerSelectors } from 'features/player'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
-import { RootState } from '../../features'
-import { playerSelectors } from '../../features/player'
 import { PlayerSlide } from './PlayerSlide'
 
 const TimeLineContainer = styled.div`
