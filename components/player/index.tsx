@@ -66,10 +66,11 @@ const TimeLine = styled.span`
 
 const PlayerButton = styled.div`
   margin: auto;
-  width: 24px;
-  height: 24px;
-  background-color: #e0115f;
-  border-radius: 50%;
+  width: 0px;
+  height: 0px;
+  border-top: 14px solid transparent;
+  border-bottom: 14px solid transparent;
+  border-left: 20px solid #EF4D88;
 `
 
 export const Player: React.FC<Props> = () => {
