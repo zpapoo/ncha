@@ -20,7 +20,6 @@ const FormattedTime = styled.span`
 const TimeLine = styled.span`
   display: flex;
   margin: 0 12px;
-
   width: 100%;
   height: 2px;
   background-color: rgba(255, 255, 255, 0.5);
