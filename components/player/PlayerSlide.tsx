@@ -24,7 +24,7 @@ const Slide = styled<'div', Props>('div')`
   }
 `
 
-export const PlayerSlide = ({width}: Props) => {
+export const PlayerSlide = ({ width }: Props) => {
   return (
     <Slide width={width} />
   )

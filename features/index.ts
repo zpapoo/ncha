@@ -6,7 +6,7 @@ import { playerReducer } from './player'
 import { playerEpic } from './playerEpic'
 
 const rootReducer = combineReducers({
-  player: playerReducer
+  player: playerReducer,
 })
 
 const rootEpic = combineEpics(

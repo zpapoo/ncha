@@ -30,10 +30,10 @@ const TimeLine = styled.span`
 
 export const PlayerTimeLine = () => {
   const currentTime = useSelector<RootState, number>(
-    state => playerSelectors.currentTime(state.player)
+    state => playerSelectors.currentTime(state.player),
   )
   const runningTime = useSelector<RootState, number>(
-    state => playerSelectors.runningTime(state.player)
+    state => playerSelectors.runningTime(state.player),
   )
   const width = (currentTime / runningTime) * 100
 

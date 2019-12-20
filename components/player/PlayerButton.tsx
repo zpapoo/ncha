@@ -24,7 +24,7 @@ const PauseButton = styled.div`
 export const PlayerButton = () => {
   const dispatch = useDispatch()
   const isPlaying = useSelector<RootState, boolean>(
-    state => state.player.isPlaying
+    state => state.player.isPlaying,
   )
 
   return (
