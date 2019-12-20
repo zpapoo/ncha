@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { RootState } from 'features'
-import { playerSelectors } from 'features/player'
+import { playerSelectors, Time } from 'features/player'
 import React from 'react'
 import { useSelector } from 'react-redux'
 
@@ -29,13 +29,11 @@ const TimeLine = styled.span`
 `
 
 export const PlayerTimeLine = () => {
-  const currentTime = useSelector<RootState, number>(
-    state => playerSelectors.currentTime(state.player),
+  const time = useSelector<RootState, Time>(
+    state => playerSelectors.time(state.player),
   )
-  const runningTime = useSelector<RootState, number>(
-    state => playerSelectors.runningTime(state.player),
-  )
-  const width = (currentTime / runningTime) * 100
+  const { current, total } = time
+  const width = (current / total) * 100
 
   return (
     <TimeLineContainer>

@@ -8,6 +8,11 @@ export interface PlayerState {
   comment: string[]
 }
 
+export interface Time {
+  current: number;
+  total: number;
+}
+
 const name = 'player'
 // TODO: Change running time
 const initialState: PlayerState = {
@@ -31,19 +36,13 @@ const reducers = {
 
 const _ = createSlice({ name, initialState, reducers })
 
-const getCurrentTime = createSelector(
-  (state: PlayerState) => state.currentTime,
-  (time: number) => time || 0,
-)
-
-const getRunningTime = createSelector(
-  (state: PlayerState) => state.runningTime,
-  (time: number) => time || 0,
-)
+const getTimes = createSelector((state: PlayerState) => ({
+  current: state.currentTime || 0,
+  total: state.runningTime || 0,
+}), (timeState: Time) => timeState)
 
 export const playerSelectors = {
-  currentTime: getCurrentTime,
-  runningTime: getRunningTime,
+  time: getTimes,
 }
 
 export const playerActionName = _.name
