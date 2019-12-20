@@ -14,7 +14,7 @@ const initialState: PlayerState = {
   currentTime: 0,
   runningTime: 100,
   isPlaying: false,
-  comment: []
+  comment: [],
 }
 
 const reducers = {
@@ -26,24 +26,24 @@ const reducers = {
   },
   pause: (state: PlayerState) => {
     state.isPlaying = false
-  }
+  },
 }
 
 const _ = createSlice({ name, initialState, reducers })
 
 const getCurrentTime = createSelector(
   (state: PlayerState) => state.currentTime,
-  (time: number) => time || 0
+  (time: number) => time || 0,
 )
 
 const getRunningTime = createSelector(
   (state: PlayerState) => state.runningTime,
-  (time: number) => time || 0
+  (time: number) => time || 0,
 )
 
 export const playerSelectors = {
   currentTime: getCurrentTime,
-  runningTime: getRunningTime
+  runningTime: getRunningTime,
 }
 
 export const playerActionName = _.name
