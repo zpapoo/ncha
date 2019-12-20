@@ -4,7 +4,8 @@ import { PlayerTimeLine } from 'components/player/PlayerTimeLine'
 import { SpeechBubble } from 'components/player/SpeechBubble'
 import React from 'react'
 
-import { mockData } from '../../mockData/comment'
+import { mockData } from '__tests__/mockData/comment'
+
 
 interface Props {}
 
