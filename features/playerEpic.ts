@@ -17,7 +17,7 @@ export const playerEpic: Epic = (
       map(() => {
         const currentTime = store$.value.player.currentTime
 
-        return playerActions.onTimeUpdate(currentTime + 1)
+        return playerActions.updateCurrentTime(currentTime + 1)
       }),
       takeUntil(action$.pipe(
         ofType(`${playerActionName}/pause`)

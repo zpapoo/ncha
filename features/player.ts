@@ -22,7 +22,7 @@ const reducers = {
     ...state,
     isPlaying: true,
   }),
-  onTimeUpdate: (state: PlayerState, action: PayloadAction<number>) =>  ({
+  updateCurrentTime: (state: PlayerState, action: PayloadAction<number>) =>  ({
     ...state,
     currentTime: action.payload
   }),
