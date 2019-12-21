@@ -10,11 +10,11 @@ export const playerEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,
   store$: StateObservable<RootState>,
 ) =>  {
-  const playerActionType = playerActions.play().type
+  const { type } = playerActions.play()
 
   return (
     action$.pipe(
-      ofType(`${playerActionName}/${playerActionType}`),
+      ofType(type),
       mergeMap(() => timer(0, 1000)),
       map(() => {
         const currentTime = store$.value.player.currentTime
