@@ -11,14 +11,14 @@ const PlayButton = styled.div`
   height: 0px;
   border-top: 14px solid transparent;
   border-bottom: 14px solid transparent;
-  border-left: 20px solid #EF4D88;
+  border-left: 20px solid #ef4d88;
 `
 
 const PauseButton = styled.div`
   margin: auto;
   width: 12px;
   height: 12px;
-  background-color: #EF4D88;
+  background-color: #ef4d88;
 `
 
 export const PlayerButton = () => {
@@ -27,13 +27,9 @@ export const PlayerButton = () => {
     state => state.player.isPlaying,
   )
 
-  return (
-    isPlaying
-      ? <PauseButton onClick={ () =>
-        dispatch(playerActions.pause())
-      }/>
-      : <PlayButton onClick={ () =>
-        dispatch(playerActions.play())
-      }/>
-  )
+  if (isPlaying) {
+    return <PauseButton onClick={() => dispatch(playerActions.pause())} />
+  }
+
+  return <PlayButton onClick={() => dispatch(playerActions.play())} />
 }
