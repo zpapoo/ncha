@@ -42,7 +42,7 @@ const getTimes = createSelector((state: PlayerState) => ({
 }), (timeState: Time) => timeState)
 
 export const playerSelectors = {
-  time: getTimes,
+  times: getTimes,
 }
 
 export const PLAYER_PREFIX = _.name
