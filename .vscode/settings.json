@@ -1,10 +1,7 @@
 {
-  "editor.formatOnSave": false,
-  "javascript.format.enable": false,
+  "editor.formatOnSave": true,
   "eslint.alwaysShowStatus": true,
-  "eslint.options": {
-    "extensions": [".html", ".ts", ".js", ".tsx"]
-  },
+  "eslint.validate": ["javascript", "javascriptreact", "html", "typescriptreact"],
   "eslint.packageManager": "yarn",
   "typescript.tsdk": "node_modules/typescript/lib",
   "editor.codeActionsOnSave": {
