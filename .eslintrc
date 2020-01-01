@@ -8,6 +8,7 @@
       "error",
       { "blankLine": "always", "prev": "*", "next": "return" }
     ],
+    "eol-last": ["error", "always"],
     "max-depth": ["error", { "max": 3 }],
     "max-len":["error", { "code": 100 }],
     "comma-spacing": ["error", { "before": false, "after": true }],
@@ -18,6 +19,8 @@
     "import/order": "off",
     "no-multiple-empty-lines": "error",
     "semi": ["error", "never"],
-    "no-tabs": "error"
+    "no-tabs": "error",
+    "object-curly-spacing": ["error", "always", { "objectsInObjects": false }],
+    "comma-dangle": ["error", "always-multiline"]
   }
 }

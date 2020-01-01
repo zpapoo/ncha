@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": ".",
     "target": "es5",
     "lib": [
       "dom",
@@ -16,7 +17,11 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "allowJs": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "components/*": ["components/*"],
+      "features/*": ["features/*"]
+    },
   },
   "exclude": [
     "node_modules"
