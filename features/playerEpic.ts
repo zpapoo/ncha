@@ -4,7 +4,7 @@ import { timer } from 'rxjs'
 import { map, mergeMap, repeat, takeUntil } from 'rxjs/operators'
 
 import { RootState } from '.'
-import { PLAYER_PREFIX, playerActions } from './player'
+import { playerActions } from './player'
 
 export const playerEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,

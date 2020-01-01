@@ -2,15 +2,15 @@ import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 // TODO: Fix Comment Type
 export interface PlayerState {
-  currentTime: number;
-  runningTime: number;
-  isPlaying: boolean;
+  currentTime: number
+  runningTime: number
+  isPlaying: boolean
   comment: string[]
 }
 
-export interface Time {
-  current: number;
-  total: number;
+export interface PlayerTime {
+  current: number
+  total: number
 }
 
 const name = 'player'
@@ -26,7 +26,10 @@ const reducers = {
   play: (state: PlayerState) => {
     state.isPlaying = true
   },
-  updateCurrentTime: (state: PlayerState, { payload }: PayloadAction<number>) =>  {
+  updateCurrentTime: (
+    state: PlayerState,
+    { payload }: PayloadAction<number>,
+  ) => {
     state.currentTime = payload
   },
   pause: (state: PlayerState) => {
@@ -36,10 +39,13 @@ const reducers = {
 
 const _ = createSlice({ name, initialState, reducers })
 
-const getTimes = createSelector((state: PlayerState) => ({
-  current: state.currentTime || 0,
-  total: state.runningTime || 0,
-}), (timeState: Time) => timeState)
+const getTimes = createSelector(
+  (state: PlayerState) => ({
+    current: state.currentTime || 0,
+    total: state.runningTime || 0,
+  }),
+  (timeState: PlayerTime) => timeState,
+)
 
 export const playerSelectors = {
   times: getTimes,
