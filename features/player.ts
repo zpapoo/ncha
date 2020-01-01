@@ -45,6 +45,6 @@ export const playerSelectors = {
   time: getTimes,
 }
 
-export const playerActionName = _.name
+export const PLAYER_PREFIX = _.name
 export const playerReducer = _.reducer
 export const playerActions = _.actions

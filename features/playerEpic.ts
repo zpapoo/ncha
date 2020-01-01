@@ -4,17 +4,15 @@ import { timer } from 'rxjs'
 import { map, mergeMap, repeat, takeUntil } from 'rxjs/operators'
 
 import { RootState } from '.'
-import { playerActionName, playerActions } from './player'
+import { PLAYER_PREFIX, playerActions } from './player'
 
 export const playerEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,
   store$: StateObservable<RootState>,
 ) =>  {
-  const { type } = playerActions.play()
-
   return (
     action$.pipe(
-      ofType(type),
+      ofType(playerActions.play().type),
       mergeMap(() => timer(0, 1000)),
       map(() => {
         const currentTime = store$.value.player.currentTime
@@ -22,7 +20,7 @@ export const playerEpic: Epic = (
         return playerActions.updateCurrentTime(currentTime + 1)
       }),
       takeUntil(action$.pipe(
-        ofType(`${playerActionName}/pause`),
+        ofType(playerActions.pause().type),
       )),
       repeat(),
     )
