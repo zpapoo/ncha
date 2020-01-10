@@ -1,4 +1,5 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { HttpStatusCode } from 'api'
 
 export interface Comment {
   kind: string
@@ -11,7 +12,7 @@ export interface PlayerState {
   runningTime: number
   isPlaying: boolean
   comment: Comment[]
-  isLoading: boolean
+  fetchState: HttpStatusCode
 }
 
 export interface PlayerTime {
@@ -26,18 +27,21 @@ const initialState: PlayerState = {
   runningTime: 0,
   isPlaying: false,
   comment: [],
-  isLoading: true,
+  fetchState: HttpStatusCode.LOADING,
 }
 
 // FIXME: Fix any type
 const reducers = {
   fetch: (state: PlayerState) => {
-    state.isLoading = true
+    state.fetchState = HttpStatusCode.LOADING
   },
   success: (state: PlayerState, { payload }: PayloadAction<any>) => {
-    state.isLoading = false
+    state.fetchState = HttpStatusCode.OK
     state.comment = payload.comment
     state.runningTime = payload.running_time
+  },
+  fail: (state: PlayerState, { payload }: PayloadAction<any>) => {
+    state.fetchState = payload.status
   },
   play: (state: PlayerState) => {
     state.isPlaying = true
