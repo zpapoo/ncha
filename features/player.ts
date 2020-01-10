@@ -1,11 +1,17 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 
-// TODO: Fix Comment Type
+export interface Comment {
+  kind: string
+  contents: string[]
+  time: number
+}
+
 export interface PlayerState {
   currentTime: number
   runningTime: number
   isPlaying: boolean
-  comment: string[]
+  comment: Comment[]
+  isLoading: boolean
 }
 
 export interface PlayerTime {
@@ -14,15 +20,25 @@ export interface PlayerTime {
 }
 
 const name = 'player'
-// TODO: Change running time
+
 const initialState: PlayerState = {
   currentTime: 0,
-  runningTime: 100,
+  runningTime: 0,
   isPlaying: false,
   comment: [],
+  isLoading: true,
 }
 
+// FIXME: Fix any type
 const reducers = {
+  fetch: (state: PlayerState) => {
+    state.isLoading = true
+  },
+  success: (state: PlayerState, { payload }: PayloadAction<any>) => {
+    state.isLoading = false
+    state.comment = payload.comment
+    state.runningTime = payload.running_time
+  },
   play: (state: PlayerState) => {
     state.isPlaying = true
   },
