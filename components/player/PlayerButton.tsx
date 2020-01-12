@@ -4,7 +4,6 @@ import { playerActions } from 'features/player'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-// TODO: Replace with svg
 const PlayButton = styled.div`
   margin: auto;
   width: 24px;
