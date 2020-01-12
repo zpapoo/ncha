@@ -7,13 +7,13 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test": "jest",
     "lint": "eslint ./ --ext ts,tsx"
   },
   "dependencies": {
     "@emotion/core": "^10.0.22",
     "@emotion/styled": "^10.0.23",
     "@reduxjs/toolkit": "^1.1.0",
-    "@types/react-redux": "^7.1.5",
     "axios": "^0.19.1",
     "date-fns": "^2.9.0",
     "next": "9.1.3",
@@ -24,8 +24,10 @@
     "redux-observable": "^1.2.0"
   },
   "devDependencies": {
+    "@types/jest": "^24.0.25",
     "@types/node": "^12.12.7",
     "@types/react": "^16.9.11",
+    "@types/react-redux": "^7.1.5",
     "@typescript-eslint/eslint-plugin": "^2.6.1",
     "@typescript-eslint/parser": "^2.6.1",
     "babel-eslint": "^10.0.3",
@@ -39,7 +41,9 @@
     "eslint-plugin-react": "^7.16.0",
     "eslint-plugin-react-hooks": "^2.3.0",
     "eslint-plugin-simple-import-sort": "^4.0.0",
+    "jest": "^24.9.0",
     "prettier": "^1.19.0",
+    "ts-jest": "^24.3.0",
     "typescript": "^3.7.2"
   }
 }
