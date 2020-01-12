@@ -27,10 +27,10 @@ export const MainTop: React.FC<Props> = () => {
             filter=""
             fill="#e0115f"
             stroke="rgba(111,41,41,0)"
-            stroke-width="0px"
-            stroke-dasharray=" "
-            fill-rule="nonzero"
-            text-anchor="start"
+            strokeWidth="0px"
+            strokeDasharray=" "
+            fillRule="nonzero"
+            textAnchor="start"
           />
         </g>
       </g>
