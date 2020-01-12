@@ -1,10 +1,15 @@
 import styled from '@emotion/styled'
 import { HttpStatusCode } from 'api'
 import { Loader } from 'components/common/Loader'
-import { PlayerButton } from 'components/player/PlayerButton'
-import { PlayerTimeLine } from 'components/player/PlayerTimeLine'
 import { RootState } from 'features'
-import { Comment, Movie, movieSelectors, playerActions } from 'features/player'
+import {
+  Comment,
+  Movie,
+  movieSelectors,
+  playerActions,
+  playerSelectors,
+  PlayerTime,
+} from 'features/player'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -13,25 +18,6 @@ import { PlayerController } from './PlayerController'
 
 
 interface Props {}
-
-const PlayerTop = styled.div`
-  position: relative;
-  margin-bottom: 16px;
-  padding: 24px 0;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 0px 0px 25px 25px;
-`
-
-const CloseButton = styled.span`
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 16px;
-  height: 16px;
-  background-image: url("/images/cancel_icon.png");
-  background-size: cover;
-  opacity: 0.3;
-`
 
 const PlayerTitle = styled.h2`
   width: 100%;
@@ -51,6 +37,10 @@ export const Player: React.FC<Props> = () => {
   const { title, comments } = useSelector<RootState, Movie>(state =>
     movieSelectors.movie(state.player),
   )
+  const time = useSelector<RootState, PlayerTime>(state =>
+    playerSelectors.times(state.player),
+  )
+  const { current } = time
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -60,10 +50,15 @@ export const Player: React.FC<Props> = () => {
   const renderView = () => {
     return (
       <>
-        <PlayerController />
+        <PlayerController time={time}>
+          <PlayerTitle>{title}</PlayerTitle>
+        </PlayerController>
         {
           comments.map((comment: Comment, index: number) => {
             const { kind, contents, time } = comment
+            if (time >= current) {
+              return <></>
+            }
 
             return (
               <Comments
