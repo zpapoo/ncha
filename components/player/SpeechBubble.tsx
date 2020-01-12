@@ -2,29 +2,8 @@ import styled from '@emotion/styled'
 import React from 'react'
 
 interface Props {
-  data: {
-    name: string
-    comments: string[]
-  }
+  content: string
 }
-
-const Wrapper = styled.div`
-  padding: 0px 13px 0px 9px;
-  font-size: 12px;
-  margin-bottom: 17px;
-`
-
-const ContentWrapper = styled.div`
-  display: flex;
-`
-
-const ProfileImage = styled.div`
-  min-width: 39px;
-  height: 39px;
-  background: rgba(196, 196, 196, 0.57);
-  border-radius: 50%;
-  margin-right: 13px;
-`
 
 const Bubble = styled.div`
   display: inline-block;
@@ -53,30 +32,11 @@ const Bubble = styled.div`
   }
 `
 
-const Name = styled.span`
-  color: rgba(255, 255, 255, 0.9);
-`
-
-export const SpeechBubble = ({ data }: Props) => {
-  const { name, comments } = data
+export const SpeechBubble = ({ content }: Props) => {
 
   return (
-    <Wrapper>
-      <ContentWrapper>
-        <ProfileImage />
-        <div>
-          <Name>{name}</Name>
-          {
-            comments.map((comment: string, index: number) => {
-              return (
-                <Bubble key={`${name}-${index}`}>
-                  {comment}
-                </Bubble>
-              )
-            })
-          }
-        </div>
-      </ContentWrapper>
-    </Wrapper>
+    <Bubble>
+      {content}
+    </Bubble>
   )
 }
