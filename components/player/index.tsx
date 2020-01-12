@@ -1,13 +1,14 @@
 import styled from '@emotion/styled'
+import { HttpStatusCode } from 'api'
+import { Loader } from 'components/common/Loader'
 import { PlayerButton } from 'components/player/PlayerButton'
 import { PlayerTimeLine } from 'components/player/PlayerTimeLine'
-import { SpeechBubble } from 'components/player/SpeechBubble'
 import { RootState } from 'features'
-import { Movie, movieSelectors, playerActions } from 'features/player'
+import { Comment, Movie, movieSelectors, playerActions } from 'features/player'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-import { mockData } from '__tests__/mockData/comment'
+import { Comments } from './Comments'
 
 
 interface Props {}
@@ -43,6 +44,9 @@ const PlayerTitle = styled.h2`
 `
 
 export const Player: React.FC<Props> = () => {
+  const fetchState = useSelector<RootState, HttpStatusCode>(state =>
+    movieSelectors.movieFetchState(state.player),
+  )
   const { title, comments } = useSelector<RootState, Movie>(state =>
     movieSelectors.movie(state.player),
   )
@@ -52,16 +56,35 @@ export const Player: React.FC<Props> = () => {
     dispatch(playerActions.fetch(1))
   }, [dispatch])
 
-  return (
-    <>
-      <PlayerTop>
-        <PlayerTitle>{title}</PlayerTitle>
-        <CloseButton />
-        <PlayerTimeLine />
-        <PlayerButton />
-      </PlayerTop>
-      <SpeechBubble data={mockData[0].data}/>
-      <SpeechBubble data={mockData[1].data}/>
-    </>
-  )
+  const renderView = () => {
+    return (
+      <>
+        <PlayerTop>
+          <PlayerTitle>{title}</PlayerTitle>
+          <CloseButton />
+          <PlayerTimeLine />
+          <PlayerButton />
+        </PlayerTop>
+        {
+          comments.map((comment: Comment, index: number) => {
+            const { kind, contents } = comment
+
+            return (
+              <Comments kind={kind} contents={contents} />
+            )
+          })
+        }
+      </>
+    )
+  }
+  const renderByFetchState = () => {
+    switch(fetchState) {
+    case HttpStatusCode.LOADING:
+      return <Loader />
+    default:
+      return renderView()
+    }
+  }
+
+  return renderByFetchState()
 }
