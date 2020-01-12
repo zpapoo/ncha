@@ -23,6 +23,7 @@ export const mockData = [
 export const playerCommentsMockData = {
   data: {
     running_time: 119520,
+    title: 'The Dark Night',
     comments: [
       {
         kind: 'music_director',
