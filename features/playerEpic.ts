@@ -25,14 +25,14 @@ export const playerEpic: Epic = (
   store$: StateObservable<RootState>,
 ) => {
   return action$.pipe(
-    ofType(playerActions.play().type),
+    ofType(`${playerActions.play}`),
     mergeMap(() => timer(0, 1000)),
     map(() => {
       const currentTime = store$.value.player.currentTime
 
       return playerActions.updateCurrentTime(currentTime + 1)
     }),
-    takeUntil(action$.pipe(ofType(playerActions.pause().type))),
+    takeUntil(action$.pipe(ofType(`${playerActions.pause}`))),
     repeat(),
   )
 }
@@ -41,7 +41,7 @@ export const playerFetchEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,
 ) => {
   return action$.pipe(
-    ofType(playerActions.fetch().type),
+    ofType(`${playerActions.fetch}`),
     switchMap(action => {
       const movieId = action.payload
 
