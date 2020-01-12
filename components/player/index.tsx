@@ -2,7 +2,10 @@ import styled from '@emotion/styled'
 import { PlayerButton } from 'components/player/PlayerButton'
 import { PlayerTimeLine } from 'components/player/PlayerTimeLine'
 import { SpeechBubble } from 'components/player/SpeechBubble'
-import React from 'react'
+import { RootState } from 'features'
+import { Movie, movieSelectors, playerActions } from 'features/player'
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
 import { mockData } from '__tests__/mockData/comment'
 
@@ -40,10 +43,19 @@ const PlayerTitle = styled.h2`
 `
 
 export const Player: React.FC<Props> = () => {
+  const { title, comments } = useSelector<RootState, Movie>(state =>
+    movieSelectors.movie(state.player),
+  )
+  const dispatch = useDispatch()
+
+  useEffect(() => {
+    dispatch(playerActions.fetch(1))
+  }, [dispatch])
+
   return (
     <>
       <PlayerTop>
-        <PlayerTitle>The Dark Night</PlayerTitle>
+        <PlayerTitle>{title}</PlayerTitle>
         <CloseButton />
         <PlayerTimeLine />
         <PlayerButton />
