@@ -1,12 +1,17 @@
 import styled from '@emotion/styled'
 import { RootState } from 'features'
 import { playerSelectors, PlayerTime } from 'features/player'
-import { title } from 'process'
 import React from 'react'
 import { useSelector } from 'react-redux'
+import { formatTime } from 'utils/time'
 
 import { PlayerButton } from './PlayerButton'
 import { PlayerTimeLine } from './PlayerTimeLine'
+
+interface Props {
+  children: React.ReactElement
+  time: PlayerTime
+}
 
 const PlayerTop = styled.div`
   position: relative;
@@ -27,29 +32,19 @@ const CloseButton = styled.span`
   opacity: 0.3;
 `
 
-const PlayerTitle = styled.h2`
-  width: 100%;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 20px;
-  line-height: 29px;
-  text-align: center;
-
-  color: #ffffff;
-`
-
-export const PlayerController = () => {
-  const time = useSelector<RootState, PlayerTime>(state =>
-    playerSelectors.times(state.player),
-  )
+export const PlayerController = ({ children, time }: Props) => {
   const { current, total } = time
   const width = (current / total) * 100
 
   return (
     <PlayerTop>
-      <PlayerTitle>{title}</PlayerTitle>
+      {children}
       <CloseButton />
-      <PlayerTimeLine width={width}/>
+      <PlayerTimeLine
+        width={width}
+        current={formatTime(current)}
+        total={formatTime(total)}
+      />
       <PlayerButton />
     </PlayerTop>
   )

@@ -5,6 +5,8 @@ import { PlayerSlide } from './PlayerSlide'
 
 interface Props {
   width: number
+  current: string
+  total: string
 }
 
 const TimeLineContainer = styled.div`
@@ -29,14 +31,14 @@ const TimeLine = styled.span`
   background-color: rgba(255, 255, 255, 0.5);
 `
 
-export const PlayerTimeLine = ({ width }: Props) => {
+export const PlayerTimeLine = ({ width, current, total }: Props) => {
   return (
     <TimeLineContainer>
-      <FormattedTime>00:00</FormattedTime>
+      <FormattedTime>{current}</FormattedTime>
       <TimeLine>
         <PlayerSlide width={width} />
       </TimeLine>
-      <FormattedTime>127:24</FormattedTime>
+      <FormattedTime>{total}</FormattedTime>
     </TimeLineContainer>
   )
 }
