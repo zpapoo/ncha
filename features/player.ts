@@ -8,6 +8,7 @@ export interface Comment {
 }
 
 export interface PlayerState {
+  id: number
   currentTime: number
   runningTime: number
   isPlaying: boolean
@@ -23,8 +24,9 @@ export interface PlayerTime {
 const name = 'player'
 
 const initialState: PlayerState = {
+  id: 0,
   currentTime: 0,
-  runningTime: 0,
+  runningTime: 1,
   isPlaying: false,
   comment: [],
   fetchState: HttpStatusCode.LOADING,
@@ -32,7 +34,11 @@ const initialState: PlayerState = {
 
 // FIXME: Fix any type
 const reducers = {
-  fetch: (state: PlayerState) => {
+  fetch: (
+    state: PlayerState,
+    { payload }: PayloadAction<number>,
+  ) => {
+    state.id = payload
     state.fetchState = HttpStatusCode.LOADING
   },
   success: (state: PlayerState, { payload }: PayloadAction<any>) => {
