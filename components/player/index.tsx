@@ -9,6 +9,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 import { Comments } from './Comments'
+import { PlayerController } from './PlayerController'
 
 
 interface Props {}
@@ -59,18 +60,17 @@ export const Player: React.FC<Props> = () => {
   const renderView = () => {
     return (
       <>
-        <PlayerTop>
-          <PlayerTitle>{title}</PlayerTitle>
-          <CloseButton />
-          <PlayerTimeLine />
-          <PlayerButton />
-        </PlayerTop>
+        <PlayerController />
         {
           comments.map((comment: Comment, index: number) => {
-            const { kind, contents } = comment
+            const { kind, contents, time } = comment
 
             return (
-              <Comments kind={kind} contents={contents} />
+              <Comments
+                key={`${kind}-${index}`}
+                kind={kind}
+                contents={contents}
+              />
             )
           })
         }
