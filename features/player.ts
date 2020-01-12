@@ -7,12 +7,17 @@ export interface Comment {
   time: number
 }
 
-export interface PlayerState {
+export interface Movie {
   id: number
-  currentTime: number
+  title: string
   runningTime: number
+  comments: Comment[]
+}
+
+export interface PlayerState {
+  movie: Movie
   isPlaying: boolean
-  comment: Comment[]
+  currentTime: number
   fetchState: HttpStatusCode
 }
 
@@ -24,11 +29,14 @@ export interface PlayerTime {
 const name = 'player'
 
 const initialState: PlayerState = {
-  id: 0,
-  currentTime: 0,
-  runningTime: 1,
+  movie: {
+    id: 0,
+    title: '',
+    runningTime: 1,
+    comments: [],
+  },
   isPlaying: false,
-  comment: [],
+  currentTime: 0,
   fetchState: HttpStatusCode.LOADING,
 }
 
@@ -38,13 +46,16 @@ const reducers = {
     state: PlayerState,
     { payload }: PayloadAction<number>,
   ) => {
-    state.id = payload
+    const { movie } = state
+    movie.id = payload
     state.fetchState = HttpStatusCode.LOADING
   },
   success: (state: PlayerState, { payload }: PayloadAction<any>) => {
+    const { movie } = state
     state.fetchState = HttpStatusCode.OK
-    state.comment = payload.comment
-    state.runningTime = payload.running_time
+    movie.title = payload.title
+    movie.comments = payload.comments
+    movie.runningTime = payload.running_time
   },
   fail: (state: PlayerState, { payload }: PayloadAction<any>) => {
     state.fetchState = payload.status
@@ -68,13 +79,27 @@ const _ = createSlice({ name, initialState, reducers })
 const getTimes = createSelector(
   (state: PlayerState) => ({
     current: state.currentTime || 0,
-    total: state.runningTime || 0,
+    total: state.movie.runningTime || 1,
   }),
   (timeState: PlayerTime) => timeState,
 )
 
+const getMovieInfo = createSelector(
+  ({ movie }: PlayerState) => ({
+    title: movie.title,
+    comments: movie.comments,
+    runningTime: movie.runningTime,
+    id: movie.id,
+  }),
+  (movie: Movie) => movie,
+)
+
 export const playerSelectors = {
   times: getTimes,
+}
+
+export const movieSelectors = {
+  movie: getMovieInfo,
 }
 
 export const PLAYER_PREFIX = _.name
