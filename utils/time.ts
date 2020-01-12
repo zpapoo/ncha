@@ -1,7 +1,8 @@
-import { addSeconds, format } from 'date-fns'
+import { padZero } from './string'
 
 export const formatTime = (time: number): string => {
-  const helperDate = addSeconds(new Date(0), time)
+  const minutes = Math.floor(time / 60)
+  const seconds = time - minutes*60
 
-  return format(helperDate, 'mm:ss')
+  return `${padZero(minutes, 2)}:${padZero(seconds, 2)}`
 }
