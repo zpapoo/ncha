@@ -1,6 +1,5 @@
 import styled from '@emotion/styled'
 import { HttpStatusCode } from 'api'
-import { Loader } from 'components/common/Loader'
 import { RootState } from 'features'
 import {
   Comment,
@@ -10,8 +9,10 @@ import {
   playerSelectors,
   PlayerTime,
 } from 'features/player'
-import React, { useEffect } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useFetchWithStore } from 'hooks/fetch'
+import React from 'react'
+import { useSelector } from 'react-redux'
+import { renderByFetchState } from 'utils/render'
 
 import { Comments } from './Comments'
 import { PlayerController } from './PlayerController'
@@ -41,11 +42,10 @@ export const Player: React.FC<Props> = () => {
     playerSelectors.times(state.player),
   )
   const { current } = time
-  const dispatch = useDispatch()
 
-  useEffect(() => {
-    dispatch(playerActions.fetch(1))
-  }, [dispatch])
+  useFetchWithStore(
+    fetchState, playerActions.fetch, 1,
+  )
 
   const renderView = () => {
     return (
@@ -57,7 +57,7 @@ export const Player: React.FC<Props> = () => {
           comments.map((comment: Comment, index: number) => {
             const { kind, contents, time } = comment
             if (time >= current) {
-              return <></>
+              return <div key={`${kind}-${index}`}/>
             }
 
             return (
@@ -72,14 +72,6 @@ export const Player: React.FC<Props> = () => {
       </>
     )
   }
-  const renderByFetchState = () => {
-    switch(fetchState) {
-    case HttpStatusCode.LOADING:
-      return <Loader />
-    default:
-      return renderView()
-    }
-  }
 
-  return renderByFetchState()
+  return renderByFetchState(fetchState, renderView)
 }
