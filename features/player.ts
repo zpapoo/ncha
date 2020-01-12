@@ -100,6 +100,10 @@ export const playerSelectors = {
 
 export const movieSelectors = {
   movie: getMovieInfo,
+  movieFetchState: createSelector(
+    ({ fetchState }: PlayerState) => fetchState,
+    (fetchState: HttpStatusCode) => fetchState,
+  ),
 }
 
 export const PLAYER_PREFIX = _.name
