@@ -9,4 +9,22 @@ describe('[Utils] formatTime', () => {
     // Then
     expect(result).toEqual(expected)
   })
+
+  it('formatTime - 59s < seconds < 99m', () => {
+    // Given
+    const expected = '10:59'
+    // When
+    const result = formatTime(659)
+    // Then
+    expect(result).toEqual(expected)
+  })
+
+  it('formatTime - 99m =< seconds', () => {
+    // Given
+    const expected = '100:00'
+    // When
+    const result = formatTime(6000)
+    // Then
+    expect(result).toEqual(expected)
+  })
 })
