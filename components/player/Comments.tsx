@@ -6,6 +6,7 @@ import { SpeechBubble } from './SpeechBubble'
 interface Props {
   kind: string
   contents: string[]
+  time: number
 }
 
 const Wrapper = styled.div`
@@ -30,18 +31,22 @@ const Name = styled.span`
   color: rgba(255, 255, 255, 0.9);
 `
 
-export const Comments = ({ kind, contents }: Props) => {
+export const Comments = ({ kind, contents, time }: Props) => {
   return (
     <Wrapper>
       <ContentWrapper>
         <ProfileImage />
         <div>
           <Name>{kind}</Name>
-          {
-            contents.map((content: string, index: number) => {
-              return <SpeechBubble key={`${kind}-${index}`} content={content}/>
-            })
-          }
+          {contents.map((content: string, index: number) => {
+            return (
+              <SpeechBubble
+                key={`${kind}-${index}`}
+                time={time}
+                content={content}
+              />
+            )
+          })}
         </div>
       </ContentWrapper>
     </Wrapper>
