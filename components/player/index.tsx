@@ -34,13 +34,15 @@ export const Player: React.FC<Props> = () => {
   const fetchState = useSelector<RootState, HttpStatusCode>(state =>
     movieSelectors.movieFetchState(state.player),
   )
-  const { title, comments } = useSelector<RootState, Movie>(state =>
+  const { title } = useSelector<RootState, Movie>(state =>
     movieSelectors.movie(state.player),
+  )
+  const currentComment = useSelector<RootState, Comment[]>(state =>
+    movieSelectors.currentComments(state.player),
   )
   const time = useSelector<RootState, PlayerTime>(state =>
     playerSelectors.times(state.player),
   )
-  const { current } = time
 
   useFetchWithStore<number>(fetchState, playerActions.fetch, 1)
 
@@ -50,12 +52,8 @@ export const Player: React.FC<Props> = () => {
         <PlayerController time={time}>
           <PlayerTitle>{title}</PlayerTitle>
         </PlayerController>
-        {comments.map((comment: Comment, index: number) => {
-          const { kind, contents, time } = comment
-          console.log(time, current)
-          if (time >= current) {
-            return <div key={`${kind}-${index}`} />
-          }
+        {currentComment.map((comment: Comment, index: number) => {
+          const { kind, contents } = comment
 
           return (
             <Comments

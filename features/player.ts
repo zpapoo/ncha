@@ -42,10 +42,7 @@ const initialState: PlayerState = {
 
 // FIXME: Fix any type
 const reducers = {
-  fetch: (
-    state: PlayerState,
-    { payload }: PayloadAction<number>,
-  ) => {
+  fetch: (state: PlayerState, { payload }: PayloadAction<number>) => {
     const { movie } = state
     movie.id = payload
     state.fetchState = HttpStatusCode.LOADING
@@ -76,22 +73,33 @@ const reducers = {
 
 const _ = createSlice({ name, initialState, reducers })
 
+const getCurrentTime = (state: PlayerState) => state.currentTime
+const getRunningTime = (state: PlayerState) => state.movie.runningTime
+
 const getTimes = createSelector(
-  (state: PlayerState) => ({
-    current: state.currentTime || 0,
-    total: state.movie.runningTime || 1,
+  [getCurrentTime, getRunningTime],
+  (current: number, total: number): PlayerTime => ({
+    current,
+    total,
   }),
-  (timeState: PlayerTime) => timeState,
 )
 
-const getMovieInfo = createSelector(
-  ({ movie }: PlayerState) => ({
-    title: movie.title,
-    comments: movie.comments,
-    runningTime: movie.runningTime,
-    id: movie.id,
-  }),
-  (movie: Movie) => movie,
+const getMovie = ({ movie }: PlayerState) => ({
+  title: movie.title,
+  comments: movie.comments,
+  runningTime: movie.runningTime,
+  id: movie.id,
+})
+
+const getMovieInfo = createSelector(getMovie, (movie: Movie) => movie)
+
+const getCurrentComments = createSelector(
+  [getMovie, getCurrentTime],
+  (movie: Movie, currentTime: number): Comment[] => {
+    return movie.comments.filter(
+      (comment: Comment) => comment.time <= currentTime,
+    )
+  },
 )
 
 export const playerSelectors = {
@@ -104,6 +112,7 @@ export const movieSelectors = {
     ({ fetchState }: PlayerState) => fetchState,
     (fetchState: HttpStatusCode) => fetchState,
   ),
+  currentComments: getCurrentComments,
 }
 
 export const PLAYER_PREFIX = _.name
