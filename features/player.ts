@@ -95,11 +95,8 @@ const getMovieInfo = createSelector(getMovie, (movie: Movie) => movie)
 
 const getCurrentComments = createSelector(
   [getMovie, getCurrentTime],
-  (movie: Movie, currentTime: number): Comment[] => {
-    return movie.comments.filter(
-      (comment: Comment) => comment.time <= currentTime,
-    )
-  },
+  (movie: Movie, currentTime: number): Comment[] =>
+    movie.comments.filter((comment: Comment) => comment.time <= currentTime),
 )
 
 export const playerSelectors = {
