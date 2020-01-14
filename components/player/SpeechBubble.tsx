@@ -1,11 +1,17 @@
 import styled from '@emotion/styled'
 import React from 'react'
+import { formatTime } from 'utils/time'
 
 interface Props {
   content: string
+  time: number
 }
 
-const Bubble = styled.div`
+interface ImageProps {
+  time: number
+}
+
+const Bubble = styled('div')`
   display: inline-block;
   position: relative;
   background: rgba(104, 127, 209, 0.5);
@@ -26,17 +32,21 @@ const Bubble = styled.div`
       border-top: 0px solid transparent;
       border-radius: 1px 0 0 0;
       border-bottom: 12px solid transparent;
-      border-right: 9px solid rgba(104,127,209,0.5);
+      border-right: 9px solid rgba(104, 127, 209, 0.5);
     }
+  }
 
+  &:last-of-type {
+    &:after {
+      content: '';
+      position: absolute;
+      left: 100%;
+    }
   }
 `
 
-export const SpeechBubble = ({ content }: Props) => {
+export const SpeechBubble = ({ content, time }: Props) => {
+  console.log('time', formatTime(time))
 
-  return (
-    <Bubble>
-      {content}
-    </Bubble>
-  )
+  return <Bubble>{content}</Bubble>
 }
