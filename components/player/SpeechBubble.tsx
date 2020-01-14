@@ -1,5 +1,4 @@
 import styled from '@emotion/styled'
-import React from 'react'
 import { formatTime } from 'utils/time'
 
 interface Props {
@@ -7,11 +6,11 @@ interface Props {
   time: number
 }
 
-interface ImageProps {
+interface Time {
   time: number
 }
 
-const Bubble = styled('div')`
+const Bubble = styled<'div', Time>('div')`
   display: inline-block;
   position: relative;
   background: rgba(104, 127, 209, 0.5);
@@ -38,7 +37,7 @@ const Bubble = styled('div')`
 
   &:last-of-type {
     &:after {
-      content: '';
+      content: '${props => formatTime(props.time)}';
       position: absolute;
       left: 100%;
     }
@@ -46,7 +45,5 @@ const Bubble = styled('div')`
 `
 
 export const SpeechBubble = ({ content, time }: Props) => {
-  console.log('time', formatTime(time))
-
-  return <Bubble>{content}</Bubble>
+  return <Bubble time={50}>{content}</Bubble>
 }

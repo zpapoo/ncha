@@ -25,7 +25,7 @@ const CloseButton = styled.span`
   right: 16px;
   width: 16px;
   height: 16px;
-  background-image: url("/images/cancel_icon.png");
+  background-image: url('/images/cancel_icon.png');
   background-size: cover;
   opacity: 0.3;
 `
