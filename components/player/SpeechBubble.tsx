@@ -41,6 +41,9 @@ const Bubble = styled<'div', Time>('div')`
       content: '${props => formatTime(props.time)}';
       position: absolute;
       left: 100%;
+      font-size: 10px;
+      margin-left: 8px;
+      bottom: 3%;
     }
   }
 `
