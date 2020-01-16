@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import React from 'react'
 import { formatTime } from 'utils/time'
 
 interface Props {
@@ -45,5 +46,5 @@ const Bubble = styled<'div', Time>('div')`
 `
 
 export const SpeechBubble = ({ content, time }: Props) => {
-  return <Bubble time={50}>{content}</Bubble>
+  return <Bubble time={time}>{content}</Bubble>
 }
