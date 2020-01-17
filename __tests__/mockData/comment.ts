@@ -2,6 +2,7 @@
 // FIXME: Change name and remove 'mockData'
 export const playerCommentsMockData = {
   data: {
+    id: 1,
     running_time: 119520,
     title: 'The Dark Night',
     comments: [
