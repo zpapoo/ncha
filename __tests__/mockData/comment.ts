@@ -3,7 +3,7 @@
 export const playerCommentsMockData = {
   data: {
     id: 1,
-    running_time: 119520,
+    running_time: 11952,
     title: 'The Dark Night',
     comments: [
       {
