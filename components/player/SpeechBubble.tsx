@@ -5,16 +5,17 @@ import { formatTime } from 'utils/time'
 interface Props {
   content: string
   time: number
+  color: string
 }
 
-interface Time {
+interface BubbleProps {
   time: number
 }
 
-const Bubble = styled<'div', Time>('div')`
+const Bubble = styled<'div', BubbleProps>('div')`
   display: inline-block;
   position: relative;
-  background: rgba(104, 127, 209, 0.5);
+  background: ${props => props.color};
   color: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
   padding: 9px;
@@ -32,7 +33,7 @@ const Bubble = styled<'div', Time>('div')`
       border-top: 0px solid transparent;
       border-radius: 1px 0 0 0;
       border-bottom: 12px solid transparent;
-      border-right: 9px solid rgba(104, 127, 209, 0.5);
+      border-right: 9px solid ${props => props.color};
     }
   }
 
@@ -48,6 +49,6 @@ const Bubble = styled<'div', Time>('div')`
   }
 `
 
-export const SpeechBubble = ({ content, time }: Props) => {
-  return <Bubble time={time}>{content}</Bubble>
+export const SpeechBubble = ({ content, time, color }: Props) => {
+  return <Bubble color={color} time={time}>{content}</Bubble>
 }

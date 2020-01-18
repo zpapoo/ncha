@@ -7,6 +7,7 @@ interface Props {
   kind: string
   contents: string[]
   time: number
+  color: string
 }
 
 const Wrapper = styled.div`
@@ -31,7 +32,7 @@ const Name = styled.span`
   color: rgba(255, 255, 255, 0.9);
 `
 
-export const Comments = ({ kind, contents, time }: Props) => {
+export const Comments = ({ kind, contents, time, color }: Props) => {
   return (
     <Wrapper>
       <ContentWrapper>
@@ -43,6 +44,7 @@ export const Comments = ({ kind, contents, time }: Props) => {
               <SpeechBubble
                 key={`${kind}-${index}`}
                 time={time}
+                color={color}
                 content={content}
               />
             )

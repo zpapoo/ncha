@@ -53,12 +53,13 @@ export const Player: React.FC<Props> = () => {
           <PlayerTitle>{title}</PlayerTitle>
         </PlayerController>
         {currentComment.map((comment: Comment, index: number) => {
-          const { kind, contents, time } = comment
+          const { kind, contents, time, color } = comment
 
           return (
             <Comments
               key={`${kind}-${index}`}
               kind={kind}
+              color={color}
               contents={contents}
               time={time}
             />
