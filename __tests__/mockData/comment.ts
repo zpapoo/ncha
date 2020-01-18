@@ -1,5 +1,4 @@
 /* eslint-disable max-len */
-// FIXME: Change name and remove 'mockData'
 export const playerCommentsMockData = {
   data: {
     id: 1,
