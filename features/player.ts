@@ -77,25 +77,42 @@ const _ = createSlice({ name, initialState, reducers })
 const getCurrentTime = ({ currentTime }: PlayerState) => currentTime
 const getRunningTime = ({ movie }: PlayerState) => movie.runningTime
 const getMovie = ({ movie }: PlayerState): Movie => {
-  const convertCommentKind = (kind: string) => {
+  const convertCommentInfoByKind = (kind: string) => {
     switch (kind) {
     case 'music_director':
-      return '음악감독'
+      return {
+        color: 'rgba(182, 104, 209, 0.5)',
+        kindKo: '음악감독',
+      }
     case 'spoiler':
-      return '스포일러 방지 봇'
+      return {
+        color: 'rgba(255, 255, 255, 0.2)',
+        kindKo: '스포일러 방지 봇',
+      }
     case 'action_director':
-      return '액션감독'
+      return {
+        color: 'rgba(182, 104, 209, 0.5)',
+        kindKo: '액션감독',
+      }
     default:
-      return kind
+      return {
+        color: 'rgba(255, 255, 255, 0.2)',
+        kindKo: kind,
+      }
     }
   }
 
   return {
     ...movie,
-    comments: movie.comments.map((comment: Comment) => ({
-      ...comment,
-      kind: convertCommentKind(comment.kind),
-    })),
+    comments: movie.comments.map((comment: Comment) => {
+      const { color, kindKo } = convertCommentInfoByKind(comment.kind)
+
+      return {
+        ...comment,
+        color: color,
+        kind: kindKo,
+      }
+    }),
   }
 }
 
