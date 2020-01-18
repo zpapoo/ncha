@@ -5,6 +5,7 @@ export interface Comment {
   kind: string
   contents: string[]
   time: number
+  color: string
 }
 
 export interface Movie {
@@ -73,8 +74,30 @@ const reducers = {
 
 const _ = createSlice({ name, initialState, reducers })
 
-const getCurrentTime = (state: PlayerState) => state.currentTime
-const getRunningTime = (state: PlayerState) => state.movie.runningTime
+const getCurrentTime = ({ currentTime }: PlayerState) => currentTime
+const getRunningTime = ({ movie }: PlayerState) => movie.runningTime
+const getMovie = ({ movie }: PlayerState): Movie => {
+  const convertCommentKind = (kind: string) => {
+    switch (kind) {
+    case 'music_director':
+      return '음악감독'
+    case 'spoiler':
+      return '스포일러 방지 봇'
+    case 'action_director':
+      return '액션감독'
+    default:
+      return kind
+    }
+  }
+
+  return {
+    ...movie,
+    comments: movie.comments.map((comment: Comment) => ({
+      ...comment,
+      kind: convertCommentKind(comment.kind),
+    })),
+  }
+}
 
 const getTimes = createSelector(
   [getCurrentTime, getRunningTime],
@@ -83,13 +106,6 @@ const getTimes = createSelector(
     total,
   }),
 )
-
-const getMovie = ({ movie }: PlayerState) => ({
-  title: movie.title,
-  comments: movie.comments,
-  runningTime: movie.runningTime,
-  id: movie.id,
-})
 
 const getMovieInfo = createSelector(getMovie, (movie: Movie) => movie)
 
