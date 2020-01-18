@@ -1,6 +1,8 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { HttpStatusCode } from 'api'
 
+import { CommentPayload, StatusPayload } from './playerType'
+
 export interface Comment {
   kind: string
   contents: string[]
@@ -48,15 +50,15 @@ const reducers = {
     movie.id = payload
     state.fetchState = HttpStatusCode.LOADING
   },
-  success: (state: PlayerState, { payload }: PayloadAction<any>) => {
+  success: (state: PlayerState, { payload }: PayloadAction<CommentPayload>) => {
     const { movie } = state
     state.fetchState = HttpStatusCode.OK
     movie.title = payload.title
     movie.comments = payload.comments
     movie.runningTime = payload.running_time
   },
-  fail: (state: PlayerState, { payload }: PayloadAction<any>) => {
-    state.fetchState = payload.status
+  fail: (state: PlayerState, { payload }: PayloadAction<StatusPayload>) => {
+    state.fetchState = payload.statusCode
   },
   play: (state: PlayerState) => {
     state.isPlaying = true
