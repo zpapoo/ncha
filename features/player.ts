@@ -43,7 +43,6 @@ const initialState: PlayerState = {
   fetchState: HttpStatusCode.LOADING,
 }
 
-// FIXME: Fix any type
 const reducers = {
   fetch: (state: PlayerState, { payload }: PayloadAction<number>) => {
     const { movie } = state
