@@ -49,12 +49,7 @@ describe('[Features - Player Reducer]', () => {
     // When
     const result = playerReducer(state, playerActions.updateCurrentTime(1))
     // Then
-    const expected: PlayerState = {
-      ...initialState,
-      currentTime: 1,
-    }
-
-    expect(result).toEqual(expected)
+    expect(result.currentTime).toBe(1)
   })
 
   it('fetch는 movie id정보를 store에 저장한다.', () => {
@@ -63,16 +58,7 @@ describe('[Features - Player Reducer]', () => {
     // When
     const result = playerReducer(state, playerActions.fetch(1))
     // Then
-    const expected: PlayerState = {
-      ...initialState,
-      movie: {
-        ...initialState.movie,
-        id: 1,
-      },
-      fetchState: HttpStatusCode.LOADING,
-    }
-
-    expect(result).toEqual(expected)
+    expect(result.movie.id).toBe(1)
   })
 })
 
