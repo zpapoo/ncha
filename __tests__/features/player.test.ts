@@ -1,7 +1,6 @@
 /* eslint-disable max-len */
 import { HttpStatusCode } from 'api'
 import {
-  Movie,
   movieSelectors,
   playerActions,
   playerReducer,
@@ -27,12 +26,8 @@ describe('[Features - Player Reducer]', () => {
   it('play action은 isPlaying을 true로 수정한다.', () => {
     // Given
     const state = initialState
-    const actions = {
-      type: `${playerActions.play}`,
-    }
-
     // When
-    const result = playerReducer(state, actions)
+    const result = playerReducer(state, playerActions.play())
     // Then
     const expected: PlayerState = {
       ...initialState,
@@ -45,12 +40,8 @@ describe('[Features - Player Reducer]', () => {
   it('pause action은 isPlaying을 false로 수정한다.', () => {
     // Given
     const state = initialState
-    const actions = {
-      type: `${playerActions.pause}`,
-    }
-
     // When
-    const result = playerReducer(state, actions)
+    const result = playerReducer(state, playerActions.pause())
     // Then
     const expected: PlayerState = {
       ...initialState,
@@ -63,13 +54,8 @@ describe('[Features - Player Reducer]', () => {
   it('updateCurrentTime은 player의 현재 진행시간을 갱신한다.', () => {
     // Given
     const state = initialState
-    const actions = {
-      type: `${playerActions.updateCurrentTime}`,
-      payload: 1,
-    }
-
     // When
-    const result = playerReducer(state, actions)
+    const result = playerReducer(state, playerActions.updateCurrentTime(1))
     // Then
     const expected: PlayerState = {
       ...initialState,
@@ -82,13 +68,8 @@ describe('[Features - Player Reducer]', () => {
   it('fetch는 movie id정보를 store에 저장한다.', () => {
     // Given
     const state = initialState
-    const actions = {
-      type: `${playerActions.fetch}`,
-      payload: 1,
-    }
-
     // When
-    const result = playerReducer(state, actions)
+    const result = playerReducer(state, playerActions.fetch(1))
     // Then
     const expected: PlayerState = {
       ...initialState,
@@ -107,7 +88,7 @@ describe('[Features - Player Selector]', () => {
   it('currentComments Selector는 player의 현재 진행시간을 기반으로 나타나야 하는 comment를 필터링 한다.', () => {
     // Given
     const { data } = playerCommentsMockData
-    const mockMovie: Movie = {
+    const mockMovie = {
       ...data,
       runningTime: data.running_time,
     }
