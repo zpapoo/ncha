@@ -49,13 +49,23 @@ export const PlayerButton = () => {
 
   return (
     <FlexWrapper>
-      <BackwardButton onClick={() => dispatch(playerActions.updateCurrentTime(-5))}/>
+      <BackwardButton
+        onClick={() =>
+          dispatch(
+            playerActions.requestUpdateCurrentTime(-5),
+          )}
+      />
       {
         isPlaying
           ? <PauseButton onClick={() => dispatch(playerActions.pause())} />
           : <PlayButton onClick={() => dispatch(playerActions.play())} />
       }
-      <ForwardButton onClick={() => dispatch(playerActions.updateCurrentTime(5))}/>
+      <ForwardButton
+        onClick={() =>
+          dispatch(
+            playerActions.requestUpdateCurrentTime(5),
+          )}
+      />
     </FlexWrapper>
   )
 }
