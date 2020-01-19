@@ -5,6 +5,7 @@ module.exports = {
     const { alias } = config.resolve
 
     alias['api'] = path.join(__dirname, 'api')
+    alias['constants'] = path.join(__dirname, 'constants')
     alias['utils'] = path.join(__dirname, 'utils')
     alias['hooks'] = path.join(__dirname, 'hooks')
     alias['components'] = path.join(__dirname, 'components')

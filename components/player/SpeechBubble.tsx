@@ -1,21 +1,23 @@
 import styled from '@emotion/styled'
+import { COMMENT_COLOR, COMMENT_TYPE } from 'constants/playerConstants'
 import React from 'react'
 import { formatTime } from 'utils/time'
 
 interface Props {
+  kind: COMMENT_TYPE
   content: string
   time: number
-  color: string
 }
 
 interface BubbleProps {
+  color: string
   time: number
 }
 
 const Bubble = styled<'div', BubbleProps>('div')`
   display: inline-block;
   position: relative;
-  background: ${props => props.color};
+  background: ${(props) => props.color};
   color: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
   padding: 9px;
@@ -49,6 +51,6 @@ const Bubble = styled<'div', BubbleProps>('div')`
   }
 `
 
-export const SpeechBubble = ({ content, time, color }: Props) => {
-  return <Bubble color={color} time={time}>{content}</Bubble>
+export const SpeechBubble = ({ content, time, kind }: Props) => {
+  return <Bubble color={COMMENT_COLOR[kind]} time={time}>{content}</Bubble>
 }

@@ -1,10 +1,11 @@
 import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { HttpStatusCode } from 'api'
+import { COMMENT_TYPE } from 'constants/playerConstants'
 
 import { CommentPayload, StatusPayload } from './playerType'
 
 export interface Comment {
-  kind: string
+  kind: COMMENT_TYPE
   contents: string[]
   time: number
   color: string
@@ -77,45 +78,7 @@ const _ = createSlice({ name, initialState, reducers })
 
 const getCurrentTime = ({ currentTime }: PlayerState) => currentTime
 const getRunningTime = ({ movie }: PlayerState) => movie.runningTime
-const getMovie = ({ movie }: PlayerState): Movie => {
-  const convertCommentInfoByKind = (kind: string) => {
-    switch (kind) {
-    case 'music_director':
-      return {
-        color: 'rgba(182, 104, 209, 0.5)',
-        kindKo: '음악감독',
-      }
-    case 'spoiler':
-      return {
-        color: 'rgba(255, 255, 255, 0.2)',
-        kindKo: '스포일러 방지 봇',
-      }
-    case 'action_director':
-      return {
-        color: 'rgba(182, 104, 209, 0.5)',
-        kindKo: '액션감독',
-      }
-    default:
-      return {
-        color: 'rgba(255, 255, 255, 0.2)',
-        kindKo: kind,
-      }
-    }
-  }
-
-  return {
-    ...movie,
-    comments: movie.comments.map((comment: Comment) => {
-      const { color, kindKo } = convertCommentInfoByKind(comment.kind)
-
-      return {
-        ...comment,
-        color: color,
-        kind: kindKo,
-      }
-    }),
-  }
-}
+const getMovie = ({ movie }: PlayerState): Movie => movie
 
 const getTimes = createSelector(
   [getCurrentTime, getRunningTime],

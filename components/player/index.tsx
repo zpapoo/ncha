@@ -59,7 +59,6 @@ export const Player: React.FC<Props> = () => {
             <Comments
               key={`${kind}-${index}`}
               kind={kind}
-              color={color}
               contents={contents}
               time={time}
             />
