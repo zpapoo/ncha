@@ -20,6 +20,7 @@ export interface Movie {
 export interface PlayerState {
   movie: Movie
   isPlaying: boolean
+  requestUpdateTime: number
   currentTime: number
   fetchState: HttpStatusCode
 }
@@ -38,6 +39,7 @@ const initialState: PlayerState = {
     runningTime: 1,
     comments: [],
   },
+  requestUpdateTime: 0,
   isPlaying: false,
   currentTime: 0,
   fetchState: HttpStatusCode.LOADING,
@@ -61,6 +63,12 @@ const reducers = {
   },
   play: (state: PlayerState) => {
     state.isPlaying = true
+  },
+  requestUpdateCurrentTime: (
+    state: PlayerState,
+    { payload }: PayloadAction<number>,
+  ) => {
+    state.requestUpdateTime = payload
   },
   updateCurrentTime: (
     state: PlayerState,

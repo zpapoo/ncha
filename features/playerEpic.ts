@@ -30,9 +30,34 @@ export const playerEpic: Epic = (
     map(() => {
       const currentTime = store$.value.player.currentTime
 
-      return playerActions.updateCurrentTime(currentTime + 1)
+      return playerActions.requestUpdateCurrentTime(currentTime + 1)
     }),
     takeUntil(action$.pipe(ofType(`${playerActions.pause}`))),
+    repeat(),
+  )
+}
+
+export const playerRewindEpic: Epic = (
+  action$: ActionsObservable<PayloadAction<number>>,
+  store$: StateObservable<RootState>,
+) => {
+  return action$.pipe(
+    ofType(`${playerActions.requestUpdateCurrentTime}`),
+    map((action) => {
+      const { currentTime, movie } = store$.value.player
+      const targetTime = currentTime + action.payload
+      let calculatedTime
+
+      if (targetTime < 0) {
+        calculatedTime = 0
+      } else if (targetTime > movie.runningTime) {
+        calculatedTime = movie.runningTime
+      } else {
+        calculatedTime = targetTime
+      }
+
+      return playerActions.updateCurrentTime(calculatedTime)
+    }),
     repeat(),
   )
 }
