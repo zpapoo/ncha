@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 import { HttpStatusCode } from 'api'
+import { COMMENT_TYPE } from 'constants/playerConstants'
 import {
+  Movie,
   movieSelectors,
   playerActions,
   playerReducer,
@@ -29,12 +31,7 @@ describe('[Features - Player Reducer]', () => {
     // When
     const result = playerReducer(state, playerActions.play())
     // Then
-    const expected: PlayerState = {
-      ...initialState,
-      isPlaying: true,
-    }
-
-    expect(result).toEqual(expected)
+    expect(result.isPlaying).toBeTruthy()
   })
 
   it('pause action은 isPlaying을 false로 수정한다.', () => {
@@ -43,12 +40,7 @@ describe('[Features - Player Reducer]', () => {
     // When
     const result = playerReducer(state, playerActions.pause())
     // Then
-    const expected: PlayerState = {
-      ...initialState,
-      isPlaying: false,
-    }
-
-    expect(result).toEqual(expected)
+    expect(result.isPlaying).toBeFalsy()
   })
 
   it('updateCurrentTime은 player의 현재 진행시간을 갱신한다.', () => {
@@ -94,7 +86,7 @@ describe('[Features - Player Selector]', () => {
     }
     const expected = [
       {
-        kind: 'music_director',
+        kind: COMMENT_TYPE.MUSIC_DIRECTOR,
         contents: [
           '방황하였으며, 우리의 얼마나 심장은 불어 청춘의 이상의 투명하되 것이다. 가슴이 따뜻한 작고 힘있다. 얼음이 무엇을 천고에 쓸쓸하랴? 같으며,설레는 거친 새 장식하는 희망의 얼음과 것 같으며, 설레는 거친 새장식하는 희망의 얼음과 것 같으며, 설레는 거친 새 장식하는 희망의',
           '가슴이 따뜻한 작고 힘있다.',
