@@ -27,11 +27,7 @@ export const playerEpic: Epic = (
   return action$.pipe(
     ofType(`${playerActions.play}`),
     mergeMap(() => timer(0, 1000)),
-    map(() => {
-      const currentTime = store$.value.player.currentTime
-
-      return playerActions.requestUpdateCurrentTime(currentTime + 1)
-    }),
+    map(() => playerActions.requestUpdateCurrentTime(1)),
     takeUntil(action$.pipe(ofType(`${playerActions.pause}`))),
     repeat(),
   )
@@ -43,7 +39,7 @@ export const playerRewindEpic: Epic = (
 ) => {
   return action$.pipe(
     ofType(`${playerActions.requestUpdateCurrentTime}`),
-    map((action) => {
+    mergeMap((action) => {
       const { currentTime, movie } = store$.value.player
       const targetTime = currentTime + action.payload
       let calculatedTime
@@ -56,9 +52,8 @@ export const playerRewindEpic: Epic = (
         calculatedTime = targetTime
       }
 
-      return playerActions.updateCurrentTime(calculatedTime)
+      return of(playerActions.updateCurrentTime(calculatedTime))
     }),
-    repeat(),
   )
 }
 
