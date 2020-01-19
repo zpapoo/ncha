@@ -8,7 +8,6 @@ export interface Comment {
   kind: COMMENT_TYPE
   contents: string[]
   time: number
-  color: string
 }
 
 export interface Movie {
