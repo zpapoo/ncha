@@ -24,7 +24,7 @@ describe('[Features - Player Reducer]', () => {
     fetchState: HttpStatusCode.LOADING,
   }
 
-  it('play', () => {
+  it('play action은 isPlaying을 true로 수정한다.', () => {
     // Given
     const state = initialState
     const actions = {
@@ -42,7 +42,7 @@ describe('[Features - Player Reducer]', () => {
     expect(result).toEqual(expected)
   })
 
-  it('pause', () => {
+  it('pause action은 isPlaying을 false로 수정한다.', () => {
     // Given
     const state = initialState
     const actions = {
@@ -60,7 +60,7 @@ describe('[Features - Player Reducer]', () => {
     expect(result).toEqual(expected)
   })
 
-  it('updateCurrentTime', () => {
+  it('updateCurrentTime은 player의 현재 진행시간을 갱신한다.', () => {
     // Given
     const state = initialState
     const actions = {
@@ -79,7 +79,7 @@ describe('[Features - Player Reducer]', () => {
     expect(result).toEqual(expected)
   })
 
-  it('fetch', () => {
+  it('fetch는 movie id정보를 store에 저장한다.', () => {
     // Given
     const state = initialState
     const actions = {
@@ -104,7 +104,7 @@ describe('[Features - Player Reducer]', () => {
 })
 
 describe('[Features - Player Selector]', () => {
-  it('currentComments', () => {
+  it('currentComments Selector는 player의 현재 진행시간을 기반으로 나타나야 하는 comment를 필터링 한다.', () => {
     // Given
     const { data } = playerCommentsMockData
     const mockMovie: Movie = {
@@ -127,7 +127,7 @@ describe('[Features - Player Selector]', () => {
     expect(result).toEqual(expected)
   })
 
-  it('time', () => {
+  it('time Selector는 player의 현재 진행시간과 runningTime을 가져온다.', () => {
     // Given
     const state: PlayerState = {
       movie: {
@@ -158,7 +158,7 @@ describe('[Features - Player Selector]', () => {
     expect(result).toEqual(expected)
   })
 
-  it('movieFetchState', () => {
+  it('movieFetchState는 영화 정보 api요청 status를 가져온다.', () => {
     // Given
     const expected = HttpStatusCode.LOADING
     // When
