@@ -43,10 +43,9 @@ const initialState: PlayerState = {
   fetchState: HttpStatusCode.LOADING,
 }
 
+// FIXME: createAction으로 변경 고려
 const reducers = {
   fetch: (state: PlayerState, { payload }: PayloadAction<number>) => {
-    const { movie } = state
-    movie.id = payload
     state.fetchState = HttpStatusCode.LOADING
   },
   success: (state: PlayerState, { payload }: PayloadAction<CommentPayload>) => {
