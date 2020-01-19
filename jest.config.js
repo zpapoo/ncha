@@ -1,6 +1,7 @@
 module.exports = {
   testRegex: '\\.test\\.ts$',
   moduleNameMapper: {
+    '^constants(.*)$': '<rootDir>/constants$1',
     '^__tests__(.*)$': '<rootDir>/__tests__$1',
     '^utils(.*)$': '<rootDir>/utils$1',
     '^features(.*)$': '<rootDir>/features$1',
