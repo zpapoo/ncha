@@ -5,24 +5,13 @@ import { playerActions } from 'features/player'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
-
-// TODO: isPlaying 상황에 따라 url resource가 분기되도록 설정하기.
-const PlayButton = styled.div`
+const PlayButton = styled<'div', {isPlaying: boolean}>('div')`
   margin: 0 10px 0 10px;
   width: 24px;
   height: 24px;
   background-size: contain;
   align-self: center;
-  background-image: url("/images/play.svg");
-`
-
-const PauseButton = styled.div`
-  margin: 0 10px 0 10px;
-  width: 24px;
-  height: 24px;
-  background-size: contain;
-  align-self: center;
-  background-image: url("/images/pause.svg");
+  background-image: url(${({ isPlaying }) => isPlaying ? '/images/pause.svg' : '/images/play.svg'});
 `
 
 const ForwardButton = styled.div`
@@ -47,24 +36,20 @@ export const PlayerButton = () => {
     state => state.player.isPlaying,
   )
 
+  const { requestUpdateCurrentTime, play, pause } = playerActions
+
   return (
     <FlexWrapper>
       <BackwardButton
-        onClick={() =>
-          dispatch(
-            playerActions.requestUpdateCurrentTime(-5),
-          )}
+        onClick={() => dispatch(requestUpdateCurrentTime(-5))}
       />
-      {
-        isPlaying
-          ? <PauseButton onClick={() => dispatch(playerActions.pause())} />
-          : <PlayButton onClick={() => dispatch(playerActions.play())} />
-      }
+      <PlayButton
+        isPlaying={isPlaying}
+        onClick={() => isPlaying ? dispatch(pause()) : dispatch(play())
+        }
+      />
       <ForwardButton
-        onClick={() =>
-          dispatch(
-            playerActions.requestUpdateCurrentTime(5),
-          )}
+        onClick={() => dispatch(requestUpdateCurrentTime(-5))}
       />
     </FlexWrapper>
   )
