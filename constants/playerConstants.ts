@@ -10,8 +10,8 @@ export const COMMENT_KIND = {
   [COMMENT_TYPE.ACTION_DIRECTOR]: '액션감독',
 }
 
-export enum COMMENT_COLOR {
-  music_director = 'rgba(182, 104, 209, 0.5)',
-  spoiler = 'rgba(255, 255, 255, 0.2)',
-  action_director = 'rgba(182, 104, 209, 0.5)',
+export const COMMENT_COLOR = {
+  [COMMENT_TYPE.MUSIC_DIRECTOR]: 'rgba(182, 104, 209, 0.5)',
+  [COMMENT_TYPE.SPOILER]: 'rgba(255, 255, 255, 0.2)',
+  [COMMENT_TYPE.ACTION_DIRECTOR]: 'rgba(182, 104, 209, 0.5)',
 }
