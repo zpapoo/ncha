@@ -3,7 +3,7 @@ import { from, throwError } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
 export enum HttpStatusCode {
-  LOADING = 0,
+  LOADING = 99,
   OK = 200,
   UNAUTHORIZED = 401,
   UNKNOWN = 500,
