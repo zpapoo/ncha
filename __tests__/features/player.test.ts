@@ -2,7 +2,7 @@
 import { HttpStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
 import {
-  Movie,
+  fetchMovieInfo,
   movieSelectors,
   playerActions,
   playerReducer,
@@ -17,7 +17,7 @@ describe('[Features - Player Reducer]', () => {
     movie: {
       id: 0,
       title: '',
-      runningTime: 1,
+      running_time: 1,
       comments: [],
     },
     isPlaying: false,
@@ -51,15 +51,6 @@ describe('[Features - Player Reducer]', () => {
     // Then
     expect(result.currentTime).toBe(1)
   })
-
-  it('fetch는 movie id정보를 store에 저장한다.', () => {
-    // Given
-    const state = initialState
-    // When
-    const result = playerReducer(state, playerActions.fetch(1))
-    // Then
-    expect(result.movie.id).toBe(1)
-  })
 })
 
 describe('[Features - Player Selector]', () => {
@@ -92,7 +83,7 @@ describe('[Features - Player Selector]', () => {
       movie: {
         id: 0,
         title: '',
-        runningTime: 10,
+        running_time: 10,
         comments: [],
       },
       isPlaying: false,
@@ -111,7 +102,7 @@ describe('[Features - Player Selector]', () => {
     // When
     const result = playerSelectors.times.resultFunc(
       updatedState.currentTime,
-      state.movie.runningTime,
+      state.movie.running_time,
     )
     // Then
     expect(result).toEqual(expected)
