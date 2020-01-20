@@ -18,7 +18,7 @@ import {
 } from 'rxjs/operators'
 
 import { RootState } from '.'
-import { playerActions } from './player'
+import { fetchMovieInfo, playerActions } from './player'
 
 export const playerEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,
@@ -41,7 +41,7 @@ export const playerFetchEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,
 ) => {
   return action$.pipe(
-    ofType(`${playerActions.fetch}`),
+    ofType(`${fetchMovieInfo}`),
     switchMap(action => {
       const movieId = action.payload
 

@@ -41,10 +41,10 @@ const initialState: PlayerState = {
   fetchState: HttpStatusCode.LOADING,
 }
 
-const fetch = createAction<number>('player/fetch')
+export const fetchMovieInfo = createAction<number>('player/fetch')
 
 const reducers = {
-  [fetch.toString()]: (state: PlayerState) => {
+  [`${fetchMovieInfo}`]: (state: PlayerState) => {
     state.fetchState = HttpStatusCode.LOADING
   },
   success: (state: PlayerState, { payload }: PayloadAction<Movie>) => {

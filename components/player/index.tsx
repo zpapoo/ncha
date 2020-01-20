@@ -3,9 +3,9 @@ import { HttpStatusCode } from 'api'
 import { RootState } from 'features'
 import {
   Comment,
+  fetchMovieInfo,
   Movie,
   movieSelectors,
-  playerActions,
   playerSelectors,
   PlayerTime,
 } from 'features/player'
@@ -44,7 +44,7 @@ export const Player: React.FC<Props> = () => {
     playerSelectors.times(state.player),
   )
 
-  useFetchWithStore<number>(fetchState, playerActions.fetch, 1)
+  useFetchWithStore<number>(fetchState, fetchMovieInfo, 1)
 
   const renderView = () => {
     return (
