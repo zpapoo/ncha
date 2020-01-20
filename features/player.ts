@@ -2,8 +2,6 @@ import { createAction, createSelector, createSlice, PayloadAction } from '@redux
 import { HttpStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
 
-import { CommentPayload, StatusPayload } from './playerType'
-
 export interface Comment {
   kind: COMMENT_TYPE
   contents: string[]
@@ -13,7 +11,7 @@ export interface Comment {
 export interface Movie {
   id: number
   title: string
-  runningTime: number
+  running_time: number
   comments: Comment[]
 }
 
@@ -35,7 +33,7 @@ const initialState: PlayerState = {
   movie: {
     id: 0,
     title: '',
-    runningTime: 1,
+    running_time: 1,
     comments: [],
   },
   isPlaying: false,
@@ -45,20 +43,16 @@ const initialState: PlayerState = {
 
 const fetch = createAction<number>('player/fetch')
 
-// FIXME: createAction으로 변경 고려
 const reducers = {
   [fetch.toString()]: (state: PlayerState) => {
     state.fetchState = HttpStatusCode.LOADING
   },
-  success: (state: PlayerState, { payload }: PayloadAction<CommentPayload>) => {
-    const { movie } = state
+  success: (state: PlayerState, { payload }: PayloadAction<Movie>) => {
     state.fetchState = HttpStatusCode.OK
-    movie.title = payload.title
-    movie.comments = payload.comments
-    movie.runningTime = payload.running_time
+    state.movie = payload
   },
-  fail: (state: PlayerState, { payload }: PayloadAction<StatusPayload>) => {
-    state.fetchState = payload.statusCode
+  fail: (state: PlayerState, { payload }: PayloadAction<HttpStatusCode>) => {
+    state.fetchState = payload
   },
   play: (state: PlayerState) => {
     state.isPlaying = true
@@ -77,7 +71,7 @@ const reducers = {
 const _ = createSlice({ name, initialState, reducers })
 
 const getCurrentTime = ({ currentTime }: PlayerState) => currentTime
-const getRunningTime = ({ movie }: PlayerState) => movie.runningTime
+const getRunningTime = ({ movie }: PlayerState) => movie.running_time
 const getMovie = ({ movie }: PlayerState): Movie => movie
 
 const getTimes = createSelector(

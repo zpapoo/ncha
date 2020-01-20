@@ -52,9 +52,7 @@ export const playerFetchEpic: Epic = (
     }),
     catchError((error: AxiosResponse) => {
       return of(
-        playerActions.fail({
-          statusCode: error.status,
-        }),
+        playerActions.fail(error.status),
       )
     }),
     repeat(),
