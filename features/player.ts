@@ -1,4 +1,4 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { HttpStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
 
@@ -43,9 +43,11 @@ const initialState: PlayerState = {
   fetchState: HttpStatusCode.LOADING,
 }
 
+const fetch = createAction<number>('player/fetch')
+
 // FIXME: createAction으로 변경 고려
 const reducers = {
-  fetch: (state: PlayerState, { payload }: PayloadAction<number>) => {
+  [fetch.toString()]: (state: PlayerState) => {
     state.fetchState = HttpStatusCode.LOADING
   },
   success: (state: PlayerState, { payload }: PayloadAction<CommentPayload>) => {
