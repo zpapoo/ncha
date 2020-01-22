@@ -40,11 +40,11 @@ const initialState: PlayerState = {
   currentTime: 0,
   fetchState: HttpStatusCode.LOADING,
 }
-
-export const fetchMovieInfo = createAction<number>('player/fetch')
+const FETCH_MOVIE_INFO = `${name}/fetchMovieInfo`
+export const fetchMovieInfo = createAction<number>(FETCH_MOVIE_INFO)
 
 const reducers = {
-  [`${fetchMovieInfo}`]: (state: PlayerState) => {
+  [FETCH_MOVIE_INFO]: (state: PlayerState) => {
     state.fetchState = HttpStatusCode.LOADING
   },
   success: (state: PlayerState, { payload }: PayloadAction<Movie>) => {
