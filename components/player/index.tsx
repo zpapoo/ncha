@@ -44,7 +44,7 @@ export const Player: React.FC<Props> = () => {
     playerSelectors.times(state.player),
   )
 
-  useFetchWithStore<number>(fetchState, fetchMovieInfo, 1)
+  useFetchWithStore<number>(fetchState, () => fetchMovieInfo(1))
 
   const renderView = () => {
     return (

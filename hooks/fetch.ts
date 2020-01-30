@@ -5,7 +5,6 @@ import { useDispatch } from 'react-redux'
 export const useFetchWithStore = <T>(
   fetchState: FetchStatusCode,
   fetchFunction: Function,
-  fetchParams?: T,
 ) => {
   const dispatch = useDispatch()
 
@@ -14,6 +13,6 @@ export const useFetchWithStore = <T>(
       return
     }
 
-    dispatch(fetchFunction(fetchParams))
-  }, [dispatch, fetchFunction, fetchParams, fetchState])
+    dispatch(fetchFunction())
+  }, [dispatch, fetchFunction, fetchState])
 }
