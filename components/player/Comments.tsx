@@ -1,13 +1,13 @@
 import styled from '@emotion/styled'
+import { COMMENT_KIND, COMMENT_TYPE } from 'constants/playerConstants'
 import React from 'react'
 
 import { SpeechBubble } from './SpeechBubble'
 
 interface Props {
-  kind: string
+  kind: COMMENT_TYPE
   contents: string[]
   time: number
-  color: string
 }
 
 const Wrapper = styled.div`
@@ -32,19 +32,19 @@ const Name = styled.span`
   color: rgba(255, 255, 255, 0.9);
 `
 
-export const Comments = ({ kind, contents, time, color }: Props) => {
+export const Comments = ({ kind, contents, time }: Props) => {
   return (
     <Wrapper>
       <ContentWrapper>
         <ProfileImage />
         <div>
-          <Name>{kind}</Name>
+          <Name>{COMMENT_KIND[kind]}</Name>
           {contents.map((content: string, index: number) => {
             return (
               <SpeechBubble
                 key={`${kind}-${index}`}
                 time={time}
-                color={color}
+                kind={kind}
                 content={content}
               />
             )

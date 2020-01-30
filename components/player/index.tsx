@@ -1,11 +1,11 @@
 import styled from '@emotion/styled'
-import { HttpStatusCode } from 'api'
+import { FetchStatusCode } from 'api'
 import { RootState } from 'features'
 import {
   Comment,
+  fetchMovieInfo,
   Movie,
   movieSelectors,
-  playerActions,
   playerSelectors,
   PlayerTime,
 } from 'features/player'
@@ -31,7 +31,7 @@ const PlayerTitle = styled.h2`
 `
 
 export const Player: React.FC<Props> = () => {
-  const fetchState = useSelector<RootState, HttpStatusCode>(state =>
+  const fetchState = useSelector<RootState, FetchStatusCode>(state =>
     movieSelectors.movieFetchState(state.player),
   )
   const { title } = useSelector<RootState, Movie>(state =>
@@ -44,7 +44,7 @@ export const Player: React.FC<Props> = () => {
     playerSelectors.times(state.player),
   )
 
-  useFetchWithStore<number>(fetchState, playerActions.fetch, 1)
+  useFetchWithStore<number>(fetchState, () => fetchMovieInfo(1))
 
   const renderView = () => {
     return (
@@ -53,13 +53,12 @@ export const Player: React.FC<Props> = () => {
           <PlayerTitle>{title}</PlayerTitle>
         </PlayerController>
         {currentComment.map((comment: Comment, index: number) => {
-          const { kind, contents, time, color } = comment
+          const { kind, contents, time } = comment
 
           return (
             <Comments
               key={`${kind}-${index}`}
               kind={kind}
-              color={color}
               contents={contents}
               time={time}
             />

@@ -1,19 +1,17 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { HttpStatusCode } from 'api'
-
-import { CommentPayload, StatusPayload } from './playerType'
+import { createAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { FetchStatusCode } from 'api'
+import { COMMENT_TYPE } from 'constants/playerConstants'
 
 export interface Comment {
-  kind: string
+  kind: COMMENT_TYPE
   contents: string[]
   time: number
-  color: string
 }
 
 export interface Movie {
   id: number
   title: string
-  runningTime: number
+  running_time: number
   comments: Comment[]
 }
 
@@ -22,7 +20,7 @@ export interface PlayerState {
   isPlaying: boolean
   requestUpdateTime: number
   currentTime: number
-  fetchState: HttpStatusCode
+  fetchState: FetchStatusCode
 }
 
 export interface PlayerTime {
@@ -36,30 +34,27 @@ const initialState: PlayerState = {
   movie: {
     id: 0,
     title: '',
-    runningTime: 1,
+    running_time: 1,
     comments: [],
   },
   requestUpdateTime: 0,
   isPlaying: false,
   currentTime: 0,
-  fetchState: HttpStatusCode.LOADING,
+  fetchState: FetchStatusCode.LOADING,
 }
+const FETCH_MOVIE_INFO = `${name}/fetchMovieInfo`
+export const fetchMovieInfo = createAction<number>(FETCH_MOVIE_INFO)
 
 const reducers = {
-  fetch: (state: PlayerState, { payload }: PayloadAction<number>) => {
-    const { movie } = state
-    movie.id = payload
-    state.fetchState = HttpStatusCode.LOADING
+  [FETCH_MOVIE_INFO]: (state: PlayerState) => {
+    state.fetchState = FetchStatusCode.LOADING
   },
-  success: (state: PlayerState, { payload }: PayloadAction<CommentPayload>) => {
-    const { movie } = state
-    state.fetchState = HttpStatusCode.OK
-    movie.title = payload.title
-    movie.comments = payload.comments
-    movie.runningTime = payload.running_time
+  success: (state: PlayerState, { payload }: PayloadAction<Movie>) => {
+    state.fetchState = FetchStatusCode.OK
+    state.movie = payload
   },
-  fail: (state: PlayerState, { payload }: PayloadAction<StatusPayload>) => {
-    state.fetchState = payload.statusCode
+  fail: (state: PlayerState, { payload }: PayloadAction<FetchStatusCode>) => {
+    state.fetchState = payload
   },
   play: (state: PlayerState) => {
     state.isPlaying = true
@@ -84,46 +79,8 @@ const reducers = {
 const _ = createSlice({ name, initialState, reducers })
 
 const getCurrentTime = ({ currentTime }: PlayerState) => currentTime
-const getRunningTime = ({ movie }: PlayerState) => movie.runningTime
-const getMovie = ({ movie }: PlayerState): Movie => {
-  const convertCommentInfoByKind = (kind: string) => {
-    switch (kind) {
-    case 'music_director':
-      return {
-        color: 'rgba(182, 104, 209, 0.5)',
-        kindKo: '음악감독',
-      }
-    case 'spoiler':
-      return {
-        color: 'rgba(255, 255, 255, 0.2)',
-        kindKo: '스포일러 방지 봇',
-      }
-    case 'action_director':
-      return {
-        color: 'rgba(182, 104, 209, 0.5)',
-        kindKo: '액션감독',
-      }
-    default:
-      return {
-        color: 'rgba(255, 255, 255, 0.2)',
-        kindKo: kind,
-      }
-    }
-  }
-
-  return {
-    ...movie,
-    comments: movie.comments.map((comment: Comment) => {
-      const { color, kindKo } = convertCommentInfoByKind(comment.kind)
-
-      return {
-        ...comment,
-        color: color,
-        kind: kindKo,
-      }
-    }),
-  }
-}
+const getRunningTime = ({ movie }: PlayerState) => movie.running_time
+const getMovie = ({ movie }: PlayerState): Movie => movie
 
 const getTimes = createSelector(
   [getCurrentTime, getRunningTime],
@@ -149,7 +106,7 @@ export const movieSelectors = {
   movie: getMovieInfo,
   movieFetchState: createSelector(
     ({ fetchState }: PlayerState) => fetchState,
-    (fetchState: HttpStatusCode) => fetchState,
+    (fetchState: FetchStatusCode) => fetchState,
   ),
   currentComments: getCurrentComments,
 }

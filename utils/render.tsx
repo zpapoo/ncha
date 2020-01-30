@@ -1,13 +1,13 @@
-import { HttpStatusCode } from 'api'
+import { FetchStatusCode } from 'api'
 import { Loader } from 'components/common/Loader'
 import React from 'react'
 
 export const renderByFetchState = (
-  fetchState: HttpStatusCode,
+  fetchState: FetchStatusCode,
   renderView: (params?: any) => React.ReactElement,
 ) => {
   switch(fetchState) {
-  case HttpStatusCode.LOADING:
+  case FetchStatusCode.LOADING:
     return <Loader />
   default:
     return renderView()
