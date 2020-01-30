@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { HttpStatusCode } from 'api'
+import { FetchStatusCode } from 'api'
 import { RootState } from 'features'
 import {
   Comment,
@@ -31,7 +31,7 @@ const PlayerTitle = styled.h2`
 `
 
 export const Player: React.FC<Props> = () => {
-  const fetchState = useSelector<RootState, HttpStatusCode>(state =>
+  const fetchState = useSelector<RootState, FetchStatusCode>(state =>
     movieSelectors.movieFetchState(state.player),
   )
   const { title } = useSelector<RootState, Movie>(state =>

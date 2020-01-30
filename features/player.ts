@@ -1,5 +1,5 @@
 import { createAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { HttpStatusCode } from 'api'
+import { FetchStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
 
 export interface Comment {
@@ -19,7 +19,7 @@ export interface PlayerState {
   movie: Movie
   isPlaying: boolean
   currentTime: number
-  fetchState: HttpStatusCode
+  fetchState: FetchStatusCode
 }
 
 export interface PlayerTime {
@@ -38,20 +38,20 @@ const initialState: PlayerState = {
   },
   isPlaying: false,
   currentTime: 0,
-  fetchState: HttpStatusCode.LOADING,
+  fetchState: FetchStatusCode.LOADING,
 }
 const FETCH_MOVIE_INFO = `${name}/fetchMovieInfo`
 export const fetchMovieInfo = createAction<number>(FETCH_MOVIE_INFO)
 
 const reducers = {
   [FETCH_MOVIE_INFO]: (state: PlayerState) => {
-    state.fetchState = HttpStatusCode.LOADING
+    state.fetchState = FetchStatusCode.LOADING
   },
   success: (state: PlayerState, { payload }: PayloadAction<Movie>) => {
-    state.fetchState = HttpStatusCode.OK
+    state.fetchState = FetchStatusCode.OK
     state.movie = payload
   },
-  fail: (state: PlayerState, { payload }: PayloadAction<HttpStatusCode>) => {
+  fail: (state: PlayerState, { payload }: PayloadAction<FetchStatusCode>) => {
     state.fetchState = payload
   },
   play: (state: PlayerState) => {
@@ -98,7 +98,7 @@ export const movieSelectors = {
   movie: getMovieInfo,
   movieFetchState: createSelector(
     ({ fetchState }: PlayerState) => fetchState,
-    (fetchState: HttpStatusCode) => fetchState,
+    (fetchState: FetchStatusCode) => fetchState,
   ),
   currentComments: getCurrentComments,
 }

@@ -2,7 +2,7 @@ import Axios, { AxiosError, AxiosInstance } from 'axios'
 import { from, throwError } from 'rxjs'
 import { catchError, map } from 'rxjs/operators'
 
-export enum HttpStatusCode {
+export enum FetchStatusCode {
   LOADING = 99,
   OK = 200,
   UNAUTHORIZED = 401,

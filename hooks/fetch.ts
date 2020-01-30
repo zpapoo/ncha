@@ -1,16 +1,16 @@
-import { HttpStatusCode } from 'api'
+import { FetchStatusCode } from 'api'
 import { useEffect } from 'react'
 import { useDispatch } from 'react-redux'
 
 export const useFetchWithStore = <T>(
-  fetchState: HttpStatusCode,
+  fetchState: FetchStatusCode,
   fetchFunction: Function,
   fetchParams?: T,
 ) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (fetchState === HttpStatusCode.OK) {
+    if (fetchState === FetchStatusCode.OK) {
       return
     }
 

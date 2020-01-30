@@ -1,8 +1,7 @@
 /* eslint-disable max-len */
-import { HttpStatusCode } from 'api'
+import { FetchStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
 import {
-  fetchMovieInfo,
   movieSelectors,
   playerActions,
   playerReducer,
@@ -22,7 +21,7 @@ describe('[Features - Player Reducer]', () => {
     },
     isPlaying: false,
     currentTime: 0,
-    fetchState: HttpStatusCode.LOADING,
+    fetchState: FetchStatusCode.LOADING,
   }
 
   it('play action은 isPlaying을 true로 수정한다.', () => {
@@ -88,7 +87,7 @@ describe('[Features - Player Selector]', () => {
       },
       isPlaying: false,
       currentTime: 0,
-      fetchState: HttpStatusCode.LOADING,
+      fetchState: FetchStatusCode.LOADING,
     }
     const actions = {
       type: `${playerActions.updateCurrentTime}`,
@@ -110,10 +109,10 @@ describe('[Features - Player Selector]', () => {
 
   it('movieFetchState는 영화 정보 api요청 status를 가져온다.', () => {
     // Given
-    const expected = HttpStatusCode.LOADING
+    const expected = FetchStatusCode.LOADING
     // When
     const result = movieSelectors.movieFetchState.resultFunc(
-      HttpStatusCode.LOADING,
+      FetchStatusCode.LOADING,
     )
     // Then
     expect(result).toEqual(expected)
