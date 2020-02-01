@@ -1,11 +1,25 @@
-import { createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { createAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { FetchStatusCode } from 'api'
+import { COMMENT_TYPE } from 'constants/playerConstants'
 
-// TODO: Fix Comment Type
+export interface Comment {
+  kind: COMMENT_TYPE
+  contents: string[]
+  time: number
+}
+
+export interface Movie {
+  id: number
+  title: string
+  running_time: number
+  comments: Comment[]
+}
+
 export interface PlayerState {
-  currentTime: number
-  runningTime: number
+  movie: Movie
   isPlaying: boolean
-  comment: string[]
+  currentTime: number
+  fetchState: FetchStatusCode
 }
 
 export interface PlayerTime {
@@ -14,15 +28,32 @@ export interface PlayerTime {
 }
 
 const name = 'player'
-// TODO: Change running time
+
 const initialState: PlayerState = {
-  currentTime: 0,
-  runningTime: 100,
+  movie: {
+    id: 0,
+    title: '',
+    running_time: 1,
+    comments: [],
+  },
   isPlaying: false,
-  comment: [],
+  currentTime: 0,
+  fetchState: FetchStatusCode.LOADING,
 }
+const FETCH_MOVIE_INFO = `${name}/fetchMovieInfo`
+export const fetchMovieInfo = createAction<number>(FETCH_MOVIE_INFO)
 
 const reducers = {
+  [FETCH_MOVIE_INFO]: (state: PlayerState) => {
+    state.fetchState = FetchStatusCode.LOADING
+  },
+  success: (state: PlayerState, { payload }: PayloadAction<Movie>) => {
+    state.fetchState = FetchStatusCode.OK
+    state.movie = payload
+  },
+  fail: (state: PlayerState, { payload }: PayloadAction<FetchStatusCode>) => {
+    state.fetchState = payload
+  },
   play: (state: PlayerState) => {
     state.isPlaying = true
   },
@@ -39,16 +70,37 @@ const reducers = {
 
 const _ = createSlice({ name, initialState, reducers })
 
+const getCurrentTime = ({ currentTime }: PlayerState) => currentTime
+const getRunningTime = ({ movie }: PlayerState) => movie.running_time
+const getMovie = ({ movie }: PlayerState): Movie => movie
+
 const getTimes = createSelector(
-  (state: PlayerState) => ({
-    current: state.currentTime || 0,
-    total: state.runningTime || 0,
+  [getCurrentTime, getRunningTime],
+  (current: number, total: number): PlayerTime => ({
+    current,
+    total,
   }),
-  (timeState: PlayerTime) => timeState,
+)
+
+const getMovieInfo = createSelector(getMovie, (movie: Movie) => movie)
+
+const getCurrentComments = createSelector(
+  [getMovie, getCurrentTime],
+  (movie: Movie, currentTime: number): Comment[] =>
+    movie.comments.filter((comment: Comment) => comment.time <= currentTime),
 )
 
 export const playerSelectors = {
   times: getTimes,
+}
+
+export const movieSelectors = {
+  movie: getMovieInfo,
+  movieFetchState: createSelector(
+    ({ fetchState }: PlayerState) => fetchState,
+    (fetchState: FetchStatusCode) => fetchState,
+  ),
+  currentComments: getCurrentComments,
 }
 
 export const PLAYER_PREFIX = _.name

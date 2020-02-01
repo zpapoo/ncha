@@ -1,35 +1,23 @@
 import styled from '@emotion/styled'
+import { COMMENT_COLOR, COMMENT_TYPE } from 'constants/playerConstants'
 import React from 'react'
+import { formatTime } from 'utils/time'
 
 interface Props {
-  data: {
-    name: string
-    comments: string[]
-  }
+  kind: COMMENT_TYPE
+  content: string
+  time: number
 }
 
-const Wrapper = styled.div`
-  padding: 0px 13px 0px 9px;
-  font-size: 12px;
-  margin-bottom: 17px;
-`
+interface BubbleProps {
+  color: string
+  time: number
+}
 
-const ContentWrapper = styled.div`
-  display: flex;
-`
-
-const ProfileImage = styled.div`
-  min-width: 39px;
-  height: 39px;
-  background: rgba(196, 196, 196, 0.57);
-  border-radius: 50%;
-  margin-right: 13px;
-`
-
-const Bubble = styled.div`
+const Bubble = styled<'div', BubbleProps>('div')`
   display: inline-block;
   position: relative;
-  background: rgba(104, 127, 209, 0.5);
+  background: ${(props) => props.color};
   color: rgba(255, 255, 255, 0.9);
   border-radius: 5px;
   padding: 9px;
@@ -47,36 +35,22 @@ const Bubble = styled.div`
       border-top: 0px solid transparent;
       border-radius: 1px 0 0 0;
       border-bottom: 12px solid transparent;
-      border-right: 9px solid rgba(104,127,209,0.5);
+      border-right: 9px solid ${props => props.color};
     }
+  }
 
+  &:last-of-type {
+    &:after {
+      content: '${props => formatTime(props.time)}';
+      position: absolute;
+      left: 100%;
+      font-size: 10px;
+      margin-left: 8px;
+      bottom: 3%;
+    }
   }
 `
 
-const Name = styled.span`
-  color: rgba(255, 255, 255, 0.9);
-`
-
-export const SpeechBubble = ({ data }: Props) => {
-  const { name, comments } = data
-
-  return (
-    <Wrapper>
-      <ContentWrapper>
-        <ProfileImage />
-        <div>
-          <Name>{name}</Name>
-          {
-            comments.map((comment: string, index: number) => {
-              return (
-                <Bubble key={`${name}-${index}`}>
-                  {comment}
-                </Bubble>
-              )
-            })
-          }
-        </div>
-      </ContentWrapper>
-    </Wrapper>
-  )
+export const SpeechBubble = ({ content, time, kind }: Props) => {
+  return <Bubble color={COMMENT_COLOR[kind]} time={time}>{content}</Bubble>
 }

@@ -1,32 +1,23 @@
 import styled from '@emotion/styled'
-import { PlayerButton } from 'components/player/PlayerButton'
-import { PlayerTimeLine } from 'components/player/PlayerTimeLine'
-import { SpeechBubble } from 'components/player/SpeechBubble'
+import { FetchStatusCode } from 'api'
+import { RootState } from 'features'
+import {
+  Comment,
+  fetchMovieInfo,
+  Movie,
+  movieSelectors,
+  playerSelectors,
+  PlayerTime,
+} from 'features/player'
+import { useFetchWithStore } from 'hooks/fetch'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { renderByFetchState } from 'utils/render'
 
-import { mockData } from '__tests__/mockData/comment'
-
+import { Comments } from './Comments'
+import { PlayerController } from './PlayerController'
 
 interface Props {}
-
-const PlayerTop = styled.div`
-  position: relative;
-  margin-bottom: 16px;
-  padding: 24px 0;
-  background: rgba(0, 0, 0, 0.7);
-  border-radius: 0px 0px 25px 25px;
-`
-
-const CloseButton = styled.span`
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 16px;
-  height: 16px;
-  background-image: url("/images/cancel_icon.png");
-  background-size: cover;
-  opacity: 0.3;
-`
 
 const PlayerTitle = styled.h2`
   width: 100%;
@@ -40,16 +31,42 @@ const PlayerTitle = styled.h2`
 `
 
 export const Player: React.FC<Props> = () => {
-  return (
-    <>
-      <PlayerTop>
-        <PlayerTitle>The Dark Night</PlayerTitle>
-        <CloseButton />
-        <PlayerTimeLine />
-        <PlayerButton />
-      </PlayerTop>
-      <SpeechBubble data={mockData[0].data}/>
-      <SpeechBubble data={mockData[1].data}/>
-    </>
+  const fetchState = useSelector<RootState, FetchStatusCode>(state =>
+    movieSelectors.movieFetchState(state.player),
   )
+  const { title } = useSelector<RootState, Movie>(state =>
+    movieSelectors.movie(state.player),
+  )
+  const currentComment = useSelector<RootState, Comment[]>(state =>
+    movieSelectors.currentComments(state.player),
+  )
+  const time = useSelector<RootState, PlayerTime>(state =>
+    playerSelectors.times(state.player),
+  )
+
+  useFetchWithStore<number>(fetchState, () => fetchMovieInfo(1))
+
+  const renderView = () => {
+    return (
+      <>
+        <PlayerController time={time}>
+          <PlayerTitle>{title}</PlayerTitle>
+        </PlayerController>
+        {currentComment.map((comment: Comment, index: number) => {
+          const { kind, contents, time } = comment
+
+          return (
+            <Comments
+              key={`${kind}-${index}`}
+              kind={kind}
+              contents={contents}
+              time={time}
+            />
+          )
+        })}
+      </>
+    )
+  }
+
+  return renderByFetchState(fetchState, renderView)
 }

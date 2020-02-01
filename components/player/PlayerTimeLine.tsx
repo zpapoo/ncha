@@ -1,10 +1,13 @@
 import styled from '@emotion/styled'
-import { RootState } from 'features'
-import { playerSelectors, PlayerTime } from 'features/player'
 import React from 'react'
-import { useSelector } from 'react-redux'
 
 import { PlayerSlide } from './PlayerSlide'
+
+interface Props {
+  width: number
+  current: string
+  total: string
+}
 
 const TimeLineContainer = styled.div`
   display: flex;
@@ -28,20 +31,14 @@ const TimeLine = styled.span`
   background-color: rgba(255, 255, 255, 0.5);
 `
 
-export const PlayerTimeLine = () => {
-  const time = useSelector<RootState, PlayerTime>(state =>
-    playerSelectors.times(state.player),
-  )
-  const { current, total } = time
-  const width = (current / total) * 100
-
+export const PlayerTimeLine = ({ width, current, total }: Props) => {
   return (
     <TimeLineContainer>
-      <FormattedTime>00:00</FormattedTime>
+      <FormattedTime>{current}</FormattedTime>
       <TimeLine>
         <PlayerSlide width={width} />
       </TimeLine>
-      <FormattedTime>127:24</FormattedTime>
+      <FormattedTime>{total}</FormattedTime>
     </TimeLineContainer>
   )
 }
