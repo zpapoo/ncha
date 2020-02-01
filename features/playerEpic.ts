@@ -46,8 +46,8 @@ export const playerRewindEpic: Epic = (
 
       if (targetTime < 0) {
         calculatedTime = 0
-      } else if (targetTime > movie.runningTime) {
-        calculatedTime = movie.runningTime
+      } else if (targetTime > movie.running_time) {
+        calculatedTime = movie.running_time
       } else {
         calculatedTime = targetTime
       }
