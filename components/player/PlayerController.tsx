@@ -31,6 +31,7 @@ const CloseButton = styled.span`
 `
 
 export const PlayerController = ({ children, time }: Props) => {
+  // TODO: 불필요하면 width drilling없애기
   const { current, total } = time
   const width = (current / total) * 100
 
