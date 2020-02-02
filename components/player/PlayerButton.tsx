@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { FlexWrapper } from 'components/common/FlexWrapper'
 import { RootState } from 'features'
-import { playerActions, playerSelectors, PlayerTime } from 'features/player'
+import { playerActions } from 'features/player'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 

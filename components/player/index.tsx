@@ -6,8 +6,6 @@ import {
   fetchMovieInfo,
   Movie,
   movieSelectors,
-  playerSelectors,
-  PlayerTime,
 } from 'features/player'
 import { useFetchWithStore } from 'hooks/fetch'
 import React from 'react'

@@ -1,8 +1,7 @@
 import styled from '@emotion/styled'
-import { RootState } from 'features'
-import { playerActions, playerSelectors, PlayerTime } from 'features/player'
+import { playerActions, PlayerTime } from 'features/player'
 import React, { useRef } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
 
 interface Props {
   time: PlayerTime
@@ -58,7 +57,7 @@ export const PlayerSlide = ({ width, time }: Props) => {
   const onClick = (e: React.MouseEvent) => {
     const { total } = time
     const { offsetX } = e.nativeEvent
-    // console.log(e.currentTarget)
+
     if (sliderRef.current) {
       const { offsetWidth } = sliderRef.current
       const percent = offsetX / offsetWidth
