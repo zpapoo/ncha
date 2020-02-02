@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { playerActions, PlayerTime } from 'features/player'
+import { PlayerTime, requestUpdateCurrentTime } from 'features/player'
 import React, { useRef } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -64,7 +64,7 @@ export const PlayerSlide = ({ width, time }: Props) => {
     if (sliderRef.current) {
       const { offsetWidth } = sliderRef.current
       const percent = offsetX / offsetWidth
-      dispatch(playerActions.requestUpdateCurrentTime(percent * total))
+      dispatch(requestUpdateCurrentTime(percent * total))
     }
   }
 

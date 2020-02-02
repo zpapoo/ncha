@@ -18,7 +18,6 @@ export interface Movie {
 export interface PlayerState {
   movie: Movie
   isPlaying: boolean
-  requestUpdateTime: number
   currentTime: number
   fetchState: FetchStatusCode
 }
@@ -37,13 +36,14 @@ const initialState: PlayerState = {
     running_time: 1,
     comments: [],
   },
-  requestUpdateTime: 0,
   isPlaying: false,
   currentTime: 0,
   fetchState: FetchStatusCode.LOADING,
 }
 const FETCH_MOVIE_INFO = `${name}/fetchMovieInfo`
+const REQUEST_UPDATE_CURRENT_TIME = `${name}/requestUpdateCurrentTime`
 export const fetchMovieInfo = createAction<number>(FETCH_MOVIE_INFO)
+export const requestUpdateCurrentTime = createAction<number>(REQUEST_UPDATE_CURRENT_TIME)
 
 const reducers = {
   [FETCH_MOVIE_INFO]: (state: PlayerState) => {
@@ -58,12 +58,6 @@ const reducers = {
   },
   play: (state: PlayerState) => {
     state.isPlaying = true
-  },
-  requestUpdateCurrentTime: (
-    state: PlayerState,
-    { payload }: PayloadAction<number>,
-  ) => {
-    state.requestUpdateTime = payload
   },
   updateCurrentTime: (
     state: PlayerState,

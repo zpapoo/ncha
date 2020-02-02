@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { FlexWrapper } from 'components/common/FlexWrapper'
 import { RootState } from 'features'
-import { playerActions } from 'features/player'
+import { playerActions, requestUpdateCurrentTime } from 'features/player'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -39,7 +39,7 @@ export const PlayerButton = ({ current }: Props) => {
   const isPlaying = useSelector<RootState, boolean>(
     state => state.player.isPlaying,
   )
-  const { requestUpdateCurrentTime, play, pause } = playerActions
+  const { play, pause } = playerActions
 
   return (
     <FlexWrapper>

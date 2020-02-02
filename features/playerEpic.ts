@@ -18,7 +18,7 @@ import {
 } from 'rxjs/operators'
 
 import { RootState } from '.'
-import { fetchMovieInfo, playerActions } from './player'
+import { fetchMovieInfo, playerActions, requestUpdateCurrentTime } from './player'
 
 export const playerToggleEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,
@@ -27,7 +27,7 @@ export const playerToggleEpic: Epic = (
   return action$.pipe(
     ofType(`${playerActions.play}`),
     mergeMap(() => timer(0, 1000)),
-    map(() => playerActions.requestUpdateCurrentTime(1)),
+    map(() => requestUpdateCurrentTime(1)),
     takeUntil(action$.pipe(ofType(`${playerActions.pause}`))),
     repeat(),
   )
@@ -38,7 +38,7 @@ export const playerRewindEpic: Epic = (
   store$: StateObservable<RootState>,
 ) => {
   return action$.pipe(
-    ofType(`${playerActions.requestUpdateCurrentTime}`),
+    ofType(`${requestUpdateCurrentTime}`),
     mergeMap((action) => {
       const targetTime = Math.ceil(action.payload)
 
