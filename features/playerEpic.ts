@@ -20,7 +20,7 @@ import {
 import { RootState } from '.'
 import { fetchMovieInfo, playerActions } from './player'
 
-export const playerEpic: Epic = (
+export const playerToggleEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,
   store$: StateObservable<RootState>,
 ) => {
