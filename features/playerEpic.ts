@@ -40,7 +40,15 @@ export const playerRewindEpic: Epic = (
   return action$.pipe(
     ofType(`${requestUpdateCurrentTime}`),
     mergeMap((action) => {
-      const targetTime = Math.ceil(action.payload)
+      const { running_time } = store$.value.player.movie
+      const requestTime = Math.ceil(action.payload)
+      let targetTime = requestTime
+
+      if (requestTime < 0) {
+        targetTime = 0
+      } else if (requestTime > running_time) {
+        targetTime = running_time
+      }
 
       return of(playerActions.updateCurrentTime(targetTime))
     }),
