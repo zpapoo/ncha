@@ -42,20 +42,25 @@ export const PlayerSlide = ({ width }: Props) => {
   const sliderRef = useRef<HTMLDivElement>(null)
 
   const onMouseUp = () => {
-    console.log('onMouseUp')
+    // console.log('onMouseUp')
   }
   const onMouseDown = () => {
-    console.log('onMouseDown')
+    // console.log('onMouseDown')
   }
 
   const onMouseMove = () => {
-    console.log('onMouseMove')
+    // console.log('onMouseMove')
   }
 
   const onClick = (e: React.MouseEvent) => {
     const { total } = time
-    console.log(e.clientX)
-    console.log(e.currentTarget)
+    const { offsetX } = e.nativeEvent
+    // console.log(e.currentTarget)
+    if (sliderRef.current) {
+      const { offsetWidth } = sliderRef.current
+      const percent = offsetX / offsetWidth
+      console.log(percent * total)
+    }
   }
 
   return (
