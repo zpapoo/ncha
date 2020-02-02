@@ -23,7 +23,7 @@ const ForwardButton = styled.div`
   height: 30px;
   background-size: contain;
   margin-right: auto;
-  background-image: url("/images/forward.svg");
+  background-image: url('/images/forward.svg');
 `
 
 const BackwardButton = styled.div`
@@ -31,7 +31,7 @@ const BackwardButton = styled.div`
   height: 30px;
   background-size: contain;
   margin-left: auto;
-  background-image: url("/images/backward.svg");
+  background-image: url('/images/backward.svg');
 `
 
 export const PlayerButton = ({ current }: Props) => {
