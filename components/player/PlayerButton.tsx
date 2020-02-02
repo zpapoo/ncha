@@ -1,9 +1,13 @@
 import styled from '@emotion/styled'
 import { FlexWrapper } from 'components/common/FlexWrapper'
 import { RootState } from 'features'
-import { playerActions } from 'features/player'
+import { playerActions, playerSelectors, PlayerTime } from 'features/player'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+
+interface Props {
+  current: number
+}
 
 const PlayButton = styled<'div', {isPlaying: boolean}>('div')`
   margin: 0 10px 0 10px;
@@ -30,18 +34,17 @@ const BackwardButton = styled.div`
   background-image: url("/images/backward.svg");
 `
 
-export const PlayerButton = () => {
+export const PlayerButton = ({ current }: Props) => {
   const dispatch = useDispatch()
   const isPlaying = useSelector<RootState, boolean>(
     state => state.player.isPlaying,
   )
-
   const { requestUpdateCurrentTime, play, pause } = playerActions
 
   return (
     <FlexWrapper>
       <BackwardButton
-        onClick={() => dispatch(requestUpdateCurrentTime(-5))}
+        onClick={() => dispatch(requestUpdateCurrentTime(current-5))}
       />
       <PlayButton
         isPlaying={isPlaying}
@@ -49,7 +52,7 @@ export const PlayerButton = () => {
         }
       />
       <ForwardButton
-        onClick={() => dispatch(requestUpdateCurrentTime(5))}
+        onClick={() => dispatch(requestUpdateCurrentTime(current+5))}
       />
     </FlexWrapper>
   )
