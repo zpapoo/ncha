@@ -1,14 +1,19 @@
 import styled from '@emotion/styled'
 import { RootState } from 'features'
-import { playerSelectors, PlayerTime } from 'features/player'
+import { playerActions, playerSelectors, PlayerTime } from 'features/player'
 import React, { useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 
 interface Props {
+  time: PlayerTime
   width: number;
 }
 
-const Slide = styled<'div', Props>('div')`
+interface SlideProps {
+  width: number;
+}
+
+const Slide = styled<'div', SlideProps>('div')`
   background: linear-gradient(to right, #EF4D88 0%, #4E51FF 100%);
   height: 100%;
   width: ${(props) => `${props.width}%`};
@@ -35,10 +40,8 @@ const TimeLine = styled.div`
   background-color: rgba(255, 255, 255, 0.5);
 `
 
-export const PlayerSlide = ({ width }: Props) => {
-  const time = useSelector<RootState, PlayerTime>(state =>
-    playerSelectors.times(state.player),
-  )
+export const PlayerSlide = ({ width, time }: Props) => {
+  const dispatch = useDispatch()
   const sliderRef = useRef<HTMLDivElement>(null)
 
   const onMouseUp = () => {
@@ -60,6 +63,7 @@ export const PlayerSlide = ({ width }: Props) => {
       const { offsetWidth } = sliderRef.current
       const percent = offsetX / offsetWidth
       console.log(percent * total)
+      dispatch(playerActions.requestUpdateCurrentTime(percent * total))
     }
   }
 

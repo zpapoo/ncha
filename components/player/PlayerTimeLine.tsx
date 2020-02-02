@@ -1,12 +1,12 @@
 import styled from '@emotion/styled'
+import { PlayerTime } from 'features/player'
 import React from 'react'
+import { formatTime } from 'utils/time'
 
 import { PlayerSlide } from './PlayerSlide'
 
 interface Props {
-  width: number
-  current: string
-  total: string
+  time: PlayerTime
 }
 
 const TimeLineContainer = styled.div`
@@ -23,20 +23,15 @@ const FormattedTime = styled.span`
   color: #ffffff;
 `
 
-const TimeLine = styled.span`
-  display: flex;
-  margin: 0 12px;
-  width: 100%;
-  height: 2px;
-  background-color: rgba(255, 255, 255, 0.5);
-`
+export const PlayerTimeLine = ({ time }: Props) => {
+  const { current, total } = time
+  const width = (current / total) * 100
 
-export const PlayerTimeLine = ({ width, current, total }: Props) => {
   return (
     <TimeLineContainer>
-      <FormattedTime>{current}</FormattedTime>
-      <PlayerSlide width={width} />
-      <FormattedTime>{total}</FormattedTime>
+      <FormattedTime>{formatTime(current)}</FormattedTime>
+      <PlayerSlide time={time} width={width} />
+      <FormattedTime>{formatTime(total)}</FormattedTime>
     </TimeLineContainer>
   )
 }

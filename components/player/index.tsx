@@ -40,16 +40,13 @@ export const Player: React.FC<Props> = () => {
   const currentComment = useSelector<RootState, Comment[]>(state =>
     movieSelectors.currentComments(state.player),
   )
-  const time = useSelector<RootState, PlayerTime>(state =>
-    playerSelectors.times(state.player),
-  )
 
   useFetchWithStore<number>(fetchState, () => fetchMovieInfo(1))
 
   const renderView = () => {
     return (
       <>
-        <PlayerController time={time}>
+        <PlayerController>
           <PlayerTitle>{title}</PlayerTitle>
         </PlayerController>
         {currentComment.map((comment: Comment, index: number) => {
