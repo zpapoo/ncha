@@ -35,9 +35,7 @@ export const PlayerTimeLine = ({ width, current, total }: Props) => {
   return (
     <TimeLineContainer>
       <FormattedTime>{current}</FormattedTime>
-      <TimeLine>
-        <PlayerSlide width={width} />
-      </TimeLine>
+      <PlayerSlide width={width} />
       <FormattedTime>{total}</FormattedTime>
     </TimeLineContainer>
   )
