@@ -49,7 +49,7 @@ export const PlayerButton = () => {
         }
       />
       <ForwardButton
-        onClick={() => dispatch(requestUpdateCurrentTime(-5))}
+        onClick={() => dispatch(requestUpdateCurrentTime(5))}
       />
     </FlexWrapper>
   )
