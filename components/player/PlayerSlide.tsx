@@ -42,26 +42,28 @@ const TimeLine = styled.div`
 export const PlayerSlide = ({ width, time }: Props) => {
   const dispatch = useDispatch()
   const sliderRef = useRef<HTMLDivElement>(null)
+  const { total } = time
 
-  const onMouseUp = () => {
-    // console.log('onMouseUp')
+  const onMouseUp = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    // TODO: with Custom Hook
   }
-  const onMouseDown = () => {
-    // console.log('onMouseDown')
+  const onMouseMove = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    // TODO: with Custom Hook
   }
 
-  const onMouseMove = () => {
-    // console.log('onMouseMove')
+  const onMouseDown = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    // TODO: with Custom Hook
   }
 
   const onClick = (e: React.MouseEvent) => {
-    const { total } = time
     const { offsetX } = e.nativeEvent
 
     if (sliderRef.current) {
       const { offsetWidth } = sliderRef.current
       const percent = offsetX / offsetWidth
-      console.log(percent * total)
       dispatch(playerActions.requestUpdateCurrentTime(percent * total))
     }
   }
