@@ -22,13 +22,18 @@ import { playerActions } from './player'
 
 export const playerToggleEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,
+  store$: StateObservable<RootState>,
 ) => {
   const { play, pause, requestUpdateCurrentTime } = playerActions
 
   return action$.pipe(
     ofType(`${play}`),
     mergeMap(() => timer(0, 1000)),
-    map(() => requestUpdateCurrentTime(1)),
+    map(() => {
+      const { currentTime } = store$.value.player
+
+      return requestUpdateCurrentTime(currentTime+1)
+    }),
     takeUntil(action$.pipe(ofType(`${pause}`))),
     repeat(),
   )
