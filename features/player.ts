@@ -42,8 +42,8 @@ const initialState: PlayerState = {
 }
 const FETCH_MOVIE_INFO = `${name}/fetchMovieInfo`
 const REQUEST_UPDATE_CURRENT_TIME = `${name}/requestUpdateCurrentTime`
-export const fetchMovieInfo = createAction<number>(FETCH_MOVIE_INFO)
-export const requestUpdateCurrentTime = createAction<number>(REQUEST_UPDATE_CURRENT_TIME)
+const fetchMovieInfo = createAction<number>(FETCH_MOVIE_INFO)
+const requestUpdateCurrentTime = createAction<number>(REQUEST_UPDATE_CURRENT_TIME)
 
 const reducers = {
   [FETCH_MOVIE_INFO]: (state: PlayerState) => {
@@ -107,4 +107,8 @@ export const movieSelectors = {
 
 export const PLAYER_PREFIX = _.name
 export const playerReducer = _.reducer
-export const playerActions = _.actions
+export const playerActions = {
+  ..._.actions,
+  fetchMovieInfo,
+  requestUpdateCurrentTime,
+}
