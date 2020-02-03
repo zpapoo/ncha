@@ -1,5 +1,5 @@
 import styled from '@emotion/styled'
-import { PlayerTime, requestUpdateCurrentTime } from 'features/player'
+import { playerActions, PlayerTime } from 'features/player'
 import React, { useRef } from 'react'
 import { useDispatch } from 'react-redux'
 
@@ -42,6 +42,7 @@ const TimeLine = styled.div`
 export const PlayerSlide = ({ width, time }: Props) => {
   const dispatch = useDispatch()
   const sliderRef = useRef<HTMLDivElement>(null)
+  const { requestUpdateCurrentTime }= playerActions
   const { total } = time
 
   const onMouseUp = (e: React.MouseEvent) => {

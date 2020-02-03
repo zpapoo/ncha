@@ -3,9 +3,9 @@ import { FetchStatusCode } from 'api'
 import { RootState } from 'features'
 import {
   Comment,
-  fetchMovieInfo,
   Movie,
   movieSelectors,
+  playerActions,
 } from 'features/player'
 import { useFetchWithStore } from 'hooks/fetch'
 import React from 'react'
@@ -39,7 +39,7 @@ export const Player: React.FC<Props> = () => {
     movieSelectors.currentComments(state.player),
   )
 
-  useFetchWithStore<number>(fetchState, () => fetchMovieInfo(1))
+  useFetchWithStore<number>(fetchState, () => playerActions.fetchMovieInfo(1))
 
   const renderView = () => {
     return (
