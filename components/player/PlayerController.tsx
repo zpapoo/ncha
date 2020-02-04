@@ -31,16 +31,12 @@ const CloseButton = styled.span`
 `
 
 export const PlayerController = ({ children }: Props) => {
-  const time = useSelector<RootState, PlayerTime>(state =>
-    playerSelectors.times(state.player),
-  )
-
   return (
     <PlayerTop>
       {children}
       <CloseButton />
-      <PlayerTimeLine time={time} />
-      <PlayerButton current={time.current}/>
+      <PlayerTimeLine />
+      <PlayerButton />
     </PlayerTop>
   )
 }
