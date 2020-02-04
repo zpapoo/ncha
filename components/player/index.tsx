@@ -6,7 +6,7 @@ import {
   Movie,
   movieSelectors,
   playerActions,
-} from 'features/player'
+} from 'features/playerSlice'
 import { useFetchWithStore } from 'hooks/fetch'
 import React from 'react'
 import { useSelector } from 'react-redux'

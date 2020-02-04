@@ -18,7 +18,7 @@ import {
 } from 'rxjs/operators'
 
 import { RootState } from '.'
-import { playerActions } from './player'
+import { playerActions } from './playerSlice'
 
 export const playerToggleEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,

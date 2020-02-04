@@ -1,6 +1,6 @@
 import styled from '@emotion/styled'
 import { RootState } from 'features'
-import { playerActions, playerSelectors, PlayerTime } from 'features/player'
+import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
 import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
