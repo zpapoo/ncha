@@ -25,12 +25,11 @@ export const PlayerTimeLine = () => {
   const { current, total } = useSelector<RootState, PlayerTime>(state =>
     playerSelectors.times(state.player),
   )
-  const width = (current / total) * 100
 
   return (
     <TimeLineContainer>
       <FormattedTime>{formatTime(current)}</FormattedTime>
-      <PlayerSlide time={time} width={width} />
+      <PlayerSlide />
       <FormattedTime>{formatTime(total)}</FormattedTime>
     </TimeLineContainer>
   )

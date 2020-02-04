@@ -1,12 +1,8 @@
 import styled from '@emotion/styled'
-import { playerActions, PlayerTime } from 'features/player'
+import { RootState } from 'features'
+import { playerActions, playerSelectors, PlayerTime } from 'features/player'
 import React, { useRef } from 'react'
-import { useDispatch } from 'react-redux'
-
-interface Props {
-  time: PlayerTime
-  width: number;
-}
+import { useDispatch, useSelector } from 'react-redux'
 
 interface SlideProps {
   width: number;
@@ -39,11 +35,14 @@ const TimeLine = styled.div`
   background-color: rgba(255, 255, 255, 0.5);
 `
 
-export const PlayerSlide = ({ width, time }: Props) => {
+export const PlayerSlide = () => {
   const dispatch = useDispatch()
   const sliderRef = useRef<HTMLDivElement>(null)
+  const { current, total } = useSelector<RootState, PlayerTime>(state =>
+    playerSelectors.times(state.player),
+  )
+  const width = (current / total) * 100
   const { requestUpdateCurrentTime }= playerActions
-  const { total } = time
 
   const onMouseUp = (e: React.MouseEvent) => {
     e.stopPropagation()
