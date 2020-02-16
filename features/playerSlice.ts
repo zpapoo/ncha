@@ -40,9 +40,9 @@ const initialState: PlayerState = {
   currentTime: 0,
   fetchState: FetchStatusCode.LOADING,
 }
-const FETCH_MOVIE_INFO = `${name}/fetchMovieInfo`
+const FETCH_MOVIE_INFO = `${name}/fetch`
 const REQUEST_UPDATE_CURRENT_TIME = `${name}/requestUpdateCurrentTime`
-const fetchMovieInfo = createAction<number>(FETCH_MOVIE_INFO)
+const fetch = createAction<number>(FETCH_MOVIE_INFO)
 const requestUpdateCurrentTime = createAction<number>(REQUEST_UPDATE_CURRENT_TIME)
 
 const reducers = {
@@ -106,6 +106,6 @@ export const PLAYER_PREFIX = _.name
 export const playerReducer = _.reducer
 export const playerActions = {
   ..._.actions,
-  fetchMovieInfo,
+  fetch,
   requestUpdateCurrentTime,
 }
