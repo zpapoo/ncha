@@ -56,17 +56,14 @@ const reducers = {
   fail: (state: PlayerState, { payload }: PayloadAction<FetchStatusCode>) => {
     state.fetchState = payload
   },
-  play: (state: PlayerState) => {
-    state.isPlaying = true
+  toggle: (state: PlayerState) => {
+    state.isPlaying = !state.isPlaying
   },
   updateCurrentTime: (
     state: PlayerState,
     { payload }: PayloadAction<number>,
   ) => {
     state.currentTime = payload
-  },
-  pause: (state: PlayerState) => {
-    state.isPlaying = false
   },
 }
 
