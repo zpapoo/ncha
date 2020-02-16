@@ -29,9 +29,9 @@ export function* watchPlayerToggle() {
 
 function* playerFetchSaga({ payload }: PayloadAction<number>) {
   try {
-    const result = yield call(getComments, payload)
+    const { data } = yield call(getComments, payload)
 
-    yield put(playerActions.success(result))
+    yield put(playerActions.success(data))
   } catch(e) {
     const error: AxiosResponse = e
     yield put(playerActions.fail(error.status))
