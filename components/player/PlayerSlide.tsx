@@ -1,11 +1,14 @@
 import styled from '@emotion/styled'
-import React from 'react'
+import { RootState } from 'features'
+import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
+import React, { useRef } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 
-interface Props {
+interface SlideProps {
   width: number;
 }
 
-const Slide = styled<'div', Props>('div')`
+const Slide = styled<'div', SlideProps>('div')`
   background: linear-gradient(to right, #EF4D88 0%, #4E51FF 100%);
   height: 100%;
   width: ${(props) => `${props.width}%`};
@@ -24,8 +27,56 @@ const Slide = styled<'div', Props>('div')`
   }
 `
 
-export const PlayerSlide = ({ width }: Props) => {
+const TimeLine = styled.div`
+  display: flex;
+  margin: 0 12px;
+  width: 100%;
+  height: 2px;
+  background-color: rgba(255, 255, 255, 0.5);
+`
+
+export const PlayerSlide = () => {
+  const dispatch = useDispatch()
+  const sliderRef = useRef<HTMLDivElement>(null)
+  const { current, total } = useSelector<RootState, PlayerTime>(state =>
+    playerSelectors.times(state.player),
+  )
+  const width = (current / total) * 100
+  const { requestUpdateCurrentTime }= playerActions
+
+  const onMouseUp = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    // TODO: with Custom Hook
+  }
+  const onMouseMove = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    // TODO: with Custom Hook
+  }
+
+  const onMouseDown = (e: React.MouseEvent) => {
+    e.stopPropagation()
+    // TODO: with Custom Hook
+  }
+
+  const onClick = (e: React.MouseEvent) => {
+    const { offsetX } = e.nativeEvent
+
+    if (sliderRef.current) {
+      const { offsetWidth } = sliderRef.current
+      const percent = offsetX / offsetWidth
+      dispatch(requestUpdateCurrentTime(percent * total))
+    }
+  }
+
   return (
-    <Slide width={width} />
+    <TimeLine
+      ref={sliderRef}
+      onMouseDown={onMouseDown}
+      onMouseMove={onMouseMove}
+      onMouseUp={onMouseUp}
+      onClick={onClick}
+    >
+      <Slide width={width} />
+    </TimeLine>
   )
 }

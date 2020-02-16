@@ -2,14 +2,18 @@ import { combineReducers } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
 import { combineEpics, createEpicMiddleware } from 'redux-observable'
 
-import { playerReducer } from './player'
-import { playerEpic, playerFetchEpic } from './playerEpic'
+import { playerFetchEpic, playerRewindEpic, playerToggleEpic } from './playerEpic'
+import { playerReducer } from './playerSlice'
 
 const rootReducer = combineReducers({
   player: playerReducer,
 })
 
-const rootEpic = combineEpics(playerEpic, playerFetchEpic)
+const rootEpic = combineEpics(
+  playerToggleEpic,
+  playerRewindEpic,
+  playerFetchEpic,
+)
 
 const epicMiddleware = createEpicMiddleware()
 

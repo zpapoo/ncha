@@ -18,28 +18,56 @@ import {
 } from 'rxjs/operators'
 
 import { RootState } from '.'
-import { fetchMovieInfo, playerActions } from './player'
+import { playerActions } from './playerSlice'
 
-export const playerEpic: Epic = (
+export const playerToggleEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,
   store$: StateObservable<RootState>,
 ) => {
+  const { play, pause, requestUpdateCurrentTime } = playerActions
+
   return action$.pipe(
-    ofType(`${playerActions.play}`),
+    ofType(`${play}`),
     mergeMap(() => timer(0, 1000)),
     map(() => {
-      const currentTime = store$.value.player.currentTime
+      const { currentTime } = store$.value.player
 
-      return playerActions.updateCurrentTime(currentTime + 1)
+      return requestUpdateCurrentTime(currentTime+1)
     }),
-    takeUntil(action$.pipe(ofType(`${playerActions.pause}`))),
+    takeUntil(action$.pipe(ofType(`${pause}`))),
     repeat(),
+  )
+}
+
+export const playerRewindEpic: Epic = (
+  action$: ActionsObservable<PayloadAction<number>>,
+  store$: StateObservable<RootState>,
+) => {
+  const { updateCurrentTime, requestUpdateCurrentTime } = playerActions
+
+  return action$.pipe(
+    ofType(`${requestUpdateCurrentTime}`),
+    mergeMap((action) => {
+      const { running_time } = store$.value.player.movie
+      const requestTime = Math.ceil(action.payload)
+      let targetTime = requestTime
+
+      if (requestTime < 0) {
+        targetTime = 0
+      } else if (requestTime > running_time) {
+        targetTime = running_time
+      }
+
+      return of(updateCurrentTime(targetTime))
+    }),
   )
 }
 
 export const playerFetchEpic: Epic = (
   action$: ActionsObservable<PayloadAction<any>>,
 ) => {
+  const { fetchMovieInfo,  success, fail } = playerActions
+
   return action$.pipe(
     ofType(`${fetchMovieInfo}`),
     switchMap(action => {
@@ -48,12 +76,10 @@ export const playerFetchEpic: Epic = (
       return getComments(movieId)
     }),
     map((response: AxiosResponse) => {
-      return playerActions.success(response.data)
+      return success(response.data)
     }),
     catchError((error: AxiosResponse) => {
-      return of(
-        playerActions.fail(error.status),
-      )
+      return of(fail(error.status))
     }),
     repeat(),
   )

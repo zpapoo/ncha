@@ -7,7 +7,7 @@ import {
   playerReducer,
   playerSelectors,
   PlayerState,
-} from 'features/player'
+} from 'features/playerSlice'
 
 import { playerCommentsMockData } from '__tests__/mockData/comment'
 

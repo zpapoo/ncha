@@ -1,14 +1,14 @@
 import styled from '@emotion/styled'
-import { PlayerTime } from 'features/player'
+import { RootState } from 'features'
+import { playerSelectors, PlayerTime } from 'features/playerSlice'
 import React from 'react'
-import { formatTime } from 'utils/time'
+import { useSelector } from 'react-redux'
 
 import { PlayerButton } from './PlayerButton'
 import { PlayerTimeLine } from './PlayerTimeLine'
 
 interface Props {
   children: React.ReactElement
-  time: PlayerTime
 }
 
 const PlayerTop = styled.div`
@@ -30,19 +30,12 @@ const CloseButton = styled.span`
   opacity: 0.3;
 `
 
-export const PlayerController = ({ children, time }: Props) => {
-  const { current, total } = time
-  const width = (current / total) * 100
-
+export const PlayerController = ({ children }: Props) => {
   return (
     <PlayerTop>
       {children}
       <CloseButton />
-      <PlayerTimeLine
-        width={width}
-        current={formatTime(current)}
-        total={formatTime(total)}
-      />
+      <PlayerTimeLine />
       <PlayerButton />
     </PlayerTop>
   )

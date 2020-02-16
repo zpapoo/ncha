@@ -1,13 +1,11 @@
 import styled from '@emotion/styled'
+import { RootState } from 'features'
+import { playerSelectors, PlayerTime } from 'features/playerSlice'
 import React from 'react'
+import { useSelector } from 'react-redux'
+import { formatTime } from 'utils/time'
 
 import { PlayerSlide } from './PlayerSlide'
-
-interface Props {
-  width: number
-  current: string
-  total: string
-}
 
 const TimeLineContainer = styled.div`
   display: flex;
@@ -23,22 +21,16 @@ const FormattedTime = styled.span`
   color: #ffffff;
 `
 
-const TimeLine = styled.span`
-  display: flex;
-  margin: 0 12px;
-  width: 100%;
-  height: 2px;
-  background-color: rgba(255, 255, 255, 0.5);
-`
+export const PlayerTimeLine = () => {
+  const { current, total } = useSelector<RootState, PlayerTime>(state =>
+    playerSelectors.times(state.player),
+  )
 
-export const PlayerTimeLine = ({ width, current, total }: Props) => {
   return (
     <TimeLineContainer>
-      <FormattedTime>{current}</FormattedTime>
-      <TimeLine>
-        <PlayerSlide width={width} />
-      </TimeLine>
-      <FormattedTime>{total}</FormattedTime>
+      <FormattedTime>{formatTime(current)}</FormattedTime>
+      <PlayerSlide />
+      <FormattedTime>{formatTime(total)}</FormattedTime>
     </TimeLineContainer>
   )
 }
