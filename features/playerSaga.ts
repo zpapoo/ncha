@@ -12,12 +12,11 @@ function* playerToggleSaga() {
     ({ player }: RootState) => player.isPlaying,
   )
 
-  const currentTime = yield select(
-    ({ player }: RootState) => player.currentTime,
-  )
-
   while(isPlaying) {
     yield delay(1000)
+    const currentTime = yield select(
+      ({ player }: RootState) => player.currentTime,
+    )
     yield put(requestUpdateCurrentTime(currentTime + 1))
   }
 }
