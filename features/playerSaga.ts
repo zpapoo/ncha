@@ -42,3 +42,24 @@ export function* watchPlayerFetch() {
   const { fetch } = playerActions
   yield takeLatest(`${fetch}`, playerFetchSaga)
 }
+
+function* playerUpdateTimeSaga({ payload }: PayloadAction<number>) {
+  const runningTime = yield select(
+    ({ player }: RootState) => player.movie.running_time,
+  )
+  const requestTime = Math.ceil(payload)
+  let targetTime = requestTime
+
+  if (requestTime < 0) {
+    targetTime = 0
+  } else if (requestTime > runningTime) {
+    targetTime = runningTime
+  }
+
+  yield put(playerActions.updateCurrentTime(targetTime))
+}
+
+export function* watchPlayerUpdateTime() {
+  const { requestUpdateCurrentTime } = playerActions
+  yield takeLatest(`${requestUpdateCurrentTime}`, playerUpdateTimeSaga)
+}
