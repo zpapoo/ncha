@@ -7,7 +7,7 @@ const mockData: Promise<any> = new Promise(resolve =>
   resolve(playerCommentsMockData),
 )
 
-export const getComments = (id: string): Observable<AxiosResponse> => {
+export const getComments = (id: number): Observable<AxiosResponse> => {
   // return requestGET(`/api/movie/${id}`)
   return from(mockData)
 }
