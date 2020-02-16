@@ -1,28 +1,30 @@
 import { combineReducers } from '@reduxjs/toolkit'
 import { configureStore } from '@reduxjs/toolkit'
-import { combineEpics, createEpicMiddleware } from 'redux-observable'
+import createSagaMiddleware from 'redux-saga'
+import { all } from 'redux-saga/effects'
 
-import { playerFetchEpic, playerRewindEpic, playerToggleEpic } from './playerEpic'
+import { watchPlayerFetch, watchPlayerToggle } from './playerSaga'
 import { playerReducer } from './playerSlice'
 
 const rootReducer = combineReducers({
   player: playerReducer,
 })
 
-const rootEpic = combineEpics(
-  playerToggleEpic,
-  playerRewindEpic,
-  playerFetchEpic,
-)
+export function* rootSaga() {
+  yield all([
+    watchPlayerToggle(),
+    watchPlayerFetch(),
+  ])
+}
 
-const epicMiddleware = createEpicMiddleware()
+export const sagaMiddleware = createSagaMiddleware()
 
 const store = configureStore({
   reducer: rootReducer,
   devTools: true,
-  middleware: [epicMiddleware],
+  middleware: [sagaMiddleware],
 })
 
-epicMiddleware.run(rootEpic)
+sagaMiddleware.run(rootSaga)
 export type RootState = ReturnType<typeof rootReducer>
 export default store
