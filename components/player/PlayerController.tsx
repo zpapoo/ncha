@@ -1,8 +1,5 @@
 import styled from '@emotion/styled'
-import { RootState } from 'features'
-import { playerSelectors, PlayerTime } from 'features/playerSlice'
 import React from 'react'
-import { useSelector } from 'react-redux'
 
 import { PlayerButton } from './PlayerButton'
 import { PlayerTimeLine } from './PlayerTimeLine'
