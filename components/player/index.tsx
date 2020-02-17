@@ -29,14 +29,14 @@ const PlayerTitle = styled.h2`
 `
 
 export const Player: React.FC<Props> = () => {
-  const fetchState = useSelector<RootState, FetchStatusCode>(state =>
-    movieSelectors.movieFetchState(state.player),
+  const fetchState = useSelector<RootState, FetchStatusCode>(
+    movieSelectors.movieFetchState,
   )
-  const { title } = useSelector<RootState, Movie>(state =>
-    movieSelectors.movie(state.player),
+  const { title } = useSelector<RootState, Movie>(
+    movieSelectors.movie,
   )
-  const currentComment = useSelector<RootState, Comment[]>(state =>
-    movieSelectors.currentComments(state.player),
+  const currentComment = useSelector<RootState, Comment[]>(
+    movieSelectors.currentComments,
   )
 
   useFetchWithStore<number>(fetchState, () => playerActions.fetch(1))

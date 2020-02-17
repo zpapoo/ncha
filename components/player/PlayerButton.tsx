@@ -35,9 +35,7 @@ export const PlayerButton = () => {
   const isPlaying = useSelector<RootState, boolean>(
     state => state.player.isPlaying,
   )
-  const { current } = useSelector<RootState, PlayerTime>(state =>
-    playerSelectors.times(state.player),
-  )
+  const { current } = useSelector<RootState, PlayerTime>(playerSelectors.times)
   const { toggle, requestUpdateCurrentTime } = playerActions
 
   return (

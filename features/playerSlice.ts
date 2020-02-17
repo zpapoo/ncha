@@ -2,6 +2,8 @@ import { createAction, createSelector, createSlice, PayloadAction } from '@redux
 import { FetchStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
 
+import { RootState } from '.'
+
 export interface Comment {
   kind: COMMENT_TYPE
   contents: string[]
@@ -90,16 +92,16 @@ const getCurrentComments = createSelector(
 )
 
 export const playerSelectors = {
-  times: getTimes,
+  times: ({ player }: RootState) => getTimes(player),
 }
 
 export const movieSelectors = {
-  movie: getMovieInfo,
-  movieFetchState: createSelector(
+  movie: ({ player }: RootState) => getMovieInfo(player),
+  movieFetchState: ({ player }: RootState) => createSelector(
     ({ fetchState }: PlayerState) => fetchState,
     (fetchState: FetchStatusCode) => fetchState,
-  ),
-  currentComments: getCurrentComments,
+  )(player),
+  currentComments: ({ player }: RootState) => getCurrentComments(player),
 }
 
 export const PLAYER_PREFIX = _.name

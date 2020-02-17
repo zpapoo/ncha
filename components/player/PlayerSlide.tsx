@@ -38,9 +38,7 @@ const TimeLine = styled.div`
 export const PlayerSlide = () => {
   const dispatch = useDispatch()
   const sliderRef = useRef<HTMLDivElement>(null)
-  const { current, total } = useSelector<RootState, PlayerTime>(state =>
-    playerSelectors.times(state.player),
-  )
+  const { current, total } = useSelector<RootState, PlayerTime>(playerSelectors.times)
   const width = (current / total) * 100
   const { requestUpdateCurrentTime }= playerActions
 

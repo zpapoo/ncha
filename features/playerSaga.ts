@@ -4,7 +4,7 @@ import { AxiosResponse } from 'axios'
 import { call, delay, put, select, takeLatest } from 'redux-saga/effects'
 
 import { RootState } from '.'
-import { playerActions } from './playerSlice'
+import { movieSelectors, playerActions } from './playerSlice'
 
 function* playerToggleSaga() {
   const { requestUpdateCurrentTime } = playerActions
@@ -44,7 +44,7 @@ export function* watchPlayerFetch() {
 
 function* playerUpdateTimeSaga({ payload }: PayloadAction<number>) {
   const runningTime = yield select(
-    ({ player }: RootState) => player.movie.running_time,
+    movieSelectors.movie,
   )
   const requestTime = Math.ceil(payload)
   let targetTime = requestTime
