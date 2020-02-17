@@ -24,20 +24,23 @@ describe('[Features - Player Reducer]', () => {
     fetchState: FetchStatusCode.LOADING,
   }
 
-  it('play action은 isPlaying을 true로 수정한다.', () => {
+  it('toggle action은 isPlaying이 false일때 true로 변경한다.', () => {
     // Given
-    const state = initialState
+    const state = {
+      ...initialState,
+      isPlaying: false,
+    }
     // When
-    const result = playerReducer(state, playerActions.play())
+    const result = playerReducer(state, playerActions.toggle())
     // Then
     expect(result.isPlaying).toBeTruthy()
   })
 
-  it('pause action은 isPlaying을 false로 수정한다.', () => {
+  it('toggle action은 isPlaying이 true일때 false로 변경한다.', () => {
     // Given
     const state = initialState
     // When
-    const result = playerReducer(state, playerActions.pause())
+    const result = playerReducer(state, playerActions.toggle())
     // Then
     expect(result.isPlaying).toBeFalsy()
   })
