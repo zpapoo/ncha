@@ -38,7 +38,10 @@ describe('[Features - Player Reducer]', () => {
 
   it('toggle action은 isPlaying이 true일때 false로 변경한다.', () => {
     // Given
-    const state = initialState
+    const state = {
+      ...initialState,
+      isPlaying: true,
+    }
     // When
     const result = playerReducer(state, playerActions.toggle())
     // Then
