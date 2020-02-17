@@ -61,12 +61,8 @@ describe('[Features - Player Reducer]', () => {
 describe('[Features - Player Selector]', () => {
   it('currentComments Selector는 player의 현재 진행시간을 기반으로 나타나야 하는 comment를 필터링 한다.', () => {
     // Given
-    const { data } = playerCommentsMockData
-    const mockMovie = {
-      ...data,
-      runningTime: data.running_time,
-    }
-    const expected = [
+    const mockMovie = playerCommentsMockData.data
+    const comment = [
       {
         kind: COMMENT_TYPE.MUSIC_DIRECTOR,
         contents: [
@@ -75,11 +71,31 @@ describe('[Features - Player Selector]', () => {
         ],
         time: 1,
       },
+      {
+        kind: COMMENT_TYPE.MUSIC_DIRECTOR,
+        contents: [
+          '방황하였으며, 우리의 얼마나 심장은 불어 청춘의 이상의 투명하되 것이다. 가슴이 따뜻한 작고 힘있다. 얼음이 무엇을 천고에 쓸쓸하랴? 같으며,설레는 거친 새 장식하는 희망의 얼음과 것 같으며, 설레는 거친 새장식하는 희망의 얼음과 것 같으며, 설레는 거친 새 장식하는 희망의',
+          '가슴이 따뜻한 작고 힘있다.',
+        ],
+        time: 3,
+      },
     ]
+    const currentTime = 2
+    const state = {
+      player: {
+        movie: {
+          id: mockMovie.id,
+          title: mockMovie.title,
+          running_time: mockMovie.running_time, // 11952
+          comments: comment,
+        },
+        currentTime,
+      },
+    }
     // When
-    const result = movieSelectors.currentComments.resultFunc(mockMovie, 2)
+    const result = movieSelectors.currentComments(state as any)
     // Then
-    expect(result).toEqual(expected)
+    expect(result).toEqual(comment[0])
   })
 
   it('time Selector는 player의 현재 진행시간과 runningTime을 가져온다.', () => {
