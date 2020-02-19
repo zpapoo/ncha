@@ -6,7 +6,7 @@ import { call, delay, put, select, takeLatest } from 'redux-saga/effects'
 import { RootState } from '.'
 import { movieSelectors, playerActions } from './playerSlice'
 
-function* playerToggleSaga() {
+export function* playerToggleSaga() {
   const { requestUpdateCurrentTime } = playerActions
   const isPlaying = yield select(
     ({ player }: RootState) => player.isPlaying,
