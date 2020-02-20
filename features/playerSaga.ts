@@ -3,21 +3,21 @@ import { getComments } from 'api/playerComments'
 import { AxiosResponse } from 'axios'
 import { call, delay, put, select, takeLatest } from 'redux-saga/effects'
 
-import { RootState } from '.'
-import { movieSelectors, playerActions } from './playerSlice'
+import { movieSelectors, playerActions, playerSelectors } from './playerSlice'
 
 export function* playerToggleSaga() {
   const { requestUpdateCurrentTime } = playerActions
   const isPlaying = yield select(
-    ({ player }: RootState) => player.isPlaying,
+    playerSelectors.isPlaying,
   )
 
   while(isPlaying) {
     yield delay(1000)
-    const currentTime = yield select(
-      ({ player }: RootState) => player.currentTime,
+    const { current } = yield select(
+      playerSelectors.times,
     )
-    yield put(requestUpdateCurrentTime(currentTime + 1))
+
+    yield put(requestUpdateCurrentTime(current + 1))
   }
 }
 

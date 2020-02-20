@@ -93,6 +93,10 @@ const getCurrentComments = createSelector(
 
 export const playerSelectors = {
   times: ({ player }: RootState) => getTimes(player),
+  isPlaying: ({ player }: RootState) => createSelector(
+    ({ isPlaying }: PlayerState) => isPlaying,
+    (isPlaying: boolean) => isPlaying,
+  )(player),
 }
 
 export const movieSelectors = {
