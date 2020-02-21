@@ -6,7 +6,6 @@ import { call, delay, put, select, takeLatest } from 'redux-saga/effects'
 import { movieSelectors, playerActions, playerSelectors } from './playerSlice'
 
 export function* playerToggleSaga() {
-  const { requestUpdateCurrentTime } = playerActions
   const isPlaying = yield select(
     playerSelectors.isPlaying,
   )
@@ -17,7 +16,7 @@ export function* playerToggleSaga() {
       playerSelectors.times,
     )
 
-    yield put(requestUpdateCurrentTime(current + 1))
+    yield put(playerActions.requestUpdateCurrentTime(current + 1))
   }
 }
 
