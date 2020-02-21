@@ -3,7 +3,7 @@ import { configureStore } from '@reduxjs/toolkit'
 import createSagaMiddleware from 'redux-saga'
 import { all } from 'redux-saga/effects'
 
-import { watchPlayerFetch, watchPlayerToggle, watchPlayerUpdateTime } from './playerSaga'
+import { playerSaga } from './playerSaga'
 import { PLAYER_PREFIX, playerReducer } from './playerSlice'
 
 const rootReducer = combineReducers({
@@ -12,9 +12,7 @@ const rootReducer = combineReducers({
 
 export function* rootSaga() {
   yield all([
-    watchPlayerToggle(),
-    watchPlayerFetch(),
-    watchPlayerUpdateTime(),
+    ...playerSaga,
   ])
 }
 

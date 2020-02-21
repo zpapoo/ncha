@@ -20,7 +20,7 @@ export function* playerToggleSaga() {
   }
 }
 
-export function* watchPlayerToggle() {
+function* watchPlayerToggle() {
   const { toggle } = playerActions
   yield takeLatest(`${toggle}`, playerToggleSaga)
 }
@@ -36,7 +36,7 @@ function* playerFetchSaga({ payload }: PayloadAction<number>) {
   }
 }
 
-export function* watchPlayerFetch() {
+function* watchPlayerFetch() {
   const { fetch } = playerActions
   yield takeLatest(`${fetch}`, playerFetchSaga)
 }
@@ -57,7 +57,13 @@ function* playerUpdateTimeSaga({ payload }: PayloadAction<number>) {
   yield put(playerActions.updateCurrentTime(targetTime))
 }
 
-export function* watchPlayerUpdateTime() {
+function* watchPlayerUpdateTime() {
   const { requestUpdateCurrentTime } = playerActions
   yield takeLatest(`${requestUpdateCurrentTime}`, playerUpdateTimeSaga)
 }
+
+export const playerSaga = [
+  watchPlayerToggle(),
+  watchPlayerFetch(),
+  watchPlayerUpdateTime(),
+]
