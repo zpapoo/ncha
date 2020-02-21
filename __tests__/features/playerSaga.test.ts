@@ -1,8 +1,7 @@
 import { FetchStatusCode } from 'api'
-import { RootState } from 'features'
 import { playerToggleSaga } from 'features/playerSaga'
 import { PLAYER_PREFIX, playerActions, playerSelectors } from 'features/playerSlice'
-import { delay, select } from 'redux-saga/effects'
+import { delay, put, select } from 'redux-saga/effects'
 
 const initialState = {
   movie: {
@@ -30,8 +29,10 @@ describe('playerToggle saga', () => {
 
     // Then
     expect(gen.next(state[PLAYER_PREFIX] as any).value).toEqual(select(playerSelectors.isPlaying))
-    expect(gen.next().value).toEqual(delay(1000))
-    // expect(gen.next(state[PLAYER_PREFIX] as any).value).toEqual(select(playerSelectors.times))
-    // expect(gen.next().value).toEqual(playerActions.requestUpdateCurrentTime)
+    expect(gen.next(state[PLAYER_PREFIX] as any).value).toEqual(delay(1000))
+    expect(gen.next(state[PLAYER_PREFIX] as any).value).toEqual(select(playerSelectors.times))
+    expect(gen.next({ current: 2 }).value).toEqual(
+      put(playerActions.requestUpdateCurrentTime(3)),
+    )
   })
 })
