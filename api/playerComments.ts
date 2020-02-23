@@ -7,6 +7,6 @@ const mockData: Promise<any> = new Promise(resolve =>
 )
 
 export const getComments = (id: number): Promise<AxiosResponse> => {
-  // return requestGET(`/api/movie/${id}`)
+  // return axiosInstance.get(`/api/movie/${id}`)
   return mockData
 }

@@ -1,4 +1,4 @@
-import Axios, { AxiosError, AxiosInstance } from 'axios'
+import Axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
 
 export enum FetchStatusCode {
   LOADING = 99,
@@ -14,36 +14,13 @@ const axiosInstance: AxiosInstance = Axios.create({
   headers: {},
 })
 
-export const requestGET = async(url: string, {
-  params = {},
-  headers = {},
-} = {}) => {
-  try {
-    return await axiosInstance.get(url, { params, headers })
-  } catch (error) {
-    return handleError(error)
-  }
-}
-
-export const requestPOST = async(
-  url: string,
-  data: object = {},
-  {
-    params = {},
-    headers = {},
-  } = {},
-) => {
-  try {
-    return await axiosInstance.post(url, data, { params, headers })
-  } catch (error) {
-    return handleError(error)
-  }
-}
-
-const handleError = (error: AxiosError) => {
-  if (error.response) {
+axiosInstance.interceptors.response.use(
+  (response: AxiosResponse) => {
+    return response.data
+  },
+  (error: AxiosError) => {
+  // 오류 응답을 처리
+  // ...
     throw error.response
-  }
-
-  throw (error)
-}
+  },
+)
