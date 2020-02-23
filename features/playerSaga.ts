@@ -20,11 +20,6 @@ export function* playerToggleSaga() {
   }
 }
 
-function* watchPlayerToggle() {
-  const { toggle } = playerActions
-  yield takeLatest(`${toggle}`, playerToggleSaga)
-}
-
 function* playerFetchSaga({ payload }: PayloadAction<number>) {
   try {
     const { data } = yield call(getComments, payload)
@@ -34,11 +29,6 @@ function* playerFetchSaga({ payload }: PayloadAction<number>) {
     const error: AxiosResponse = e
     yield put(playerActions.fail(error.status))
   }
-}
-
-function* watchPlayerFetch() {
-  const { fetch } = playerActions
-  yield takeLatest(`${fetch}`, playerFetchSaga)
 }
 
 function* playerUpdateTimeSaga({ payload }: PayloadAction<number>) {
@@ -57,13 +47,8 @@ function* playerUpdateTimeSaga({ payload }: PayloadAction<number>) {
   yield put(playerActions.updateCurrentTime(targetTime))
 }
 
-function* watchPlayerUpdateTime() {
-  const { requestUpdateCurrentTime } = playerActions
-  yield takeLatest(`${requestUpdateCurrentTime}`, playerUpdateTimeSaga)
-}
-
 export const playerSaga = [
-  watchPlayerToggle(),
-  watchPlayerFetch(),
-  watchPlayerUpdateTime(),
+  takeLatest(`${playerActions.requestUpdateCurrentTime}`, playerUpdateTimeSaga),
+  takeLatest(`${playerActions.fetch}`, playerFetchSaga),
+  takeLatest(`${playerActions.toggle}`, playerToggleSaga),
 ]
