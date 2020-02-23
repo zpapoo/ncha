@@ -3,6 +3,7 @@ import { RootState } from 'features'
 import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
 import React, { useRef } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { offsetLeft } from 'utils/dom'
 
 interface SlideProps {
   width: number;
@@ -34,17 +35,6 @@ const TimeLine = styled.div`
   height: 2px;
   background-color: rgba(255, 255, 255, 0.5);
 `
-export const offsetLeft = (element: any) => {
-  let el = element
-  let x = el.offsetLeft
-
-  while (el.offsetParent) {
-    x += el.offsetParent.offsetLeft
-    el = el.offsetParent
-  }
-
-  return x
-}
 
 export const PlayerSlide = () => {
   const dispatch = useDispatch()
