@@ -31,17 +31,17 @@ function* playerFetchSaga({ payload }: PayloadAction<number>) {
   }
 }
 
-function* playerUpdateTimeSaga({ payload }: PayloadAction<number>) {
-  const runningTime = yield select(
-    movieSelectors.movie,
+export function* playerUpdateTimeSaga({ payload }: PayloadAction<number>) {
+  const { total } = yield select(
+    playerSelectors.times,
   )
   const requestTime = Math.ceil(payload)
   let targetTime = requestTime
 
   if (requestTime < 0) {
     targetTime = 0
-  } else if (requestTime > runningTime) {
-    targetTime = runningTime
+  } else if (requestTime > total) {
+    targetTime = total
   }
 
   yield put(playerActions.updateCurrentTime(targetTime))
