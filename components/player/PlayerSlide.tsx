@@ -49,19 +49,20 @@ export const PlayerSlide = () => {
     if (e instanceof TouchEvent) {
 
     } else if (e instanceof MouseEvent) {
-      console.log('onMouseUp', e.clientX)
+
     }
     // TODO: with Custom Hook
     window.removeEventListener('mousemove', onMouseMove)
+    window.removeEventListener('touchmove', onMouseMove)
     window.removeEventListener('mouseup', onMouseUp)
   }
   const onMouseMove = (e: TouchEvent | MouseEvent) => {
     e.stopPropagation()
-    e.preventDefault()
+    // e.preventDefault()
     if (sliderRef.current) {
       const { offsetWidth } = sliderRef.current
       if (e instanceof TouchEvent) {
-
+        console.log('@@ e @@', e)
       } else if (e instanceof MouseEvent && e.offsetX > 0) {
         requestAnimationFrame(() => {
           const diff = e.clientX - offsetLeft(sliderRef.current)
@@ -75,7 +76,11 @@ export const PlayerSlide = () => {
 
   const onMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation()
+    console.log('mouseDown')
+    // desktop
     window.addEventListener('mousemove', onMouseMove)
+    // mobile
+    window.addEventListener('touchmove', onMouseMove)
     window.addEventListener('mouseup', onMouseUp)
   }
 
@@ -93,6 +98,7 @@ export const PlayerSlide = () => {
     <TimeLine
       ref={sliderRef}
       onMouseDown={onMouseDown}
+      onTouchStart={onMouseDown}
       onClick={onClick}
     >
       <Slide width={width} />
