@@ -42,18 +42,23 @@ export const PlayerSlide = () => {
   const width = (current / total) * 100
   const { requestUpdateCurrentTime }= playerActions
 
-  const onMouseUp = (e: React.MouseEvent) => {
+  const onMouseUp = (e: TouchEvent | MouseEvent) => {
     e.stopPropagation()
+    console.log('onMouseUp')
     // TODO: with Custom Hook
+    window.removeEventListener('mousemove', onMouseMove)
+    window.removeEventListener('mouseup', onMouseUp)
   }
-  const onMouseMove = (e: React.MouseEvent) => {
+  const onMouseMove = (e: TouchEvent | MouseEvent) => {
     e.stopPropagation()
+    console.log('onMouseMove')
     // TODO: with Custom Hook
   }
 
-  const onMouseDown = (e: React.MouseEvent) => {
+  const onMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation()
-    // TODO: with Custom Hook
+    window.addEventListener('mousemove', onMouseMove)
+    window.addEventListener('mouseup', onMouseUp)
   }
 
   const onClick = (e: React.MouseEvent) => {
@@ -70,8 +75,6 @@ export const PlayerSlide = () => {
     <TimeLine
       ref={sliderRef}
       onMouseDown={onMouseDown}
-      onMouseMove={onMouseMove}
-      onMouseUp={onMouseUp}
       onClick={onClick}
     >
       <Slide width={width} />
