@@ -34,7 +34,7 @@ const TimeLine = styled.div`
   height: 2px;
   background-color: rgba(255, 255, 255, 0.5);
 `
-export const offsetLeft2 = (element: any) => {
+export const offsetLeft = (element: any) => {
   let el = element
   let x = el.offsetLeft
 
@@ -69,19 +69,13 @@ export const PlayerSlide = () => {
     e.stopPropagation()
     e.preventDefault()
     if (sliderRef.current) {
-      const { offsetWidth, offsetLeft, clientWidth } = sliderRef.current
-      // 394
-      // console.log('@@ offsetWidth @@', offsetWidth)
+      const { offsetWidth } = sliderRef.current
       if (e instanceof TouchEvent) {
 
       } else if (e instanceof MouseEvent && e.offsetX > 0) {
         requestAnimationFrame(() => {
-          // console.log(e.offsetX, e.clientX, clientWidth)
-          // const percent = e.offsetX / offsetWidth
-          console.log(offsetLeft2(sliderRef.current), e.clientX)
-          const diff = e.clientX - offsetLeft2(sliderRef.current)
+          const diff = e.clientX - offsetLeft(sliderRef.current)
           const percent = Math.min(Math.max(diff / offsetWidth, 0), 1)
-          console.log('@@ check percent @@',  percent * total)
           dispatch(requestUpdateCurrentTime(percent * total))
         })
       }
