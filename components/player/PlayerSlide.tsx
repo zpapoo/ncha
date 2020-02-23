@@ -42,16 +42,34 @@ export const PlayerSlide = () => {
   const width = (current / total) * 100
   const { requestUpdateCurrentTime }= playerActions
 
+  // FIXME: Move할때마다 dispatch하면 너무 성능이 떨어질것 같은데.., TouchEvent도 잡아야 한다.
   const onMouseUp = (e: TouchEvent | MouseEvent) => {
     e.stopPropagation()
-    console.log('onMouseUp')
+    if (e instanceof TouchEvent) {
+
+    } else if (e instanceof MouseEvent) {
+      console.log('onMouseUp', e.clientX)
+    }
     // TODO: with Custom Hook
     window.removeEventListener('mousemove', onMouseMove)
     window.removeEventListener('mouseup', onMouseUp)
   }
   const onMouseMove = (e: TouchEvent | MouseEvent) => {
     e.stopPropagation()
-    console.log('onMouseMove')
+    e.preventDefault()
+    if (sliderRef.current) {
+      const { offsetWidth } = sliderRef.current
+      console.log('@@ offsetWidth @@', offsetWidth)
+      if (e instanceof TouchEvent) {
+
+      } else if (e instanceof MouseEvent && e.offsetX > 0) {
+        requestAnimationFrame(() => {
+          const percent = e.offsetX / offsetWidth
+          console.log('@@ check percent @@',  percent * total)
+          // dispatch(requestUpdateCurrentTime(percent * total))
+        })
+      }
+    }
     // TODO: with Custom Hook
   }
 
@@ -63,7 +81,7 @@ export const PlayerSlide = () => {
 
   const onClick = (e: React.MouseEvent) => {
     const { offsetX } = e.nativeEvent
-
+    console.log('onClick Position', offsetX)
     if (sliderRef.current) {
       const { offsetWidth } = sliderRef.current
       const percent = offsetX / offsetWidth
