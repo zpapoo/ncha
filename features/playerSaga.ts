@@ -3,7 +3,7 @@ import { getComments } from 'api/playerComments'
 import { AxiosResponse } from 'axios'
 import { call, delay, put, select, takeLatest } from 'redux-saga/effects'
 
-import { movieSelectors, playerActions, playerSelectors } from './playerSlice'
+import { playerActions, playerSelectors } from './playerSlice'
 
 export function* playerToggleSaga() {
   const isPlaying = yield select(
