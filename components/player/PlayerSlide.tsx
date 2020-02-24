@@ -58,7 +58,7 @@ export const PlayerSlide = () => {
   }
   const onMouseMove = (e: TouchEvent | MouseEvent) => {
     e.stopPropagation()
-    // e.preventDefault()
+
     if (sliderRef.current) {
       const { offsetWidth } = sliderRef.current
       if (e instanceof TouchEvent) {
@@ -66,7 +66,7 @@ export const PlayerSlide = () => {
         const diff = clientX - offsetLeft(sliderRef.current)
         const percent = Math.min(Math.max(diff / offsetWidth, 0), 1)
         dispatch(requestUpdateCurrentTime(percent * total))
-      } else if (e instanceof MouseEvent && e.offsetX > 0) {
+      } else if (e instanceof MouseEvent) {
         requestAnimationFrame(() => {
           const diff = e.clientX - offsetLeft(sliderRef.current)
           const percent = Math.min(Math.max(diff / offsetWidth, 0), 1)
@@ -79,7 +79,6 @@ export const PlayerSlide = () => {
 
   const onMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
     e.stopPropagation()
-    console.log('mouseDown')
     // desktop
     window.addEventListener('mousemove', onMouseMove)
     // mobile
@@ -89,7 +88,6 @@ export const PlayerSlide = () => {
 
   const onClick = (e: React.MouseEvent) => {
     const { offsetX } = e.nativeEvent
-    console.log('onClick Position', offsetX)
     if (sliderRef.current) {
       const { offsetWidth } = sliderRef.current
       const percent = offsetX / offsetWidth
