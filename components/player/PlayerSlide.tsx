@@ -62,7 +62,10 @@ export const PlayerSlide = () => {
     if (sliderRef.current) {
       const { offsetWidth } = sliderRef.current
       if (e instanceof TouchEvent) {
-        console.log('@@ e @@', e)
+        const { clientX } = e.changedTouches[0]
+        const diff = clientX - offsetLeft(sliderRef.current)
+        const percent = Math.min(Math.max(diff / offsetWidth, 0), 1)
+        dispatch(requestUpdateCurrentTime(percent * total))
       } else if (e instanceof MouseEvent && e.offsetX > 0) {
         requestAnimationFrame(() => {
           const diff = e.clientX - offsetLeft(sliderRef.current)
