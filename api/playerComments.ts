@@ -1,12 +1,6 @@
-import { AxiosResponse } from 'axios'
+import { MockDataType, playerCommentsMockData } from '__tests__/mockData/comment'
 
-import { playerCommentsMockData } from '__tests__/mockData/comment'
-
-const mockData: Promise<any> = new Promise(resolve =>
-  resolve(playerCommentsMockData),
-)
-
-export const getComments = (id: number): Promise<AxiosResponse> => {
+export const getComments = (id: number): Promise<MockDataType> => {
   // return axiosInstance.get(`/api/movie/${id}`)
-  return mockData
+  return Promise.resolve(playerCommentsMockData)
 }

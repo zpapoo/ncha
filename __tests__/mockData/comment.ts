@@ -1,7 +1,20 @@
 import { COMMENT_TYPE } from 'constants/playerConstants'
 
+interface MockDataCommentType {
+  kind: COMMENT_TYPE,
+  contents: string[],
+  time: number
+}
+export interface MockDataType {
+  data: {
+    id: number,
+    running_time: number,
+    title: string,
+    comments: MockDataCommentType[],
+  },
+}
 /* eslint-disable max-len */
-export const playerCommentsMockData = {
+export const playerCommentsMockData: MockDataType = {
   data: {
     id: 1,
     running_time: 11952,
