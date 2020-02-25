@@ -1,6 +1,9 @@
 import { createAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { FetchStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
+import { connectToRoot } from 'utils/store'
+
+import { RootState } from '.'
 
 export interface Comment {
   kind: COMMENT_TYPE
@@ -40,9 +43,9 @@ const initialState: PlayerState = {
   currentTime: 0,
   fetchState: FetchStatusCode.LOADING,
 }
-const FETCH_MOVIE_INFO = `${name}/fetchMovieInfo`
+const FETCH_MOVIE_INFO = `${name}/fetch`
 const REQUEST_UPDATE_CURRENT_TIME = `${name}/requestUpdateCurrentTime`
-const fetchMovieInfo = createAction<number>(FETCH_MOVIE_INFO)
+const fetch = createAction<number>(FETCH_MOVIE_INFO)
 const requestUpdateCurrentTime = createAction<number>(REQUEST_UPDATE_CURRENT_TIME)
 
 const reducers = {
@@ -56,17 +59,14 @@ const reducers = {
   fail: (state: PlayerState, { payload }: PayloadAction<FetchStatusCode>) => {
     state.fetchState = payload
   },
-  play: (state: PlayerState) => {
-    state.isPlaying = true
+  toggle: (state: PlayerState) => {
+    state.isPlaying = !state.isPlaying
   },
   updateCurrentTime: (
     state: PlayerState,
     { payload }: PayloadAction<number>,
   ) => {
     state.currentTime = payload
-  },
-  pause: (state: PlayerState) => {
-    state.isPlaying = false
   },
 }
 
@@ -92,23 +92,27 @@ const getCurrentComments = createSelector(
     movie.comments.filter((comment: Comment) => comment.time <= currentTime),
 )
 
-export const playerSelectors = {
-  times: getTimes,
+export const PLAYER_PREFIX = _.name
+export const playerReducer = _.reducer
+export const playerActions = {
+  ..._.actions,
+  fetch,
+  requestUpdateCurrentTime,
 }
 
-export const movieSelectors = {
-  movie: getMovieInfo,
+export const movieSelectors = connectToRoot(PLAYER_PREFIX,  {
+  movie:  getMovieInfo,
   movieFetchState: createSelector(
     ({ fetchState }: PlayerState) => fetchState,
     (fetchState: FetchStatusCode) => fetchState,
   ),
   currentComments: getCurrentComments,
-}
+})
 
-export const PLAYER_PREFIX = _.name
-export const playerReducer = _.reducer
-export const playerActions = {
-  ..._.actions,
-  fetchMovieInfo,
-  requestUpdateCurrentTime,
-}
+export const playerSelectors = connectToRoot(PLAYER_PREFIX,  {
+  times: getTimes,
+  isPlaying: createSelector(
+    ({ isPlaying }: PlayerState) => isPlaying,
+    (isPlaying: boolean) => isPlaying,
+  ),
+})

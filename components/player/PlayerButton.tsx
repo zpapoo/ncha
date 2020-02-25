@@ -35,10 +35,8 @@ export const PlayerButton = () => {
   const isPlaying = useSelector<RootState, boolean>(
     state => state.player.isPlaying,
   )
-  const { current } = useSelector<RootState, PlayerTime>(state =>
-    playerSelectors.times(state.player),
-  )
-  const { play, pause, requestUpdateCurrentTime } = playerActions
+  const { current } = useSelector<RootState, PlayerTime>(playerSelectors.times)
+  const { toggle, requestUpdateCurrentTime } = playerActions
 
   return (
     <FlexWrapper>
@@ -47,8 +45,7 @@ export const PlayerButton = () => {
       />
       <PlayButton
         isPlaying={isPlaying}
-        onClick={() => isPlaying ? dispatch(pause()) : dispatch(play())
-        }
+        onClick={() => dispatch(toggle()) }
       />
       <ForwardButton
         onClick={() => dispatch(requestUpdateCurrentTime(current+5))}

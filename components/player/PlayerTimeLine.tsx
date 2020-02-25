@@ -22,9 +22,7 @@ const FormattedTime = styled.span`
 `
 
 export const PlayerTimeLine = () => {
-  const { current, total } = useSelector<RootState, PlayerTime>(state =>
-    playerSelectors.times(state.player),
-  )
+  const { current, total } = useSelector<RootState, PlayerTime>(playerSelectors.times)
 
   return (
     <TimeLineContainer>

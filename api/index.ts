@@ -1,6 +1,4 @@
-import Axios, { AxiosError, AxiosInstance } from 'axios'
-import { from, throwError } from 'rxjs'
-import { catchError, map } from 'rxjs/operators'
+import Axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios'
 
 export enum FetchStatusCode {
   LOADING = 99,
@@ -16,17 +14,13 @@ const axiosInstance: AxiosInstance = Axios.create({
   headers: {},
 })
 
-export const requestGET = (url: string, params: object = {}) => {
-  return from(axiosInstance.get(url, { params })).pipe(
-    map(response => response.data),
-    catchError(handleError),
-  )
-}
-
-const handleError = (error: AxiosError) => {
-  if (error.response) {
-    return throwError(error.response)
-  }
-
-  return throwError(error)
-}
+axiosInstance.interceptors.response.use(
+  (response: AxiosResponse) => {
+    return response.data
+  },
+  (error: AxiosError) => {
+  // 오류 응답을 처리
+  // ...
+    throw error.response
+  },
+)

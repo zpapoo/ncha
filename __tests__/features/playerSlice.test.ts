@@ -3,41 +3,49 @@ import { FetchStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
 import {
   movieSelectors,
+  PLAYER_PREFIX,
   playerActions,
   playerReducer,
   playerSelectors,
-  PlayerState,
 } from 'features/playerSlice'
 
-import { playerCommentsMockData } from '__tests__/mockData/comment'
+const initialState = {
+  movie: {
+    id: 0,
+    title: '',
+    running_time: 1,
+    comments: [],
+  },
+  isPlaying: false,
+  currentTime: 0,
+  fetchState: FetchStatusCode.LOADING,
+}
 
 describe('[Features - Player Reducer]', () => {
-  const initialState: PlayerState = {
-    movie: {
-      id: 0,
-      title: '',
-      running_time: 1,
-      comments: [],
-    },
-    isPlaying: false,
-    currentTime: 0,
-    fetchState: FetchStatusCode.LOADING,
-  }
-
-  it('play action은 isPlaying을 true로 수정한다.', () => {
+  it('toggle action은 isPlaying이 false일때 true로 변경한다.', () => {
     // Given
-    const state = initialState
+    const state = {
+      [PLAYER_PREFIX]: {
+        ...initialState,
+        isPlaying: false,
+      },
+    }
     // When
-    const result = playerReducer(state, playerActions.play())
+    const result = playerReducer(state[PLAYER_PREFIX], playerActions.toggle())
     // Then
     expect(result.isPlaying).toBeTruthy()
   })
 
-  it('pause action은 isPlaying을 false로 수정한다.', () => {
+  it('toggle action은 isPlaying이 true일때 false로 변경한다.', () => {
     // Given
-    const state = initialState
+    const state = {
+      [PLAYER_PREFIX]: {
+        ...initialState,
+        isPlaying: true,
+      },
+    }
     // When
-    const result = playerReducer(state, playerActions.pause())
+    const result = playerReducer(state[PLAYER_PREFIX], playerActions.toggle())
     // Then
     expect(result.isPlaying).toBeFalsy()
   })
@@ -55,66 +63,75 @@ describe('[Features - Player Reducer]', () => {
 describe('[Features - Player Selector]', () => {
   it('currentComments Selector는 player의 현재 진행시간을 기반으로 나타나야 하는 comment를 필터링 한다.', () => {
     // Given
-    const { data } = playerCommentsMockData
-    const mockMovie = {
-      ...data,
-      runningTime: data.running_time,
-    }
-    const expected = [
+    const comment = [
       {
         kind: COMMENT_TYPE.MUSIC_DIRECTOR,
         contents: [
-          '방황하였으며, 우리의 얼마나 심장은 불어 청춘의 이상의 투명하되 것이다. 가슴이 따뜻한 작고 힘있다. 얼음이 무엇을 천고에 쓸쓸하랴? 같으며,설레는 거친 새 장식하는 희망의 얼음과 것 같으며, 설레는 거친 새장식하는 희망의 얼음과 것 같으며, 설레는 거친 새 장식하는 희망의',
-          '가슴이 따뜻한 작고 힘있다.',
+          'test comment 1',
+          'test comment 2',
         ],
         time: 1,
       },
+      {
+        kind: COMMENT_TYPE.MUSIC_DIRECTOR,
+        contents: [
+          'test comment 3',
+          'test comment 4',
+        ],
+        time: 3,
+      },
     ]
+
+    const state = {
+      [PLAYER_PREFIX]: {
+        movie: {
+          ...initialState,
+          running_time: 11952, // 11952
+          comments: comment,
+        },
+        currentTime: 2,
+      },
+    }
     // When
-    const result = movieSelectors.currentComments.resultFunc(mockMovie, 2)
+    const result = movieSelectors.currentComments(state as any)
     // Then
-    expect(result).toEqual(expected)
+    expect(result).toEqual([comment[0]])
   })
 
   it('time Selector는 player의 현재 진행시간과 runningTime을 가져온다.', () => {
     // Given
-    const state: PlayerState = {
-      movie: {
-        id: 0,
-        title: '',
-        running_time: 10,
-        comments: [],
+    const state = {
+      [PLAYER_PREFIX]: {
+        ...initialState,
+        movie: {
+          ...initialState.movie,
+          running_time: 10,
+        },
+        currentTime: 2,
       },
-      isPlaying: false,
-      currentTime: 0,
-      fetchState: FetchStatusCode.LOADING,
     }
-    const actions = {
-      type: `${playerActions.updateCurrentTime}`,
-      payload: 2,
-    }
-    const updatedState = playerReducer(state, actions)
+
     const expected = {
       current: 2,
       total: 10,
     }
     // When
-    const result = playerSelectors.times.resultFunc(
-      updatedState.currentTime,
-      state.movie.running_time,
-    )
+    const result = playerSelectors.times(state as any)
     // Then
     expect(result).toEqual(expected)
   })
 
   it('movieFetchState는 영화 정보 api요청 status를 가져온다.', () => {
     // Given
-    const expected = FetchStatusCode.LOADING
+    const state = {
+      [PLAYER_PREFIX]: {
+        ...initialState,
+        fetchState: FetchStatusCode.LOADING,
+      },
+    }
     // When
-    const result = movieSelectors.movieFetchState.resultFunc(
-      FetchStatusCode.LOADING,
-    )
+    const result = movieSelectors.movieFetchState(state as any)
     // Then
-    expect(result).toEqual(expected)
+    expect(result).toBe(FetchStatusCode.LOADING)
   })
 })
