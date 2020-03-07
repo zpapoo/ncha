@@ -2,9 +2,8 @@ import styled from '@emotion/styled'
 import { RootState } from 'features'
 import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
 import { useMouseMoveListener } from 'hooks/mouseEvent'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { offsetLeft } from 'utils/dom'
 
 interface SlideProps {
   width: number;
