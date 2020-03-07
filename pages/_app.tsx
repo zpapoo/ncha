@@ -16,6 +16,7 @@ export default class MyApp extends App {
               margin: auto;
               max-width: 520px;
               background-color: #141414;
+              overflow-x: hidden;
               min-height: 100%;
               font-family: "Noto Sans KR", Helvetica, Arial, sans-serif;
             }
