@@ -14,8 +14,6 @@ interface Props {
 interface BubbleProps {
   color: string
   time: number
-  // FIXME: type issue
-  // as: any
 }
 
 const Bubble = styled<'div', BubbleProps>('div')`
@@ -58,26 +56,22 @@ const Bubble = styled<'div', BubbleProps>('div')`
 export const SpeechBubble = ({ content, time, kind }: Props) => {
   const [{ x, y }, set] = useSpring(() => ({ x: 0, y: 0 }))
 
-  // Set the drag hook and define component movement based on gesture data
-  //{ down, movement: [mx, my], event }
   const bind = useDrag(({ down, movement: [mx, my] }) => {
     set({ x: down ? mx : 0, y: down ? my : 0 })
   })
 
   return (
-    <>
-      <animated.div {...bind()} style={
-        {
-          transform: x.interpolate(x => `translateX(${x}px)`),
-        }
-      } >
-        <Bubble
-          color={COMMENT_COLOR[kind]}
-          time={time}
-        >
-          {content}
-        </Bubble>
-      </animated.div>
-    </>
+    <animated.div {...bind()} style={
+      {
+        transform: x.interpolate(x => `translateX(${x}px)`),
+      }
+    } >
+      <Bubble
+        color={COMMENT_COLOR[kind]}
+        time={time}
+      >
+        {content}
+      </Bubble>
+    </animated.div>
   )
 }
