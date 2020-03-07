@@ -24,16 +24,15 @@ export const useMouseMoveListener = <T extends HTMLElement>() => {
     window.removeEventListener('mousemove', onMouseMove)
     window.removeEventListener('touchmove', onMouseMove)
     window.removeEventListener('mouseup', onMouseUp)
+    window.removeEventListener('touchend', onMouseUp)
   }, [onMouseMove])
 
 
   const onMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
-    e.stopPropagation()
-    // desktop
     window.addEventListener('mousemove', onMouseMove)
-    // mobile
     window.addEventListener('touchmove', onMouseMove)
     window.addEventListener('mouseup', onMouseUp)
+    window.addEventListener('touchend', onMouseUp)
   }
 
   return { onMouseDown, mouseRef, diff }
