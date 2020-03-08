@@ -13,14 +13,15 @@ interface Props {
 }
 
 const Wrapper = styled.div`
+  position: relative;
   padding: 0px 13px 0px 9px;
   font-size: 12px;
   margin-bottom: 17px;
-  will-change: transform;
 `
 
 const ContentWrapper = styled.div`
   display: flex;
+  will-change: transform;
 `
 
 const ProfileImage = styled.div`
@@ -35,42 +36,83 @@ const Name = styled.span`
   color: rgba(255, 255, 255, 0.9);
 `
 
-export const Comments = ({ kind, contents, time }: Props) => {
-  const [{ x }, set] = useSpring(() => ({ x: 0, y: 0 }))
+const Button = styled.div`
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #4E51FF;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  right: -100px;
+`
 
-  const bind = useDrag(({ down, movement: [mx, my] }) => {
-    set({ x: down ? mx : 0, y: down ? my : 0 })
+export const Comments = ({ kind, contents, time }: Props) => {
+  const [{ x }, set] = useSpring(() => ({ x: 0 }))
+
+  const bind = useDrag(({ down, movement: [mx],  delta: [deltaX], cancel, last, memo }) => {
+    console.log('last', last)// 마우스 땔떼 true임.s
+    if (!memo) {
+
+      memo = x.getValue() - mx
+    }
+    // if (deltaX < -200) {
+    //   return !!cancel && cancel()
+    // }
+    console.log('x', x.getValue(), 'deltaX', deltaX, 'mx', mx)
+    if (last) {
+
+      if (x.getValue() < -100) {
+        set({ x: -150 })
+      }
+    } else {
+      if (x.getValue() < -30) {
+        console.log('@@@@ smaller @@@@')
+        set({ x: -150 })
+
+        return
+      }
+    }
+
+    set({ x: down ? mx : 0 })
+
+    return memo
   }, {
     bounds: { left: -150, right: 150 },
   })
 
   return (
-    <>
+    <Wrapper>
       <animated.div {...bind()} style={
         {
           transform: x.interpolate(x => `translateX(${x}px)`),
         }
       } >
-        <Wrapper>
-          <ContentWrapper>
-            <ProfileImage />
-            <div>
-              <Name>{COMMENT_KIND[kind]}</Name>
-              {contents.map((content: string, index: number) => {
-                return (
-                  <SpeechBubble
-                    key={`${kind}-${index}`}
-                    time={time}
-                    kind={kind}
-                    content={content}
-                  />
-                )
-              })}
-            </div>
-          </ContentWrapper>
-        </Wrapper>
-      </animated.div>
+        <ContentWrapper>
+          <ProfileImage />
+          <div>
+            <Name>{COMMENT_KIND[kind]}</Name>
+            {contents.map((content: string, index: number) => {
+              return (
+                <SpeechBubble
+                  key={`${kind}-${index}`}
+                  time={time}
+                  kind={kind}
+                  content={content}
+                />
+              )
+            })}
+          </div>
+        </ContentWrapper>
 
-    </>
+      </animated.div>
+      <animated.div {...bind()} style={
+        {
+          transform: x.interpolate(x => `translateX(${x}px)`),
+        }
+      } >
+        <Button >Button!</Button>
+      </animated.div>
+    </Wrapper>
   )
 }
