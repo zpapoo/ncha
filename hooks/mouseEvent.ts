@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
-import { offsetLeft } from 'utils/dom'
+import { gatherOffsetLeft } from 'utils/dom'
 
 export const useMouseMoveListener = <T extends HTMLElement>() => {
   const [diff, setDiff] = useState(0)
@@ -10,12 +10,12 @@ export const useMouseMoveListener = <T extends HTMLElement>() => {
 
     if (e instanceof TouchEvent) {
       const { clientX } = e.changedTouches[0]
-      const diff = clientX - offsetLeft(mouseRef.current)
+      const diff = clientX - gatherOffsetLeft(mouseRef.current)
       setDiff(diff)
 
       return
     } else if (e instanceof MouseEvent) {
-      const diff = e.clientX - offsetLeft(mouseRef.current)
+      const diff = e.clientX - gatherOffsetLeft(mouseRef.current)
       setDiff(diff)
     }
   }, [])
