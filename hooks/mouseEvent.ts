@@ -12,11 +12,11 @@ export const useMouseMoveListener = <T extends HTMLElement>() => {
       const { clientX } = e.changedTouches[0]
       const diff = clientX - offsetLeft(mouseRef.current)
       setDiff(diff)
+
+      return
     } else if (e instanceof MouseEvent) {
-      requestAnimationFrame(() => {
-        const diff = e.clientX - offsetLeft(mouseRef.current)
-        setDiff(diff)
-      })
+      const diff = e.clientX - offsetLeft(mouseRef.current)
+      setDiff(diff)
     }
   }, [])
 
