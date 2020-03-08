@@ -46,39 +46,29 @@ const Button = styled.div`
   bottom: 0;
   right: -100px;
 `
+const getClosest = (arr: number[], target: number): number => {
+  return arr.reduce((prev, curr) => {
+    return (Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev)
+  })
+}
 
 export const Comments = ({ kind, contents, time }: Props) => {
   const [{ x }, set] = useSpring(() => ({ x: 0 }))
 
-  const bind = useDrag(({ down, movement: [mx],  delta: [deltaX], cancel, last, memo }) => {
-    console.log('last', last)// 마우스 땔떼 true임.s
-    if (!memo) {
+  const bind = useDrag(({ movement: [mx], last }) => {
+    let newX = 0
 
-      memo = x.getValue() - mx
-    }
-    // if (deltaX < -200) {
-    //   return !!cancel && cancel()
-    // }
-    console.log('x', x.getValue(), 'deltaX', deltaX, 'mx', mx)
+    // last: mouseUp
     if (last) {
-
-      if (x.getValue() < -100) {
-        set({ x: -150 })
-      }
+      newX = getClosest([-150, 0], x.getValue())
     } else {
-      if (x.getValue() < -30) {
-        console.log('@@@@ smaller @@@@')
-        set({ x: -150 })
-
-        return
-      }
+      newX = mx
     }
 
-    set({ x: down ? mx : 0 })
-
-    return memo
+    set({ x: newX })
   }, {
     bounds: { left: -150, right: 150 },
+    rubberband: true,
   })
 
   return (
@@ -111,7 +101,7 @@ export const Comments = ({ kind, contents, time }: Props) => {
           transform: x.interpolate(x => `translateX(${x}px)`),
         }
       } >
-        <Button >Button!</Button>
+        <Button />
       </animated.div>
     </Wrapper>
   )
