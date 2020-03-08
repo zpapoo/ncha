@@ -53,14 +53,9 @@ export const Comments = ({ kind, contents, time }: Props) => {
   const [{ x }, set] = useSpring(() => ({ x: 0 }))
 
   const bind = useDrag(({ movement: [mx], last }) => {
-    let newX = 0
 
     // last: mouseUp
-    if (last) {
-      newX = getClosest([-150, 0], x.getValue())
-    } else {
-      newX = mx
-    }
+    const newX = last ? getClosest([-150, 0], x.getValue()) : mx
 
     set({ x: newX })
   }, {
