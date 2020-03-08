@@ -3,6 +3,7 @@ import { COMMENT_KIND, COMMENT_TYPE } from 'constants/playerConstants'
 import React from 'react'
 import { animated, useSpring } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
+import { getClosest } from 'utils/array'
 
 import { SpeechBubble } from './SpeechBubble'
 
@@ -46,11 +47,7 @@ const Button = styled.div`
   bottom: 0;
   right: -100px;
 `
-const getClosest = (arr: number[], target: number): number => {
-  return arr.reduce((prev, curr) => {
-    return (Math.abs(curr - target) < Math.abs(prev - target) ? curr : prev)
-  })
-}
+
 
 export const Comments = ({ kind, contents, time }: Props) => {
   const [{ x }, set] = useSpring(() => ({ x: 0 }))
@@ -68,7 +65,7 @@ export const Comments = ({ kind, contents, time }: Props) => {
     set({ x: newX })
   }, {
     bounds: { left: -150, right: 150 },
-    rubberband: true,
+    rubberband: true, // 경계 벗어날때 탄성계수
   })
 
   return (
