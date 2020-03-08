@@ -18,6 +18,8 @@ const Wrapper = styled.div`
   padding: 0px 13px 0px 9px;
   font-size: 12px;
   margin-bottom: 17px;
+  touch-action: pan-y;
+  overflow: hidden;
 `
 
 const ContentWrapper = styled.div`
@@ -42,10 +44,6 @@ const Button = styled.div`
   height: 32px;
   border-radius: 50%;
   background: #4E51FF;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  right: -100px;
 `
 
 
@@ -55,11 +53,11 @@ export const Comments = ({ kind, contents, time }: Props) => {
   const bind = useDrag(({ movement: [mx], last }) => {
 
     // last: mouseUp
-    const newX = last ? getClosest([-150, 0], x.getValue()) : mx
+    const newX = last ? getClosest([-100, 0], x.getValue()) : mx
 
     set({ x: newX })
   }, {
-    bounds: { left: -150, right: 150 },
+    bounds: { left: -100, right: 100 },
     rubberband: true, // 경계 벗어날때 탄성계수
   })
 
@@ -91,6 +89,11 @@ export const Comments = ({ kind, contents, time }: Props) => {
       <animated.div {...bind()} style={
         {
           transform: x.interpolate(x => `translateX(${x}px)`),
+          width: '32px',
+          height: '32px',
+          position: 'absolute',
+          bottom: '0',
+          right: '-60px',
         }
       } >
         <Button />
