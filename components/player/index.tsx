@@ -8,10 +8,8 @@ import {
   playerActions,
 } from 'features/playerSlice'
 import { useFetchWithStore } from 'hooks/fetch'
-import React, { useRef } from 'react'
+import React from 'react'
 import { useSelector } from 'react-redux'
-import { animated, useSpring } from 'react-spring'
-import { useDrag } from 'react-use-gesture'
 import { renderByFetchState } from 'utils/render'
 
 import { Comments } from './Comments'
@@ -42,12 +40,6 @@ export const Player: React.FC<Props> = () => {
   )
 
   useFetchWithStore<number>(fetchState, () => playerActions.fetch(1))
-  const [{ x, y }, set] = useSpring(() => ({ x: 0, y: 0 }))
-
-  // Set the drag hook and define component movement based on gesture data
-  const bind = useDrag(({ down, movement: [mx, my] }) => {
-    set({ x: down ? mx : 0, y: down ? my : 0 })
-  })
 
   const renderView = () => {
     return (
@@ -67,18 +59,6 @@ export const Player: React.FC<Props> = () => {
             />
           )
         })}
-        <animated.div {...bind()} style={
-          {
-            transform: x.interpolate(x => `translateX(${x}px)`),
-            left: y,
-            color: 'white',
-            padding: '20px',
-            border:'1px solid white',
-          }
-        } >
-        Test Move
-        </animated.div>
-
       </>
     )
   }
