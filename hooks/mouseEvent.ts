@@ -20,7 +20,7 @@ export const useMouseMoveListener = <T extends HTMLElement>() => {
     }
   }, [])
 
-  const onMouseUp = useCallback((e: TouchEvent | MouseEvent) => {
+  const onMouseUp = useCallback(() => {
     window.removeEventListener('mousemove', onMouseMove)
     window.removeEventListener('touchmove', onMouseMove)
     window.removeEventListener('mouseup', onMouseUp)
@@ -28,12 +28,12 @@ export const useMouseMoveListener = <T extends HTMLElement>() => {
   }, [onMouseMove])
 
 
-  const onMouseDown = (e: React.MouseEvent | React.TouchEvent) => {
+  const onMouseDown = useCallback(() => {
     window.addEventListener('mousemove', onMouseMove)
     window.addEventListener('touchmove', onMouseMove)
     window.addEventListener('mouseup', onMouseUp)
     window.addEventListener('touchend', onMouseUp)
-  }
+  }, [onMouseMove, onMouseUp])
 
   return { onMouseDown, mouseRef, diff }
 }
