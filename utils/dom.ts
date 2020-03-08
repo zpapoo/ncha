@@ -1,11 +1,11 @@
-export const offsetLeft = (element: any) => {
-  let el = element
-  let x = el.offsetLeft
+export const gatherOffsetLeft = (el: any): number => {
+  let sum = el.offsetLeft
 
   while (el.offsetParent) {
-    x += el.offsetParent.offsetLeft
-    el = el.offsetParent
+    const parent = el.offsetParent as HTMLElement
+    sum += parent.offsetLeft
+    el = parent
   }
 
-  return x
+  return sum
 }
