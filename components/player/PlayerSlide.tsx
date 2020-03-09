@@ -42,7 +42,7 @@ export const PlayerSlide = () => {
   const width = (current / total) * 100
   const { requestUpdateCurrentTime }= playerActions
 
-  const { onMouseDown, mouseRef, diff } = useMouseMoveListener<HTMLDivElement>()
+  const { onDragActionStart, mouseRef, diff } = useMouseMoveListener<HTMLDivElement>()
 
   const onClick = (e: React.MouseEvent) => {
     const { offsetX } = e.nativeEvent
@@ -64,8 +64,8 @@ export const PlayerSlide = () => {
   return (
     <TimeLine
       ref={mouseRef}
-      onMouseDown={onMouseDown}
-      onTouchStart={onMouseDown}
+      onMouseDown={onDragActionStart}
+      onTouchStart={onDragActionStart}
       onClick={onClick}
     >
       <Slide width={width} />

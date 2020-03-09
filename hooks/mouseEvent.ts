@@ -29,12 +29,12 @@ export const useMouseMoveListener = <T extends HTMLElement>() => {
   }, [onMouseMove])
 
 
-  const onMouseDown = useCallback(() => {
+  const onDragActionStart = useCallback(() => {
     window.addEventListener('mousemove', onMouseMove)
     window.addEventListener('touchmove', onMouseMove)
     window.addEventListener('mouseup', onMouseUp)
     window.addEventListener('touchend', onMouseUp)
   }, [onMouseMove, onMouseUp])
 
-  return { onMouseDown, mouseRef, diff }
+  return { onDragActionStart, mouseRef, diff }
 }
