@@ -1,7 +1,8 @@
 import styled from '@emotion/styled'
 import { RootState } from 'features'
 import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
-import React, { useRef } from 'react'
+import { useMouseMoveListener } from 'hooks/mouseEvent'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 interface SlideProps {
@@ -37,41 +38,34 @@ const TimeLine = styled.div`
 
 export const PlayerSlide = () => {
   const dispatch = useDispatch()
-  const sliderRef = useRef<HTMLDivElement>(null)
   const { current, total } = useSelector<RootState, PlayerTime>(playerSelectors.times)
   const width = (current / total) * 100
   const { requestUpdateCurrentTime }= playerActions
 
-  const onMouseUp = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    // TODO: with Custom Hook
-  }
-  const onMouseMove = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    // TODO: with Custom Hook
-  }
-
-  const onMouseDown = (e: React.MouseEvent) => {
-    e.stopPropagation()
-    // TODO: with Custom Hook
-  }
+  const { onHandleStart, mouseRef, diff } = useMouseMoveListener<HTMLDivElement>()
 
   const onClick = (e: React.MouseEvent) => {
     const { offsetX } = e.nativeEvent
-
-    if (sliderRef.current) {
-      const { offsetWidth } = sliderRef.current
+    if (mouseRef.current) {
+      const { offsetWidth } = mouseRef.current
       const percent = offsetX / offsetWidth
       dispatch(requestUpdateCurrentTime(percent * total))
     }
   }
 
+  useEffect(() => {
+    if (mouseRef.current) {
+      const { offsetWidth } = mouseRef.current
+      const percent = Math.min(Math.max(diff / offsetWidth, 0), 1)
+      dispatch(requestUpdateCurrentTime(percent * total))
+    }
+  }, [diff, dispatch, mouseRef, requestUpdateCurrentTime, total])
+
   return (
     <TimeLine
-      ref={sliderRef}
-      onMouseDown={onMouseDown}
-      onMouseMove={onMouseMove}
-      onMouseUp={onMouseUp}
+      ref={mouseRef}
+      onMouseDown={onHandleStart}
+      onTouchStart={onHandleStart}
       onClick={onClick}
     >
       <Slide width={width} />
