@@ -8,16 +8,17 @@ export const useMouseMoveListener = <T extends HTMLElement>() => {
   const onMouseMove = useCallback((e: TouchEvent | MouseEvent) => {
     e.stopPropagation()
 
+    let clientX = 0
     if (e instanceof TouchEvent) {
-      const { clientX } = e.changedTouches[0]
-      const diff = clientX - gatherOffsetLeft(mouseRef.current)
-      setDiff(diff)
-
-      return
-    } else if (e instanceof MouseEvent) {
-      const diff = e.clientX - gatherOffsetLeft(mouseRef.current)
-      setDiff(diff)
+      clientX = e.changedTouches[0].clientX
     }
+
+    if (e instanceof MouseEvent) {
+      clientX = e.clientX
+    }
+
+    const diff = clientX - gatherOffsetLeft(mouseRef.current)
+    setDiff(diff)
   }, [])
 
   const onMouseUp = useCallback(() => {
