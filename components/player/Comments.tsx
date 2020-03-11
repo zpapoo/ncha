@@ -79,7 +79,7 @@ export const Comments = ({ kind, contents, time }: Props) => {
           <ProfileImage />
           <div>
             <Name>{COMMENT_KIND[kind]}</Name>
-            {contents.map((content: string, index: number) => {
+            {contents.map((content, index) => {
               return (
                 <SpeechBubble
                   key={`${kind}-${index}`}
