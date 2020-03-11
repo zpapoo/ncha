@@ -1,10 +1,9 @@
 import styled from '@emotion/styled'
 import { COMMENT_MENU, COMMENT_MENU_COLOR, COMMENT_MENU_ICON } from 'constants/commentConstants'
 import { COMMENT_KIND, COMMENT_TYPE } from 'constants/playerConstants'
+import { useSwipeX } from 'hooks/swiper'
 import React from 'react'
-import { animated, useSpring } from 'react-spring'
-import { useDrag } from 'react-use-gesture'
-import { getClosest } from 'utils/array'
+import { animated } from 'react-spring'
 
 import { SpeechBubble } from './SpeechBubble'
 
@@ -55,18 +54,7 @@ const Button = styled<'div', {type: COMMENT_MENU}>('div')`
 `
 
 export const Comments = ({ kind, contents, time }: Props) => {
-  const [{ x }, set] = useSpring(() => ({ x: 0 }))
-
-  const bind = useDrag(({ movement: [mx], last }) => {
-
-    // last: mouseUp
-    const newX = last ? getClosest([-100, 0], x.getValue()) : mx
-
-    set({ x: newX })
-  }, {
-    bounds: { left: -100, right: 100 },
-    rubberband: true, // 경계 벗어날때 탄성계수
-  })
+  const { x, bind } = useSwipeX(100)
 
   return (
     <Wrapper>
@@ -79,16 +67,18 @@ export const Comments = ({ kind, contents, time }: Props) => {
           <ProfileImage />
           <div>
             <Name>{COMMENT_KIND[kind]}</Name>
-            {contents.map((content, index) => {
-              return (
-                <SpeechBubble
-                  key={`${kind}-${index}`}
-                  time={time}
-                  kind={kind}
-                  content={content}
-                />
-              )
-            })}
+            {
+              contents.map((content, index) => {
+                return (
+                  <SpeechBubble
+                    key={`${kind}-${index}`}
+                    time={time}
+                    kind={kind}
+                    content={content}
+                  />
+                )
+              })
+            }
           </div>
         </ContentWrapper>
 
