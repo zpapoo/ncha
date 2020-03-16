@@ -29,12 +29,12 @@ export const useDragAction = <T extends HTMLElement>() => {
   }, [onMouseMove])
 
 
-  const onDragActionStart = useCallback(() => {
+  const onHandleStart = useCallback(() => {
     window.addEventListener('mousemove', onMouseMove)
     window.addEventListener('touchmove', onMouseMove)
     window.addEventListener('mouseup', onMouseUp)
     window.addEventListener('touchend', onMouseUp)
   }, [onMouseMove, onMouseUp])
 
-  return { onDragActionStart, mouseRef, diff }
+  return { onHandleStart, mouseRef, diff }
 }
