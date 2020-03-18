@@ -3,8 +3,6 @@ import { FetchStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
 import { connectToRoot } from 'utils/store'
 
-import { RootState } from '.'
-
 export interface Comment {
   id: string
   kind: COMMENT_TYPE
