@@ -47,18 +47,20 @@ export const Player: React.FC<Props> = () => {
         <PlayerController>
           <PlayerTitle>{title}</PlayerTitle>
         </PlayerController>
-        {currentComment.map((comment: Comment, index: number) => {
-          const { kind, contents, time } = comment
+        {
+          currentComment.map((comment: Comment) => {
+            const { kind, contents, time, id } = comment
 
-          return (
-            <Comments
-              key={`${kind}-${index}`}
-              kind={kind}
-              contents={contents}
-              time={time}
-            />
-          )
-        })}
+            return (
+              <Comments
+                key={id}
+                kind={kind}
+                contents={contents}
+                time={time}
+              />
+            )
+          })
+        }
       </>
     )
   }
