@@ -1,6 +1,7 @@
 import { createAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { FetchStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
+import { connectToRoot } from 'utils/store'
 
 import { RootState } from '.'
 
@@ -92,23 +93,6 @@ const getCurrentComments = createSelector(
     movie.comments.filter((comment: Comment) => comment.time <= currentTime),
 )
 
-export const playerSelectors = {
-  times: ({ player }: RootState) => getTimes(player),
-  isPlaying: ({ player }: RootState) => createSelector(
-    ({ isPlaying }: PlayerState) => isPlaying,
-    (isPlaying: boolean) => isPlaying,
-  )(player),
-}
-
-export const movieSelectors = {
-  movie: ({ player }: RootState) => getMovieInfo(player),
-  movieFetchState: ({ player }: RootState) => createSelector(
-    ({ fetchState }: PlayerState) => fetchState,
-    (fetchState: FetchStatusCode) => fetchState,
-  )(player),
-  currentComments: ({ player }: RootState) => getCurrentComments(player),
-}
-
 export const PLAYER_PREFIX = _.name
 export const playerReducer = _.reducer
 export const playerActions = {
@@ -116,3 +100,20 @@ export const playerActions = {
   fetch,
   requestUpdateCurrentTime,
 }
+
+export const movieSelectors = connectToRoot(PLAYER_PREFIX,  {
+  movie:  getMovieInfo,
+  movieFetchState: createSelector(
+    ({ fetchState }: PlayerState) => fetchState,
+    (fetchState: FetchStatusCode) => fetchState,
+  ),
+  currentComments: getCurrentComments,
+})
+
+export const playerSelectors = connectToRoot(PLAYER_PREFIX,  {
+  times: getTimes,
+  isPlaying: createSelector(
+    ({ isPlaying }: PlayerState) => isPlaying,
+    (isPlaying: boolean) => isPlaying,
+  ),
+})
