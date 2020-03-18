@@ -1,6 +1,6 @@
 import { FetchStatusCode } from 'api'
 import { playerToggleSaga, playerUpdateTimeSaga } from 'features/playerSaga'
-import { movieSelectors, PLAYER_PREFIX, playerActions, playerSelectors } from 'features/playerSlice'
+import { PLAYER_PREFIX, playerActions, playerSelectors } from 'features/playerSlice'
 import { delay, put, select } from 'redux-saga/effects'
 
 const initialState = {

@@ -1,13 +1,14 @@
 import { COMMENT_TYPE } from 'constants/playerConstants'
 
 interface MockDataCommentType {
+  id: string
   kind: COMMENT_TYPE
   contents: string[]
   time: number
 }
 export interface MockDataType {
   data: {
-    id: number
+    id: string
     running_time: number
     title: string
     comments: MockDataCommentType[]

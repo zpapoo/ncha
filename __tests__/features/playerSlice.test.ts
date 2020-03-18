@@ -11,7 +11,7 @@ import {
 
 const initialState = {
   movie: {
-    id: 0,
+    id: 'test',
     title: '',
     running_time: 1,
     comments: [],
