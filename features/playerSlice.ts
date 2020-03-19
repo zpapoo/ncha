@@ -1,7 +1,7 @@
 import { createAction, createSelector, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { FetchStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
-import { connectToRoot } from 'utils/store'
+import { connectToRoot } from 'utils/storeUtils'
 
 export interface Comment {
   id: string

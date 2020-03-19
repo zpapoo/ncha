@@ -1,4 +1,4 @@
-import { padZero } from 'utils/string'
+import { padZero } from 'utils/stringUtils'
 
 describe('[Utils] padZero', () => {
   it('padZero(2,2)는 02가 되어야 한다.', () => {

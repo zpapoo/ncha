@@ -1,5 +1,5 @@
 import { useCallback, useRef, useState } from 'react'
-import { gatherOffsetLeft } from 'utils/dom'
+import { gatherOffsetLeft } from 'utils/domUtils'
 
 export const useDragAction = <T extends HTMLElement>() => {
   const [diff, setDiff] = useState(0)

@@ -1,4 +1,4 @@
-import { formatTime } from 'utils/time'
+import { formatTime } from 'utils/timeUtils'
 
 describe('[Utils] formatTime', () => {
   it('59s는 00:00:59', () => {

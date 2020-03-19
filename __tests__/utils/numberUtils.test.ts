@@ -1,4 +1,4 @@
-import { getRangeNumber } from 'utils/number'
+import { getRangeNumber } from 'utils/numberUtils'
 
 describe('[Utils] getRangeNumber', () => {
   it('should return 10', () => {
