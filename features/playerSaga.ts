@@ -2,7 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { getComments } from 'api/playerComments'
 import { AxiosResponse } from 'axios'
 import { call, delay, put, select, takeLatest } from 'redux-saga/effects'
-import { rangeNumber } from 'utils/number'
+import { getRangeNumber } from 'utils/number'
 
 import { playerActions, playerSelectors } from './playerSlice'
 
@@ -37,11 +37,12 @@ export function* playerUpdateTimeSaga({ payload }: PayloadAction<number>) {
     playerSelectors.times,
   )
   const requestTime = Math.ceil(payload)
-
-  const targetTime = rangeNumber(
-    requestTime,
-    { min: 0, max: total },
-  )
+  const targetTime = getRangeNumber({
+    range: {
+      max: total,
+    },
+    target: requestTime,
+  })
 
   yield put(playerActions.updateCurrentTime(targetTime))
 }

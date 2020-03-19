@@ -3,16 +3,15 @@ import { FetchStatusCode } from 'api'
 import { COMMENT_TYPE } from 'constants/playerConstants'
 import { connectToRoot } from 'utils/store'
 
-import { RootState } from '.'
-
 export interface Comment {
+  id: string
   kind: COMMENT_TYPE
   contents: string[]
   time: number
 }
 
 export interface Movie {
-  id: number
+  id: string
   title: string
   running_time: number
   comments: Comment[]
@@ -34,7 +33,7 @@ const name = 'player'
 
 const initialState: PlayerState = {
   movie: {
-    id: 0,
+    id: '',
     title: '',
     running_time: 1,
     comments: [],

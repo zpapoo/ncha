@@ -1,7 +1,7 @@
 import { useCallback, useRef, useState } from 'react'
 import { gatherOffsetLeft } from 'utils/dom'
 
-export const useMouseMoveListener = <T extends HTMLElement>() => {
+export const useDragAction = <T extends HTMLElement>() => {
   const [diff, setDiff] = useState(0)
   const mouseRef = useRef<T>(null)
 

@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { RootState } from 'features'
 import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
-import { useMouseMoveListener } from 'hooks/mouseEvent'
+import { useDragAction } from 'hooks/dragAction'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -42,7 +42,7 @@ export const PlayerSlide = () => {
   const width = (current / total) * 100
   const { requestUpdateCurrentTime }= playerActions
 
-  const { onHandleStart, mouseRef, diff } = useMouseMoveListener<HTMLDivElement>()
+  const { onHandleStart, mouseRef, diff } = useDragAction<HTMLDivElement>()
 
   const onClick = (e: React.MouseEvent) => {
     const { offsetX } = e.nativeEvent

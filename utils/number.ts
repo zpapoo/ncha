@@ -1,13 +1,16 @@
-interface RangeNumberParamterType {
-  min?: number
-  max?: number
+interface Params {
+  range: {
+    min?: number,
+    max: number
+  },
+  target: number
 }
 
-export const rangeNumber = (
-  target: number,
-  params: RangeNumberParamterType,
-) => {
-  const { min = 0, max = 100 } = params
+export const getRangeNumber = ({
+  range,
+  target,
+}: Params) => {
+  const maxValue = Math.min(target, range.max)
 
-  return Math.min(Math.max(target, min), max)
+  return Math.max(maxValue, 0)
 }

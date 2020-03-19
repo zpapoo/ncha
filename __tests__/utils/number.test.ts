@@ -1,66 +1,45 @@
-import { rangeNumber } from 'utils/number'
+import { getRangeNumber } from 'utils/number'
 
-describe('[Utils] rangeNumber', () => {
-  it('rangeNumber(-5, {min: 0, max: 10})은 0을 반환한다.', () => {
+describe('[Utils] getRangeNumber', () => {
+  it('should return 10', () => {
     // Given
-    const target = -5
-    const min = 0
-    const max = 10
     // When
-    const result = rangeNumber(target, { min, max })
+    const result = getRangeNumber({
+      range: {
+        max: 10,
+        min: 0,
+      },
+      target: 11,
+    })
     // Then
-    expect(result).toBe(0)
+    expect(result).toEqual(10)
   })
 
-  it('rangeNumber(5, {min: 0, max: 10 })은 5를 반환한다.', () => {
+  it('should return 0', () => {
     // Given
-    const target = 5
-    const min = 0
-    const max = 10
     // When
-    const result = rangeNumber(target, { min, max })
+    const result = getRangeNumber({
+      range: {
+        max: 10,
+        min: 0,
+      },
+      target: -1,
+    })
     // Then
-    expect(result).toBe(5)
+    expect(result).toEqual(0)
   })
 
-  it('rangeNumber(15, {min: 0, max: 10 })은 10 반환한다.', () => {
+  it('should return 5', () => {
     // Given
-    const target = 15
-    const min = 0
-    const max = 10
     // When
-    const result = rangeNumber(target, { min, max })
+    const result = getRangeNumber({
+      range: {
+        max: 10,
+        min: 0,
+      },
+      target: 5,
+    })
     // Then
-    expect(result).toBe(10)
-  })
-
-  it('rangeNumber(15, { max: 10 })은 10 반환한다.', () => {
-    // Given
-    const target = 15
-    const max = 10
-    // When
-    const result = rangeNumber(target, { max })
-    // Then
-    expect(result).toBe(10)
-  })
-
-  it('rangeNumber(-1, { max: 10 })은 10 반환한다.', () => {
-    // Given
-    const target = -1
-    const max = 10
-    // When
-    const result = rangeNumber(target, { max })
-    // Then
-    expect(result).toBe(0)
-  })
-
-  it('rangeNumber(-1, { min: -10 })은 -1 반환한다.', () => {
-    // Given
-    const target = -1
-    const min = -10
-    // When
-    const result = rangeNumber(target, { min })
-    // Then
-    expect(result).toBe(-1)
+    expect(result).toEqual(5)
   })
 })
