@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { RootState } from 'features'
 import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
-import { useDragAction } from 'hooks/dragAction'
+import { useDragAction } from 'hooks/useDragAction'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
