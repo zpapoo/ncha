@@ -3,7 +3,7 @@ import { RootState } from 'features'
 import { playerSelectors, PlayerTime } from 'features/playerSlice'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { formatTime } from 'utils/time'
+import { formatTime } from 'utils/timeUtils'
 
 import { PlayerSlide } from './PlayerSlide'
 

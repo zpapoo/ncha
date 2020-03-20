@@ -2,7 +2,7 @@ import { PayloadAction } from '@reduxjs/toolkit'
 import { getComments } from 'api/playerComments'
 import { AxiosResponse } from 'axios'
 import { call, delay, put, select, takeLatest } from 'redux-saga/effects'
-import { getRangeNumber } from 'utils/number'
+import { getRangeNumber } from 'utils/numberUtils'
 
 import { playerActions, playerSelectors } from './playerSlice'
 

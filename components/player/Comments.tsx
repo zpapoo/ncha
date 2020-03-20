@@ -1,7 +1,7 @@
 import styled from '@emotion/styled'
 import { COMMENT_MENU, COMMENT_MENU_COLOR, COMMENT_MENU_ICON } from 'constants/commentConstants'
 import { COMMENT_KIND, COMMENT_TYPE } from 'constants/playerConstants'
-import { useSwipeX } from 'hooks/swiper'
+import { useSwipeX } from 'hooks/useSwiper'
 import React from 'react'
 import { animated } from 'react-spring'
 

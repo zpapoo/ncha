@@ -7,10 +7,10 @@ import {
   movieSelectors,
   playerActions,
 } from 'features/playerSlice'
-import { useFetchWithStore } from 'hooks/fetch'
+import { useFetchWithStore } from 'hooks/useFetch'
 import React from 'react'
 import { useSelector } from 'react-redux'
-import { renderByFetchState } from 'utils/render'
+import { renderByFetchState } from 'utils/renderUtils'
 
 import { Comments } from './Comments'
 import { PlayerController } from './PlayerController'

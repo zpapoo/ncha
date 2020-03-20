@@ -3,7 +3,7 @@ import { COMMENT_COLOR, COMMENT_TYPE } from 'constants/playerConstants'
 import React from 'react'
 import { animated, useSpring } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
-import { formatTime } from 'utils/time'
+import { formatTime } from 'utils/timeUtils'
 
 interface Props {
   kind: COMMENT_TYPE

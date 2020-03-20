@@ -1,6 +1,6 @@
 import { useSpring } from 'react-spring'
 import { useDrag } from 'react-use-gesture'
-import { getClosest } from 'utils/array'
+import { getClosest } from 'utils/arrayUtils'
 
 export const useSwipeX = (range: number, defaultPosition = 0) => {
   const [{ x }, set] = useSpring(() => ({ x: defaultPosition }))

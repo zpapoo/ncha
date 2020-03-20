@@ -1,4 +1,4 @@
-import { padZero } from './string'
+import { padZero } from './stringUtils'
 
 export const formatTime = (time: number): string => {
   const hour = Math.floor(time / 3600)
