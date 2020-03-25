@@ -19,24 +19,25 @@ import { PlayerController } from './PlayerController'
 interface Props {}
 
 const hide = keyframes`
-  from {
-    height: 100%;
+  0% {
+    max-height: 500px;
   }
 
-  to {
-    height: 0;
+  100% {
+    max-height: 0;
   }
 `
 
 const PlayerTitle = styled.h2`
   width: 100%;
+  overflow: hidden;
   font-style: normal;
   font-weight: bold;
   font-size: 20px;
   line-height: 29px;
   text-align: center;
   color: #ffffff;
-  animation: ${hide} 2s linear infinite;
+  animation: ${hide} 1s ease-out both 1;
 `
 
 export const Player: React.FC<Props> = () => {
