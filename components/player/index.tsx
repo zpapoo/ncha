@@ -1,3 +1,4 @@
+import { keyframes } from '@emotion/core'
 import styled from '@emotion/styled'
 import { FetchStatusCode } from 'api'
 import { RootState } from 'features'
@@ -17,6 +18,16 @@ import { PlayerController } from './PlayerController'
 
 interface Props {}
 
+const hide = keyframes`
+  from {
+    height: 100%;
+  }
+
+  to {
+    height: 0;
+  }
+`
+
 const PlayerTitle = styled.h2`
   width: 100%;
   font-style: normal;
@@ -24,8 +35,8 @@ const PlayerTitle = styled.h2`
   font-size: 20px;
   line-height: 29px;
   text-align: center;
-
   color: #ffffff;
+  animation: ${hide} 2s linear infinite;
 `
 
 export const Player: React.FC<Props> = () => {
