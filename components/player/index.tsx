@@ -9,7 +9,7 @@ import {
   playerActions,
 } from 'features/playerSlice'
 import { useFetchWithStore } from 'hooks/useFetch'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 import { renderByFetchState } from 'utils/renderUtils'
 
@@ -17,6 +17,8 @@ import { Comments } from './Comments'
 import { PlayerController } from './PlayerController'
 
 interface Props {}
+
+const COMMENT_WRAPPER = 'commentWrapper'
 
 const hide = keyframes`
   0% {
@@ -51,6 +53,11 @@ export const Player: React.FC<Props> = () => {
     movieSelectors.currentComments,
   )
 
+  // TODO: Move to custom hook
+  const handleWheel = (e: React.WheelEvent) => {
+    console.log(e.deltaY)
+  }
+
   useFetchWithStore<number>(fetchState, () => playerActions.fetch(1))
 
   const renderView = () => {
@@ -59,20 +66,22 @@ export const Player: React.FC<Props> = () => {
         <PlayerController>
           <PlayerTitle>{title}</PlayerTitle>
         </PlayerController>
-        {
-          currentComment.map((comment: Comment) => {
-            const { kind, contents, time, id } = comment
+        <div id={COMMENT_WRAPPER} onWheel={handleWheel}>
+          {
+            currentComment.map((comment: Comment) => {
+              const { kind, contents, time, id } = comment
 
-            return (
-              <Comments
-                key={id}
-                kind={kind}
-                contents={contents}
-                time={time}
-              />
-            )
-          })
-        }
+              return (
+                <Comments
+                  key={id}
+                  kind={kind}
+                  contents={contents}
+                  time={time}
+                />
+              )
+            })
+          }
+        </div>
       </>
     )
   }
