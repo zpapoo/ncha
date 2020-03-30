@@ -28,7 +28,6 @@ const PlayButton = styled<'div', {isPlaying: boolean}>('div')`
   margin: 0 10px 0 10px;
   width: 24px;
   height: 24px;
-  /* animation: ${hide} 1s ease-out both 1; */
   background-size: contain;
   align-self: center;
   background-image: url(${({ isPlaying }) => isPlaying ? '/images/pause.svg' : '/images/play.svg'});
@@ -37,7 +36,6 @@ const PlayButton = styled<'div', {isPlaying: boolean}>('div')`
 const ForwardButton = styled.div`
   width: 30px;
   height: 30px;
-  /* animation: ${hide} 1s ease-out both 1; */
   background-size: contain;
   margin-right: auto;
   background-image: url('/images/forward.svg');
