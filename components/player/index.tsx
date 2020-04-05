@@ -9,7 +9,7 @@ import {
   playerActions,
 } from 'features/playerSlice'
 import { useFetchWithStore } from 'hooks/useFetch'
-import React, { useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { renderByFetchState } from 'utils/renderUtils'
 
@@ -65,18 +65,25 @@ export const Player: React.FC<Props> = () => {
   )
 
   // TODO: Move to custom hook
-  const handleWheel = (e: React.WheelEvent) => {
-    if (e.deltaY >= 0) {
-      // setIsVisible(false)
-      requestAnimationFrame(() => setIsVisible(false))
+  const handleWheel = useCallback(
+    (e: WheelEvent) => {
+      if (e.deltaY > 0 && isVisible) {
+        return setIsVisible(false)
+      }
 
-      return
-      // requestAnimationFrame(() => setIsVisible(false))
-    }
-    requestAnimationFrame(() => setIsVisible(true))
-    // setIsVisible(true)
-    // requestAnimationFrame(() => setIsVisible(true))
-  }
+      if (e.deltaY < 0 && !isVisible) {
+        return setIsVisible(true)
+      }
+    },
+    [isVisible],
+  )
+
+  useEffect(() => {
+    window.addEventListener('wheel', handleWheel)
+
+    return (() => window.removeEventListener('wheel', handleWheel))
+  }, [handleWheel])
+
 
   useFetchWithStore<number>(fetchState, () => playerActions.fetch(1))
 
@@ -86,7 +93,7 @@ export const Player: React.FC<Props> = () => {
         <PlayerController>
           <PlayerTitle isVisible={isVisible}>{title}</PlayerTitle>
         </PlayerController>
-        <div id={COMMENT_WRAPPER} onWheel={handleWheel}>
+        <div id={COMMENT_WRAPPER}>
           {
             currentComment.map((comment: Comment) => {
               const { kind, contents, time, id } = comment
