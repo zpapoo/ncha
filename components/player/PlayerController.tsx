@@ -9,11 +9,13 @@ interface Props {
 }
 
 const PlayerTop = styled.div`
-  position: relative;
+  position: sticky;
+  top: 0;
   margin-bottom: 16px;
   padding: 24px 0;
   background: rgba(0, 0, 0, 0.7);
   border-radius: 0px 0px 25px 25px;
+  z-index: 10;
 `
 
 const CloseButton = styled.span`
