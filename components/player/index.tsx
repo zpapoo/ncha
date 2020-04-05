@@ -11,6 +11,7 @@ import {
 import { useFetchWithStore } from 'hooks/useFetch'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
+import { useScroll } from 'react-use-gesture'
 import { renderByFetchState } from 'utils/renderUtils'
 
 import { Comments } from './Comments'
@@ -49,7 +50,7 @@ const PlayerTitle = styled<'h2', {isVisible: boolean}>('h2')`
   line-height: 29px;
   text-align: center;
   color: #ffffff;
-  animation: ${({ isVisible }) => isVisible ? show : hide} 1s ease-out both 1;
+  animation: ${({ isVisible }) => isVisible ? show : hide} 1s ease-in-out forwards 1;
 `
 
 export const Player: React.FC<Props> = () => {

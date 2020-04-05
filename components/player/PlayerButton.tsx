@@ -3,24 +3,32 @@ import styled from '@emotion/styled'
 import { FlexWrapper } from 'components/common/FlexWrapper'
 import { RootState } from 'features'
 import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
-import React from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 // TODO: Move common Component
 const hide = keyframes`
   0% {
-    opacity: 1;
     max-height: 500px;
   }
 
   100% {
-    opacity: 0;
     max-height: 0;
   }
 `
 
-const HideWrapper = styled.div`
-  animation: ${hide} 1s ease-out both 1;
+const show = keyframes`
+  0% {
+    max-height: 0;
+  }
+
+  100% {
+    max-height: 500px;
+  }
+`
+
+const HideWrapper = styled<'div', {isVisible: boolean}>('div')`
+  animation: ${({ isVisible }) => isVisible ? show : hide} 0.7s ease-in-out forwards 1;
   overflow: hidden;
 `
 
@@ -45,7 +53,6 @@ const BackwardButton = styled.div`
   width: 30px;
   height: 30px;
   background-size: contain;
-  animation: ${hide} 1s ease-out both 1;
   margin-left: auto;
   background-image: url('/images/backward.svg');
 `
@@ -57,9 +64,29 @@ export const PlayerButton = () => {
   )
   const { current } = useSelector<RootState, PlayerTime>(playerSelectors.times)
   const { toggle, requestUpdateCurrentTime } = playerActions
+  const [isVisible, setIsVisible] = useState(true)
+
+  // TODO: Move to custom hook
+  const handleWheel = useCallback(
+    (e: WheelEvent) => {
+      if (e.deltaY > 0 && isVisible) {
+        return setIsVisible(false)
+      }
+
+      if (e.deltaY < 0 && !isVisible) {
+        return setIsVisible(true)
+      }
+    },
+    [isVisible],
+  )
+  useEffect(() => {
+    window.addEventListener('wheel', handleWheel)
+
+    return (() => window.removeEventListener('wheel', handleWheel))
+  }, [handleWheel])
 
   return (
-    <HideWrapper>
+    <HideWrapper isVisible={isVisible}>
       <FlexWrapper>
         <BackwardButton
           onClick={() => dispatch(requestUpdateCurrentTime(current-5))}
