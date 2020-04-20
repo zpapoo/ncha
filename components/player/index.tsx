@@ -10,7 +10,7 @@ import {
 } from 'features/playerSlice'
 import { useFetchWithStore } from 'hooks/useFetch'
 import { useWheel } from 'hooks/useWheel'
-import React, { useCallback, useEffect, useState } from 'react'
+import React  from 'react'
 import { useSelector } from 'react-redux'
 import { renderByFetchState } from 'utils/renderUtils'
 

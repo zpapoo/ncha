@@ -4,7 +4,7 @@ import { FlexWrapper } from 'components/common/FlexWrapper'
 import { RootState } from 'features'
 import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
 import { useWheel } from 'hooks/useWheel'
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
 // TODO: Move common Component
