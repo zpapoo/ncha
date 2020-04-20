@@ -54,7 +54,6 @@ const PlayerTitle = styled<'h2', {isVisible: boolean}>('h2')`
 `
 
 export const Player: React.FC<Props> = () => {
-  const [isVisible, setIsVisible] = useState(true)
   const fetchState = useSelector<RootState, FetchStatusCode>(
     movieSelectors.movieFetchState,
   )
@@ -64,21 +63,7 @@ export const Player: React.FC<Props> = () => {
   const currentComment = useSelector<RootState, Comment[]>(
     movieSelectors.currentComments,
   )
-
-  // TODO: Move to custom hook
-  const handleWheel = useCallback(
-    (e: WheelEvent) => {
-      if (e.deltaY > 0 && isVisible) {
-        return setIsVisible(false)
-      }
-
-      if (e.deltaY < 0 && !isVisible) {
-        return setIsVisible(true)
-      }
-    },
-    [isVisible],
-  )
-  useWheel({ handleWheel })
+  const { isVisible } = useWheel()
 
   useFetchWithStore<number>(fetchState, () => playerActions.fetch(1))
 

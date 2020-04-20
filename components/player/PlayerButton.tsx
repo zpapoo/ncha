@@ -65,23 +65,8 @@ export const PlayerButton = () => {
   )
   const { current } = useSelector<RootState, PlayerTime>(playerSelectors.times)
   const { toggle, requestUpdateCurrentTime } = playerActions
-  const [isVisible, setIsVisible] = useState(true)
 
-  // TODO: Move to custom hook
-  const handleWheel = useCallback(
-    (e: WheelEvent) => {
-      if (e.deltaY > 0 && isVisible) {
-        return setIsVisible(false)
-      }
-
-      if (e.deltaY < 0 && !isVisible) {
-        return setIsVisible(true)
-      }
-    },
-    [isVisible],
-  )
-
-  useWheel({ handleWheel })
+  const { isVisible } = useWheel()
 
   return (
     <HideWrapper isVisible={isVisible}>
