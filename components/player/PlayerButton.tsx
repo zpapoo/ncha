@@ -3,6 +3,7 @@ import styled from '@emotion/styled'
 import { FlexWrapper } from 'components/common/FlexWrapper'
 import { RootState } from 'features'
 import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
+import { useWheel } from 'hooks/useWheel'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 
@@ -79,11 +80,8 @@ export const PlayerButton = () => {
     },
     [isVisible],
   )
-  useEffect(() => {
-    window.addEventListener('wheel', handleWheel)
 
-    return (() => window.removeEventListener('wheel', handleWheel))
-  }, [handleWheel])
+  useWheel({ handleWheel })
 
   return (
     <HideWrapper isVisible={isVisible}>

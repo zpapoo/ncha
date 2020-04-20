@@ -9,9 +9,9 @@ import {
   playerActions,
 } from 'features/playerSlice'
 import { useFetchWithStore } from 'hooks/useFetch'
+import { useWheel } from 'hooks/useWheel'
 import React, { useCallback, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
-import { useScroll } from 'react-use-gesture'
 import { renderByFetchState } from 'utils/renderUtils'
 
 import { Comments } from './Comments'
@@ -78,13 +78,7 @@ export const Player: React.FC<Props> = () => {
     },
     [isVisible],
   )
-
-  useEffect(() => {
-    window.addEventListener('wheel', handleWheel)
-
-    return (() => window.removeEventListener('wheel', handleWheel))
-  }, [handleWheel])
-
+  useWheel({ handleWheel })
 
   useFetchWithStore<number>(fetchState, () => playerActions.fetch(1))
 
