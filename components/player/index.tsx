@@ -1,6 +1,6 @@
-import { keyframes } from '@emotion/core'
 import styled from '@emotion/styled'
 import { FetchStatusCode } from 'api'
+import { HideWrapper } from 'components/common/HideWrapper'
 import { RootState } from 'features'
 import {
   Comment,
@@ -9,7 +9,6 @@ import {
   playerActions,
 } from 'features/playerSlice'
 import { useFetchWithStore } from 'hooks/useFetch'
-import { useWheel } from 'hooks/useWheel'
 import React  from 'react'
 import { useSelector } from 'react-redux'
 import { renderByFetchState } from 'utils/renderUtils'
@@ -21,27 +20,7 @@ interface Props {}
 
 const COMMENT_WRAPPER = 'commentWrapper'
 
-const hide = keyframes`
-  0% {
-    max-height: 500px;
-  }
-
-  100% {
-    max-height: 0;
-  }
-`
-
-const show = keyframes`
-  0% {
-    max-height: 0;
-  }
-
-  100% {
-    max-height: 500px;
-  }
-`
-
-const PlayerTitle = styled<'h2', {isVisible: boolean}>('h2')`
+const PlayerTitle = styled.h2`
   width: 100%;
   overflow: hidden;
   font-style: normal;
@@ -50,7 +29,6 @@ const PlayerTitle = styled<'h2', {isVisible: boolean}>('h2')`
   line-height: 29px;
   text-align: center;
   color: #ffffff;
-  animation: ${({ isVisible }) => isVisible ? show : hide} 1s ease-in-out forwards 1;
 `
 
 export const Player: React.FC<Props> = () => {
@@ -63,7 +41,6 @@ export const Player: React.FC<Props> = () => {
   const currentComment = useSelector<RootState, Comment[]>(
     movieSelectors.currentComments,
   )
-  const { isVisible } = useWheel()
 
   useFetchWithStore<number>(fetchState, () => playerActions.fetch(1))
 
@@ -71,7 +48,9 @@ export const Player: React.FC<Props> = () => {
     return (
       <>
         <PlayerController>
-          <PlayerTitle isVisible={isVisible}>{title}</PlayerTitle>
+          <HideWrapper>
+            <PlayerTitle>{title}</PlayerTitle>
+          </HideWrapper>
         </PlayerController>
         <div id={COMMENT_WRAPPER}>
           {

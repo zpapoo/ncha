@@ -1,37 +1,10 @@
-import { keyframes } from '@emotion/core'
 import styled from '@emotion/styled'
 import { FlexWrapper } from 'components/common/FlexWrapper'
+import { HideWrapper } from 'components/common/HideWrapper'
 import { RootState } from 'features'
 import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
-import { useWheel } from 'hooks/useWheel'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-
-// TODO: Move common Component
-const hide = keyframes`
-  0% {
-    max-height: 500px;
-  }
-
-  100% {
-    max-height: 0;
-  }
-`
-
-const show = keyframes`
-  0% {
-    max-height: 0;
-  }
-
-  100% {
-    max-height: 500px;
-  }
-`
-
-const HideWrapper = styled<'div', {isVisible: boolean}>('div')`
-  animation: ${({ isVisible }) => isVisible ? show : hide} 0.7s ease-in-out forwards 1;
-  overflow: hidden;
-`
 
 const PlayButton = styled<'div', {isPlaying: boolean}>('div')`
   margin: 0 10px 0 10px;
@@ -66,10 +39,8 @@ export const PlayerButton = () => {
   const { current } = useSelector<RootState, PlayerTime>(playerSelectors.times)
   const { toggle, requestUpdateCurrentTime } = playerActions
 
-  const { isVisible } = useWheel()
-
   return (
-    <HideWrapper isVisible={isVisible}>
+    <HideWrapper>
       <FlexWrapper>
         <BackwardButton
           onClick={() => dispatch(requestUpdateCurrentTime(current-5))}
