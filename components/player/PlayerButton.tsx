@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { FlexWrapper } from 'components/common/FlexWrapper'
+import { HideWrapper } from 'components/common/HideWrapper'
 import { RootState } from 'features'
 import { playerActions, playerSelectors, PlayerTime } from 'features/playerSlice'
 import React from 'react'
@@ -39,17 +40,19 @@ export const PlayerButton = () => {
   const { toggle, requestUpdateCurrentTime } = playerActions
 
   return (
-    <FlexWrapper>
-      <BackwardButton
-        onClick={() => dispatch(requestUpdateCurrentTime(current-5))}
-      />
-      <PlayButton
-        isPlaying={isPlaying}
-        onClick={() => dispatch(toggle()) }
-      />
-      <ForwardButton
-        onClick={() => dispatch(requestUpdateCurrentTime(current+5))}
-      />
-    </FlexWrapper>
+    <HideWrapper>
+      <FlexWrapper>
+        <BackwardButton
+          onClick={() => dispatch(requestUpdateCurrentTime(current-5))}
+        />
+        <PlayButton
+          isPlaying={isPlaying}
+          onClick={() => dispatch(toggle()) }
+        />
+        <ForwardButton
+          onClick={() => dispatch(requestUpdateCurrentTime(current+5))}
+        />
+      </FlexWrapper>
+    </HideWrapper>
   )
 }

@@ -1,5 +1,6 @@
 import styled from '@emotion/styled'
 import { FetchStatusCode } from 'api'
+import { HideWrapper } from 'components/common/HideWrapper'
 import { RootState } from 'features'
 import {
   Comment,
@@ -8,7 +9,7 @@ import {
   playerActions,
 } from 'features/playerSlice'
 import { useFetchWithStore } from 'hooks/useFetch'
-import React from 'react'
+import React  from 'react'
 import { useSelector } from 'react-redux'
 import { renderByFetchState } from 'utils/renderUtils'
 
@@ -17,14 +18,16 @@ import { PlayerController } from './PlayerController'
 
 interface Props {}
 
+const COMMENT_WRAPPER = 'commentWrapper'
+
 const PlayerTitle = styled.h2`
   width: 100%;
+  overflow: hidden;
   font-style: normal;
   font-weight: bold;
   font-size: 20px;
   line-height: 29px;
   text-align: center;
-
   color: #ffffff;
 `
 
@@ -45,22 +48,26 @@ export const Player: React.FC<Props> = () => {
     return (
       <>
         <PlayerController>
-          <PlayerTitle>{title}</PlayerTitle>
+          <HideWrapper>
+            <PlayerTitle>{title}</PlayerTitle>
+          </HideWrapper>
         </PlayerController>
-        {
-          currentComment.map((comment: Comment) => {
-            const { kind, contents, time, id } = comment
+        <div id={COMMENT_WRAPPER}>
+          {
+            currentComment.map((comment: Comment) => {
+              const { kind, contents, time, id } = comment
 
-            return (
-              <Comments
-                key={id}
-                kind={kind}
-                contents={contents}
-                time={time}
-              />
-            )
-          })
-        }
+              return (
+                <Comments
+                  key={id}
+                  kind={kind}
+                  contents={contents}
+                  time={time}
+                />
+              )
+            })
+          }
+        </div>
       </>
     )
   }
